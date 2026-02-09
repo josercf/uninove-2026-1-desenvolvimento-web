@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 14 - Requisições Assíncronas (AJAX) | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 14 — Requisições HTTP Assíncronas</h2>
+            <p>AJAX, Fetch API e JSON</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>O que é AJAX? Qual problema ele resolve?</li>
+                        <li>O que é JSON? Como ele se parece?</li>
+                        <li>Qual a diferença entre uma requisição síncrona e assíncrona?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>Requisições Síncronas vs. Assíncronas</li>
+                    <li>O que é AJAX?</li>
+                    <li>Formato JSON</li>
+                    <li>Fetch API</li>
+                    <li>Retornando JSON do ASP.NET Core</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Síncrono vs. Assíncrono</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div class="box-warning">
+                        <h3>Síncrono (tradicional)</h3>
+                        <p>O navegador envia a requisição e <strong>recarrega toda a página</strong> ao receber a resposta. O usuário fica esperando.</p>
+                    </div>
+                    <div class="box-success">
+                        <h3>Assíncrono (AJAX)</h3>
+                        <p>O JavaScript envia a requisição <strong>em segundo plano</strong>. A página <strong>não recarrega</strong>. Apenas a parte necessária é atualizada.</p>
+                    </div>
+                </div>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p><strong>Exemplos do dia a dia:</strong> Autocompletar do Google, feed infinito do Instagram, chat em tempo real.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Formato JSON</h2></div>
+            <div class="slide-body">
+                <p><strong>JSON</strong> (JavaScript Object Notation) é o formato padrão para troca de dados na web moderna.</p>
+                <pre>
+{
+    <span class="string">"id"</span>: <span class="number">1</span>,
+    <span class="string">"nome"</span>: <span class="string">"Maria Silva"</span>,
+    <span class="string">"email"</span>: <span class="string">"maria@email.com"</span>,
+    <span class="string">"idade"</span>: <span class="number">20</span>,
+    <span class="string">"ativo"</span>: <span class="keyword">true</span>,
+    <span class="string">"cursos"</span>: [<span class="string">"ADS"</span>, <span class="string">"Web"</span>],
+    <span class="string">"endereco"</span>: {
+        <span class="string">"cidade"</span>: <span class="string">"São Paulo"</span>,
+        <span class="string">"estado"</span>: <span class="string">"SP"</span>
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Fetch API — GET</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Requisição GET com Fetch API</span>
+<span class="js-func">fetch</span>(<span class="js-string">"/api/alunos"</span>)
+    .<span class="js-func">then</span>(<span class="js-var">response</span> => <span class="js-var">response</span>.<span class="js-func">json</span>())
+    .<span class="js-func">then</span>(<span class="js-var">data</span> => {
+        <span class="js-var">console</span>.<span class="js-func">log</span>(<span class="js-var">data</span>);
+        <span class="comment">// Atualizar a página com os dados</span>
+        <span class="js-keyword">let</span> <span class="js-var">lista</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"listaAlunos"</span>);
+        <span class="js-var">data</span>.<span class="js-func">forEach</span>(<span class="js-var">aluno</span> => {
+            <span class="js-var">lista</span>.<span class="js-var">innerHTML</span> += <span class="js-string">`&lt;li&gt;${aluno.nome}&lt;/li&gt;`</span>;
+        });
+    })
+    .<span class="js-func">catch</span>(<span class="js-var">error</span> => <span class="js-var">console</span>.<span class="js-func">error</span>(<span class="js-string">"Erro:"</span>, <span class="js-var">error</span>));</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Fetch API — POST</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Requisição POST com Fetch API</span>
+<span class="js-keyword">const</span> <span class="js-var">aluno</span> = {
+    nome: <span class="js-string">"João"</span>,
+    email: <span class="js-string">"joao@email.com"</span>,
+    idade: <span class="number">22</span>
+};
+
+<span class="js-func">fetch</span>(<span class="js-string">"/api/alunos"</span>, {
+    method: <span class="js-string">"POST"</span>,
+    headers: {
+        <span class="js-string">"Content-Type"</span>: <span class="js-string">"application/json"</span>
+    },
+    body: <span class="type">JSON</span>.<span class="js-func">stringify</span>(<span class="js-var">aluno</span>)
+})
+.<span class="js-func">then</span>(<span class="js-var">response</span> => <span class="js-var">response</span>.<span class="js-func">json</span>())
+.<span class="js-func">then</span>(<span class="js-var">data</span> => {
+    <span class="js-func">alert</span>(<span class="js-string">"Aluno cadastrado com sucesso!"</span>);
+});</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Retornando JSON do Controller</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="keyword">public class</span> <span class="type">AlunoController</span> : <span class="type">Controller</span>
+{
+    <span class="keyword">private readonly</span> <span class="type">AppDbContext</span> _context;
+
+    <span class="comment">// Retornar lista em JSON</span>
+    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">ListarJson</span>()
+    {
+        <span class="keyword">var</span> alunos = _context.Alunos.<span class="js-func">ToList</span>();
+        <span class="keyword">return</span> <span class="js-func">Json</span>(alunos);
+    }
+
+    <span class="comment">// Buscar por ID em JSON</span>
+    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">BuscarJson</span>(<span class="keyword">int</span> id)
+    {
+        <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
+        <span class="keyword">if</span> (aluno == <span class="keyword">null</span>)
+            <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+        <span class="keyword">return</span> <span class="js-func">Json</span>(aluno);
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exemplo Completo: Busca Dinâmica</h2></div>
+            <div class="slide-body">
+                <pre style="font-size: 0.85em;">
+<span class="comment">&lt;!-- View --&gt;</span>
+<span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"text"</span> <span class="html-attr">id=</span><span class="html-value">"busca"</span> <span class="html-attr">placeholder=</span><span class="html-value">"Buscar aluno..."</span><span class="html-name">&gt;</span>
+<span class="html-name">&lt;div</span> <span class="html-attr">id=</span><span class="html-value">"resultados"</span><span class="html-name">&gt;&lt;/div&gt;</span>
+
+<span class="html-name">&lt;script&gt;</span>
+<span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"busca"</span>)
+  .<span class="js-func">addEventListener</span>(<span class="js-string">"input"</span>, <span class="js-keyword">function</span>() {
+    <span class="js-keyword">const</span> <span class="js-var">termo</span> = <span class="js-keyword">this</span>.<span class="js-var">value</span>;
+    <span class="js-keyword">if</span> (<span class="js-var">termo</span>.<span class="js-var">length</span> < <span class="number">2</span>) <span class="js-keyword">return</span>;
+
+    <span class="js-func">fetch</span>(<span class="js-string">`/Aluno/Buscar?termo=${termo}`</span>)
+      .<span class="js-func">then</span>(<span class="js-var">r</span> => <span class="js-var">r</span>.<span class="js-func">json</span>())
+      .<span class="js-func">then</span>(<span class="js-var">alunos</span> => {
+        <span class="js-keyword">let</span> <span class="js-var">html</span> = <span class="js-string">""</span>;
+        <span class="js-var">alunos</span>.<span class="js-func">forEach</span>(<span class="js-var">a</span> => {
+          <span class="js-var">html</span> += <span class="js-string">`&lt;p&gt;${a.nome} - ${a.email}&lt;/p&gt;`</span>;
+        });
+        <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"resultados"</span>).<span class="js-var">innerHTML</span> = <span class="js-var">html</span>;
+      });
+});
+<span class="html-name">&lt;/script&gt;</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Busca Dinâmica de Alunos</h3>
+                    <ol>
+                        <li>Crie uma Action que recebe um termo de busca e retorna JSON</li>
+                        <li>Use LINQ: <span class="inline-code">_context.Alunos.Where(a => a.Nome.Contains(termo)).ToList()</span></li>
+                        <li>Na View, crie um campo de busca</li>
+                        <li>Use Fetch API para buscar enquanto o usuário digita</li>
+                        <li>Exiba os resultados dinamicamente sem recarregar a página</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Cadastro com AJAX (sem recarregar)</h3>
+                    <ol>
+                        <li>Crie um formulário de cadastro de aluno</li>
+                        <li>Ao clicar em "Enviar", use <span class="inline-code">fetch()</span> com método POST</li>
+                        <li>Envie os dados em formato JSON</li>
+                        <li>No Controller, receba com <span class="inline-code">[FromBody]</span></li>
+                        <li>Exiba uma mensagem de sucesso sem recarregar a página</li>
+                        <li>Atualize a lista de alunos automaticamente após o cadastro</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 15 — Autenticação e Autorização</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Pesquise a diferença entre <strong>autenticação</strong> e <strong>autorização</strong></li>
+                        <li>Leia sobre <strong>hashing de senhas</strong> (por que nunca armazenar senhas em texto puro)</li>
+                        <li>Pesquise o que é o atributo <span class="inline-code">[Authorize]</span> no ASP.NET Core</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 14 — Requisições HTTP Assíncronas (AJAX)</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

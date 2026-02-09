@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 13 - Cookies e Sessões | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 13 — Cookies e Sessões</h2>
+            <p>Gerenciamento de Estado no ASP.NET Core</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>O que são cookies? Onde ficam armazenados?</li>
+                        <li>O que são sessões? Onde ficam armazenadas?</li>
+                        <li>O que significa dizer que o HTTP é "stateless"?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>HTTP é Stateless</li>
+                    <li>Cookies — Conceito e Uso</li>
+                    <li>Cookies no ASP.NET Core</li>
+                    <li>Sessões — Conceito e Uso</li>
+                    <li>Sessões no ASP.NET Core</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>HTTP é Stateless</h2></div>
+            <div class="slide-body">
+                <p>O protocolo HTTP é <strong>stateless</strong> (sem estado). Cada requisição é independente — o servidor não "lembra" de requisições anteriores.</p>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p><strong>Problema:</strong> Como manter o usuário logado? Como lembrar itens do carrinho de compras?</p>
+                </div>
+                <div class="two-columns" style="margin-top: 15px;">
+                    <div class="box-success">
+                        <h3>Cookies</h3>
+                        <p>Dados armazenados no <strong>navegador</strong> do cliente. Enviados automaticamente a cada requisição.</p>
+                    </div>
+                    <div class="box-success">
+                        <h3>Sessões</h3>
+                        <p>Dados armazenados no <strong>servidor</strong>. O cliente recebe apenas um ID de sessão (via cookie).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-section">
+            <h1>Cookies</h1>
+            <h2>Dados armazenados no navegador</h2>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Cookies no ASP.NET Core</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// GRAVAR um cookie</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">GravarCookie</span>()
+{
+    <span class="keyword">var</span> opcoes = <span class="keyword">new</span> <span class="type">CookieOptions</span>
+    {
+        Expires = DateTime.Now.<span class="js-func">AddDays</span>(<span class="number">7</span>),  <span class="comment">// Expira em 7 dias</span>
+        HttpOnly = <span class="keyword">true</span>,                     <span class="comment">// Não acessível via JS</span>
+        Secure = <span class="keyword">true</span>                         <span class="comment">// Apenas HTTPS</span>
+    };
+    Response.Cookies.<span class="js-func">Append</span>(<span class="string">"NomeUsuario"</span>, <span class="string">"Maria"</span>, opcoes);
+    <span class="keyword">return</span> <span class="js-func">Content</span>(<span class="string">"Cookie gravado!"</span>);
+}
+
+<span class="comment">// LER um cookie</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">LerCookie</span>()
+{
+    <span class="keyword">string</span> nome = Request.Cookies[<span class="string">"NomeUsuario"</span>] ?? <span class="string">"Visitante"</span>;
+    <span class="keyword">return</span> <span class="js-func">Content</span>(<span class="string">$"Olá, {nome}!"</span>);
+}
+
+<span class="comment">// EXCLUIR um cookie</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">ExcluirCookie</span>()
+{
+    Response.Cookies.<span class="js-func">Delete</span>(<span class="string">"NomeUsuario"</span>);
+    <span class="keyword">return</span> <span class="js-func">Content</span>(<span class="string">"Cookie excluído!"</span>);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-section">
+            <h1>Sessões</h1>
+            <h2>Dados armazenados no servidor</h2>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Configurando Sessões</h2></div>
+            <div class="slide-body">
+                <p>Para usar sessões no ASP.NET Core, é necessário configurar no <span class="inline-code">Program.cs</span>:</p>
+                <pre>
+<span class="comment">// Program.cs</span>
+
+<span class="comment">// Adicionar serviço de sessão</span>
+builder.Services.<span class="js-func">AddDistributedMemoryCache</span>();
+builder.Services.<span class="js-func">AddSession</span>(options =>
+{
+    options.IdleTimeout = <span class="type">TimeSpan</span>.<span class="js-func">FromMinutes</span>(<span class="number">30</span>);
+    options.Cookie.HttpOnly = <span class="keyword">true</span>;
+    options.Cookie.IsEssential = <span class="keyword">true</span>;
+});
+
+<span class="comment">// ... após builder.Build()</span>
+
+<span class="comment">// Usar sessão (antes de MapControllerRoute)</span>
+app.<span class="js-func">UseSession</span>();</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Sessões no ASP.NET Core</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// GRAVAR na sessão</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Login</span>(<span class="keyword">string</span> nome)
+{
+    HttpContext.Session.<span class="js-func">SetString</span>(<span class="string">"UsuarioLogado"</span>, nome);
+    HttpContext.Session.<span class="js-func">SetInt32</span>(<span class="string">"UsuarioId"</span>, <span class="number">1</span>);
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Index"</span>);
+}
+
+<span class="comment">// LER da sessão</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Index</span>()
+{
+    <span class="keyword">string</span> nome = HttpContext.Session.<span class="js-func">GetString</span>(<span class="string">"UsuarioLogado"</span>);
+    <span class="keyword">if</span> (<span class="keyword">string</span>.<span class="js-func">IsNullOrEmpty</span>(nome))
+    {
+        <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Login"</span>);
+    }
+    <span class="type">ViewBag</span>.Nome = nome;
+    <span class="keyword">return</span> <span class="js-func">View</span>();
+}
+
+<span class="comment">// LIMPAR a sessão (logout)</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Logout</span>()
+{
+    HttpContext.Session.<span class="js-func">Clear</span>();
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Login"</span>);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Cookies vs. Sessões</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Característica</th><th>Cookies</th><th>Sessões</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Armazenamento</strong></td><td>Navegador (cliente)</td><td>Servidor</td></tr>
+                        <tr><td><strong>Tamanho máximo</strong></td><td>~4KB</td><td>Sem limite prático</td></tr>
+                        <tr><td><strong>Segurança</strong></td><td>Menos seguro</td><td>Mais seguro</td></tr>
+                        <tr><td><strong>Expiração</strong></td><td>Configurável</td><td>Timeout de inatividade</td></tr>
+                        <tr><td><strong>Uso comum</strong></td><td>Preferências, "lembrar-me"</td><td>Login, carrinho de compras</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Sistema de Preferências com Cookies</h3>
+                    <ol>
+                        <li>Crie um formulário onde o usuário escolhe: tema (claro/escuro), idioma e tamanho da fonte</li>
+                        <li>Grave as preferências em cookies com validade de 30 dias</li>
+                        <li>Ao acessar a página, leia os cookies e aplique as preferências</li>
+                        <li>Adicione um botão "Resetar Preferências" que exclui os cookies</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Sistema de Login Simples com Sessão</h3>
+                    <ol>
+                        <li>Crie um formulário de login (usuário e senha)</li>
+                        <li>Valide com dados fixos (ex: admin/123456)</li>
+                        <li>Ao logar, grave o nome do usuário na sessão</li>
+                        <li>Na página principal, exiba "Bem-vindo, [nome]!"</li>
+                        <li>Se não estiver logado, redirecione para o login</li>
+                        <li>Implemente o botão de Logout que limpa a sessão</li>
+                        <li><strong>Desafio:</strong> Conte e exiba quantas vezes o usuário acessou a página (usando sessão)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 14 — Requisições HTTP Assíncronas (AJAX)</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Revise o conceito de <strong>requisições HTTP</strong> (GET e POST)</li>
+                        <li>Pesquise o que é <strong>AJAX</strong> e <strong>Fetch API</strong></li>
+                        <li>Leia sobre o formato <strong>JSON</strong> (JavaScript Object Notation)</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 13 — Cookies e Sessões</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

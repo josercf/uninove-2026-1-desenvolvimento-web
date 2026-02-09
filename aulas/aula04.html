@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 04 - Introdução ao CSS | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 04 — Introdução ao CSS</h2>
+            <p>Estilização, Seletores e Box Model</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>Quais são as 3 formas de adicionar CSS a uma página?</li>
+                        <li>Qual a diferença entre um seletor de classe e um seletor de ID?</li>
+                        <li>O que é o Box Model?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>Atributos HTML (class, id)</li>
+                    <li>O que é CSS?</li>
+                    <li>Sintaxe e Seletores CSS</li>
+                    <li>CSS Inline, Interno e Externo</li>
+                    <li>Box Model</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Atributos HTML</h2></div>
+            <div class="slide-body">
+                <p><strong>Atributos HTML</strong> são palavras especiais usadas dentro da tag de abertura para controlar o comportamento do elemento.</p>
+                <pre>
+<span class="html-name">&lt;p</span> <span class="html-attr">class=</span><span class="html-value">"destaque"</span> <span class="html-attr">id=</span><span class="html-value">"intro"</span><span class="html-name">&gt;</span>Texto com atributos<span class="html-name">&lt;/p&gt;</span>
+<span class="html-name">&lt;img</span> <span class="html-attr">src=</span><span class="html-value">"foto.jpg"</span> <span class="html-attr">alt=</span><span class="html-value">"Descrição"</span> <span class="html-attr">width=</span><span class="html-value">"300"</span><span class="html-name">&gt;</span>
+<span class="html-name">&lt;a</span> <span class="html-attr">href=</span><span class="html-value">"https://uninove.br"</span> <span class="html-attr">target=</span><span class="html-value">"_blank"</span><span class="html-name">&gt;</span>Link<span class="html-name">&lt;/a&gt;</span></pre>
+                <table style="margin-top: 15px;">
+                    <thead><tr><th>Tipo</th><th>Exemplos</th><th>Uso</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Globais</strong></td><td>class, id, style, lang</td><td>Aceitos por todas as tags</td></tr>
+                        <tr><td><strong>Específicos</strong></td><td>src, href, alt, disabled</td><td>Apenas em determinadas tags</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-section">
+            <h1>CSS</h1>
+            <h2>Cascading Style Sheets</h2>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>O que é CSS?</h2></div>
+            <div class="slide-body">
+                <p><strong>CSS</strong> (Cascading Style Sheets) é a tecnologia usada para <strong>estilizar</strong> e <strong>desenhar</strong> o conteúdo HTML. Com CSS você pode alterar fontes, cores, tamanhos, espaçamentos, criar layouts e adicionar animações.</p>
+                <p>CSS é uma linguagem baseada em <strong>regras</strong> — você define grupos de estilo que devem ser aplicados a elementos específicos.</p>
+                <pre style="margin-top: 15px;">
+<span class="css-sel">h1</span> {
+    <span class="css-prop">color</span>: <span class="css-val">red</span>;
+    <span class="css-prop">font-size</span>: <span class="css-val">32px</span>;
+}
+
+<span class="comment">/* seletor { propriedade: valor; } */</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Sintaxe CSS</h2></div>
+            <div class="slide-body">
+                <pre style="font-size: 1.1em;">
+<span class="css-sel">seletor</span> {
+    <span class="css-prop">propriedade</span>: <span class="css-val">valor</span>;
+    <span class="css-prop">propriedade</span>: <span class="css-val">valor</span>;
+}</pre>
+                <div class="two-columns" style="margin-top: 20px;">
+                    <div>
+                        <h3>Componentes</h3>
+                        <ul>
+                            <li><strong>Seletor:</strong> aponta para o elemento HTML</li>
+                            <li><strong>Propriedade:</strong> o que será estilizado</li>
+                            <li><strong>Valor:</strong> como será estilizado</li>
+                            <li><strong>Chaves { }:</strong> delimitam as declarações</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Exemplo</h3>
+                        <pre>
+<span class="css-sel">p</span> {
+    <span class="css-prop">color</span>: <span class="css-val">#333333</span>;
+    <span class="css-prop">font-size</span>: <span class="css-val">18px</span>;
+    <span class="css-prop">line-height</span>: <span class="css-val">1.6</span>;
+    <span class="css-prop">margin-bottom</span>: <span class="css-val">10px</span>;
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Seletores CSS</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Seletor</th><th>Sintaxe</th><th>Seleciona</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Tipo (tag)</strong></td><td><span class="inline-code">h1 { }</span></td><td>Todos os &lt;h1&gt;</td></tr>
+                        <tr><td><strong>Classe</strong></td><td><span class="inline-code">.destaque { }</span></td><td>Elementos com class="destaque"</td></tr>
+                        <tr><td><strong>ID</strong></td><td><span class="inline-code">#unico { }</span></td><td>Elemento com id="unico"</td></tr>
+                        <tr><td><strong>Atributo</strong></td><td><span class="inline-code">a[href] { }</span></td><td>Links que possuem href</td></tr>
+                        <tr><td><strong>Múltiplos</strong></td><td><span class="inline-code">h1, h2, .box { }</span></td><td>Todos os listados</td></tr>
+                    </tbody>
+                </table>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p><strong>Regra:</strong> Classes podem ser reutilizadas em vários elementos. IDs devem ser únicos na página.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>3 Formas de Adicionar CSS</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div>
+                        <h3>1. Inline (no elemento)</h3>
+                        <pre>
+<span class="html-name">&lt;p</span> <span class="html-attr">style=</span><span class="html-value">"color: red;"</span><span class="html-name">&gt;</span>
+  Texto vermelho
+<span class="html-name">&lt;/p&gt;</span></pre>
+                        <div class="box-warning" style="margin-top: 10px;">
+                            <p style="font-size: 0.9em;">Evite! Mistura estrutura com estilo.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>2. Interno (no &lt;head&gt;)</h3>
+                        <pre>
+<span class="html-name">&lt;style&gt;</span>
+  <span class="css-sel">p</span> { <span class="css-prop">color</span>: <span class="css-val">red</span>; }
+<span class="html-name">&lt;/style&gt;</span></pre>
+                        <h3 style="margin-top: 15px;">3. Externo (arquivo .css)</h3>
+                        <pre>
+<span class="html-name">&lt;link</span> <span class="html-attr">rel=</span><span class="html-value">"stylesheet"</span>
+  <span class="html-attr">href=</span><span class="html-value">"estilo.css"</span><span class="html-name">&gt;</span></pre>
+                        <div class="box-success" style="margin-top: 10px;">
+                            <p style="font-size: 0.9em;">Recomendado! Separação de responsabilidades.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Box Model</h2></div>
+            <div class="slide-body" style="justify-content: center; align-items: center;">
+                <p>Todo elemento HTML é uma "caixa" composta por 4 camadas:</p>
+                <div style="margin: 20px auto; text-align: center;">
+                    <div style="background: #FFCDD2; padding: 20px; border: 3px dashed #C62828; display: inline-block; border-radius: 8px;">
+                        <span style="font-size: 0.9em; color: #C62828;"><strong>margin</strong></span>
+                        <div style="background: #FFF9C4; padding: 20px; border: 3px solid #F57F17; border-radius: 6px;">
+                            <span style="font-size: 0.9em; color: #F57F17;"><strong>border</strong></span>
+                            <div style="background: #C8E6C9; padding: 20px; border-radius: 4px;">
+                                <span style="font-size: 0.9em; color: #2E7D32;"><strong>padding</strong></span>
+                                <div style="background: #BBDEFB; padding: 25px 50px; border-radius: 4px;">
+                                    <span style="font-size: 1em; color: #1565C0;"><strong>conteúdo</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-info">
+                    <p><strong>Largura total</strong> = content + padding + border + margin</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Propriedades Comuns do CSS</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div>
+                        <h3>Texto e Fonte</h3>
+                        <pre>
+<span class="css-prop">color</span>: <span class="css-val">#333</span>;
+<span class="css-prop">font-size</span>: <span class="css-val">16px</span>;
+<span class="css-prop">font-family</span>: <span class="css-val">Arial, sans-serif</span>;
+<span class="css-prop">font-weight</span>: <span class="css-val">bold</span>;
+<span class="css-prop">text-align</span>: <span class="css-val">center</span>;
+<span class="css-prop">text-decoration</span>: <span class="css-val">none</span>;</pre>
+                    </div>
+                    <div>
+                        <h3>Box Model</h3>
+                        <pre>
+<span class="css-prop">width</span>: <span class="css-val">300px</span>;
+<span class="css-prop">height</span>: <span class="css-val">200px</span>;
+<span class="css-prop">padding</span>: <span class="css-val">20px</span>;
+<span class="css-prop">margin</span>: <span class="css-val">10px auto</span>;
+<span class="css-prop">border</span>: <span class="css-val">1px solid #ccc</span>;
+<span class="css-prop">background-color</span>: <span class="css-val">#f0f0f0</span>;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Estilizando a Página da Aula Anterior</h3>
+                    <ol>
+                        <li>Abra o arquivo <span class="inline-code">index.html</span> da aula 03</li>
+                        <li>Crie um arquivo <span class="inline-code">estilo.css</span> na mesma pasta</li>
+                        <li>Vincule o CSS ao HTML usando <span class="inline-code">&lt;link&gt;</span></li>
+                        <li>Defina a fonte do <span class="inline-code">body</span> como Arial</li>
+                        <li>Altere a cor do <span class="inline-code">&lt;h1&gt;</span> para azul escuro (#00274D)</li>
+                        <li>Adicione uma borda inferior ao <span class="inline-code">&lt;h1&gt;</span></li>
+                        <li>Defina o <span class="inline-code">background-color</span> do body como #f5f5f5</li>
+                        <li>Centralize o conteúdo com <span class="inline-code">max-width: 800px</span> e <span class="inline-code">margin: auto</span></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Cartão de Visita Digital</h3>
+                    <p>Crie um cartão de visita digital usando HTML e CSS:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Crie um <span class="inline-code">&lt;div&gt;</span> com classe <span class="inline-code">cartao</span></li>
+                        <li>Largura de <strong>400px</strong>, centralizado na página</li>
+                        <li>Borda arredondada (<span class="inline-code">border-radius: 10px</span>)</li>
+                        <li>Sombra (<span class="inline-code">box-shadow: 0 4px 8px rgba(0,0,0,0.2)</span>)</li>
+                        <li>Padding de <strong>30px</strong></li>
+                        <li>Dentro do cartão: nome (h2), cargo (h3) e contato (p)</li>
+                        <li>Use classes para estilizar cada elemento</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 05 — CSS Avançado e Formulários</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Assista a um vídeo sobre <strong>medidas absolutas vs. relativas</strong> no CSS (px, em, rem, %, vw, vh)</li>
+                        <li>Pesquise sobre os elementos de <strong>formulário HTML</strong> (&lt;form&gt;, &lt;input&gt;, &lt;select&gt;, &lt;textarea&gt;)</li>
+                        <li>Leia sobre os atributos <strong>action</strong> e <strong>method</strong> do &lt;form&gt;</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 04 — Introdução ao CSS</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

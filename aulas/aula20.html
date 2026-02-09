@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 20 - Revisão Geral e Projeto Final | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 20 — Revisão Geral e Projeto Final</h2>
+            <p>Consolidação de conhecimentos e apresentação do projeto</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>Revisão Geral do Semestre</li>
+                    <li>Mapa de Tecnologias</li>
+                    <li>Especificação do Projeto Final</li>
+                    <li>Critérios de Avaliação</li>
+                    <li>Dúvidas e Orientação</li>
+                    <li>Próximos Passos na Carreira</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão — Bloco 1: Fundamentos Web</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Aula</th><th>Tema</th><th>Conceitos-Chave</th></tr></thead>
+                    <tbody>
+                        <tr><td>01</td><td>Apresentação</td><td>Disciplina, metodologia, ferramentas</td></tr>
+                        <tr><td>02</td><td>Estrutura da Web</td><td>TCP/IP, HTTP, cliente-servidor, DNS</td></tr>
+                        <tr><td>03</td><td>HTML</td><td>Tags, semântica, estrutura de página</td></tr>
+                        <tr><td>04</td><td>CSS</td><td>Seletores, box model, flexbox, grid</td></tr>
+                        <tr><td>05</td><td>Formulários</td><td>Inputs, validação HTML5, acessibilidade</td></tr>
+                        <tr><td>06</td><td>JavaScript</td><td>Variáveis, DOM, eventos, funções</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão — Bloco 2: ASP.NET Core MVC</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Aula</th><th>Tema</th><th>Conceitos-Chave</th></tr></thead>
+                    <tbody>
+                        <tr><td>07</td><td>Ambiente .NET</td><td>SDK, CLI, Visual Studio, projeto MVC</td></tr>
+                        <tr><td>08</td><td>Primeiros Passos MVC</td><td>Controllers, Views, Razor, ViewBag</td></tr>
+                        <tr><td>09</td><td>Estruturas de Controle</td><td>if/else, for, foreach, List&lt;T&gt;</td></tr>
+                        <tr><td>10</td><td>Formulários e Models</td><td>Tag Helpers, Model Binding, Data Annotations</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão — Bloco 3: Banco de Dados e Recursos</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Aula</th><th>Tema</th><th>Conceitos-Chave</th></tr></thead>
+                    <tbody>
+                        <tr><td>11</td><td>EF Core e MySQL</td><td>ORM, DbContext, Migrations, conexão</td></tr>
+                        <tr><td>12</td><td>CRUD Completo</td><td>Create, Read, Update, Delete</td></tr>
+                        <tr><td>13</td><td>Cookies e Sessões</td><td>Estado, cookies, sessões, login simples</td></tr>
+                        <tr><td>14</td><td>AJAX</td><td>Fetch API, JSON, requisições assíncronas</td></tr>
+                        <tr><td>15</td><td>Autenticação</td><td>Login, registro, BCrypt, [Authorize]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão — Bloco 4: Avançado e Deploy</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Aula</th><th>Tema</th><th>Conceitos-Chave</th></tr></thead>
+                    <tbody>
+                        <tr><td>16</td><td>API REST</td><td>Web API, endpoints, Swagger, status codes</td></tr>
+                        <tr><td>17</td><td>Relacionamentos</td><td>1:N, Include, LINQ, SelectList</td></tr>
+                        <tr><td>18</td><td>Layout e Bootstrap</td><td>_Layout, Partial Views, componentes</td></tr>
+                        <tr><td>19</td><td>Deploy</td><td>Docker, variáveis de ambiente, nuvem</td></tr>
+                        <tr><td>20</td><td>Revisão e Projeto</td><td>Consolidação, projeto final</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-section">
+            <h1>Projeto Final</h1>
+            <h2>Especificação e Critérios</h2>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Especificação do Projeto Final</h2></div>
+            <div class="slide-body">
+                <p>Desenvolva uma <strong>aplicação web completa</strong> usando ASP.NET Core MVC com os seguintes requisitos obrigatórios:</p>
+                <div class="box-exercise">
+                    <h3>Requisitos Obrigatórios</h3>
+                    <ol>
+                        <li><strong>Padrão MVC</strong> — Controllers, Models e Views organizados</li>
+                        <li><strong>Banco de Dados MySQL</strong> com Entity Framework Core</li>
+                        <li><strong>CRUD completo</strong> de pelo menos 2 entidades</li>
+                        <li><strong>Relacionamento 1:N</strong> entre as entidades</li>
+                        <li><strong>Autenticação</strong> — Registro, login e logout</li>
+                        <li><strong>Validação</strong> com Data Annotations</li>
+                        <li><strong>Layout</strong> com _Layout.cshtml e Bootstrap</li>
+                        <li><strong>Pelo menos 1 funcionalidade com AJAX</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Sugestões de Temas</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Tema</th><th>Entidades</th><th>Funcionalidade AJAX</th></tr></thead>
+                    <tbody>
+                        <tr><td>Biblioteca</td><td>Livro, Autor, Empréstimo</td><td>Busca de livros</td></tr>
+                        <tr><td>Loja Virtual</td><td>Produto, Categoria, Pedido</td><td>Carrinho de compras</td></tr>
+                        <tr><td>Blog</td><td>Post, Categoria, Comentário</td><td>Comentários em tempo real</td></tr>
+                        <tr><td>Agenda</td><td>Contato, Grupo, Evento</td><td>Busca de contatos</td></tr>
+                        <tr><td>Escola</td><td>Aluno, Turma, Nota</td><td>Filtro por turma</td></tr>
+                        <tr><td>Clínica</td><td>Paciente, Médico, Consulta</td><td>Agendamento dinâmico</td></tr>
+                    </tbody>
+                </table>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>Você pode propor um tema diferente! Consulte o professor para aprovação.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Critérios de Avaliação</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Critério</th><th>Peso</th><th>Descrição</th></tr></thead>
+                    <tbody>
+                        <tr><td>Funcionalidade</td><td>30%</td><td>Todos os requisitos implementados e funcionando</td></tr>
+                        <tr><td>Código</td><td>25%</td><td>Organização, boas práticas, padrão MVC</td></tr>
+                        <tr><td>Banco de Dados</td><td>20%</td><td>EF Core, migrations, relacionamentos</td></tr>
+                        <tr><td>Interface</td><td>15%</td><td>Layout, Bootstrap, usabilidade</td></tr>
+                        <tr><td>Apresentação</td><td>10%</td><td>Demonstração e explicação do projeto</td></tr>
+                    </tbody>
+                </table>
+                <div class="box-warning" style="margin-top: 10px;">
+                    <p><strong>Entrega:</strong> Repositório GitHub + Deploy funcional (Railway, Azure ou Docker local)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Próximos Passos na Carreira</h2></div>
+            <div class="slide-body">
+                <p>O que estudar depois desta disciplina para se aprofundar em desenvolvimento web:</p>
+                <div class="two-columns">
+                    <div>
+                        <h3>Backend</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li>ASP.NET Core Identity</li>
+                            <li>JWT e OAuth 2.0</li>
+                            <li>Microservices</li>
+                            <li>SignalR (tempo real)</li>
+                            <li>Testes automatizados</li>
+                            <li>CI/CD (GitHub Actions)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Frontend</h3>
+                        <ul style="font-size: 0.9em;">
+                            <li>React / Angular / Vue.js</li>
+                            <li>TypeScript</li>
+                            <li>Blazor (C# no frontend)</li>
+                            <li>Tailwind CSS</li>
+                            <li>Progressive Web Apps</li>
+                            <li>Design Responsivo avançado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Dúvidas e Orientação</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-exercise">
+                    <h3>Atividade em Sala (60 min)</h3>
+                    <ol>
+                        <li>Forme duplas ou trios para o projeto final</li>
+                        <li>Defina o tema e as entidades do projeto</li>
+                        <li>Crie o repositório no GitHub</li>
+                        <li>Inicie a estrutura do projeto (Models, DbContext, Migrations)</li>
+                        <li>Tire dúvidas com o professor sobre qualquer tema do semestre</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Parabéns!</h1>
+            <h2>Vocês concluíram a disciplina de Desenvolvimento Web!</h2>
+            <p>Bom trabalho no projeto final!</p>
+            <p style="margin-top: 30px;">jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 10px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 20 — Revisão Geral e Projeto Final</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

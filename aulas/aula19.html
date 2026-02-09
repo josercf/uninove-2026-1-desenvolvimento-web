@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 19 - Publicação e Deploy | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 19 — Publicação e Deploy</h2>
+            <p>Docker, Ambientes e Publicação na Nuvem</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>O que é deploy? Por que é importante?</li>
+                        <li>O que é Docker? O que é um container?</li>
+                        <li>Todos conseguiram criar a conta no Azure ou Railway?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>Ambientes: Desenvolvimento vs. Produção</li>
+                    <li>Publicando com dotnet publish</li>
+                    <li>Docker e Dockerfile</li>
+                    <li>Variáveis de Ambiente</li>
+                    <li>Deploy na Nuvem</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Ambientes no ASP.NET Core</h2></div>
+            <div class="slide-body">
+                <p>O ASP.NET Core suporta múltiplos ambientes para configurações diferentes:</p>
+                <table style="margin-top: 15px;">
+                    <thead><tr><th>Ambiente</th><th>Variável</th><th>Uso</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Development</strong></td><td><span class="inline-code">ASPNETCORE_ENVIRONMENT=Development</span></td><td>Desenvolvimento local, erros detalhados</td></tr>
+                        <tr><td><strong>Staging</strong></td><td><span class="inline-code">ASPNETCORE_ENVIRONMENT=Staging</span></td><td>Testes antes de produção</td></tr>
+                        <tr><td><strong>Production</strong></td><td><span class="inline-code">ASPNETCORE_ENVIRONMENT=Production</span></td><td>Servidor real, erros genéricos</td></tr>
+                    </tbody>
+                </table>
+                <pre style="margin-top: 15px;">
+<span class="comment">// Program.cs — Configuração por ambiente</span>
+<span class="keyword">if</span> (app.Environment.<span class="js-func">IsDevelopment</span>())
+{
+    app.<span class="js-func">UseDeveloperExceptionPage</span>();
+    app.<span class="js-func">UseSwagger</span>();
+}
+<span class="keyword">else</span>
+{
+    app.<span class="js-func">UseExceptionHandler</span>(<span class="string">"/Home/Error"</span>);
+    app.<span class="js-func">UseHsts</span>();
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Publicando com dotnet publish</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment"># Publicar em modo Release</span>
+$ dotnet publish -c Release -o ./publish
+
+<span class="comment"># Estrutura gerada:</span>
+publish/
+├── MinhaAppWeb.dll          <span class="comment"># Aplicação compilada</span>
+├── MinhaAppWeb.exe          <span class="comment"># Executável (Windows)</span>
+├── appsettings.json         <span class="comment"># Configurações</span>
+├── wwwroot/                 <span class="comment"># Arquivos estáticos</span>
+│   ├── css/
+│   ├── js/
+│   └── lib/
+└── ...
+
+<span class="comment"># Executar a aplicação publicada</span>
+$ dotnet MinhaAppWeb.dll</pre>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>O comando <span class="inline-code">dotnet publish</span> compila, otimiza e gera os arquivos prontos para deploy.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Docker — Conceito</h2></div>
+            <div class="slide-body">
+                <p><strong>Docker</strong> permite empacotar a aplicação com todas as suas dependências em um <strong>container</strong> — garantindo que funcione em qualquer lugar.</p>
+                <div class="box-success" style="margin-top: 15px;">
+                    <p><strong>Analogia:</strong> Um container Docker é como uma "caixa" que contém tudo que a aplicação precisa para rodar: código, runtime, bibliotecas e configurações.</p>
+                </div>
+                <pre style="margin-top: 15px;">
+<span class="comment"># Comandos básicos do Docker</span>
+$ docker build -t minhaapp .          <span class="comment"># Construir imagem</span>
+$ docker run -p 8080:80 minhaapp      <span class="comment"># Rodar container</span>
+$ docker ps                            <span class="comment"># Listar containers</span>
+$ docker stop &lt;id&gt;                    <span class="comment"># Parar container</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Dockerfile</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment"># Dockerfile</span>
+
+<span class="comment"># Etapa 1: Build</span>
+<span class="keyword">FROM</span> mcr.microsoft.com/dotnet/sdk:8.0 <span class="keyword">AS</span> build
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> *.csproj .
+<span class="keyword">RUN</span> dotnet restore
+<span class="keyword">COPY</span> . .
+<span class="keyword">RUN</span> dotnet publish -c Release -o /out
+
+<span class="comment"># Etapa 2: Runtime</span>
+<span class="keyword">FROM</span> mcr.microsoft.com/dotnet/aspnet:8.0
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> --from=build /out .
+<span class="keyword">EXPOSE</span> 80
+<span class="keyword">ENTRYPOINT</span> [<span class="string">"dotnet"</span>, <span class="string">"MinhaAppWeb.dll"</span>]</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Variáveis de Ambiente</h2></div>
+            <div class="slide-body">
+                <p>Em produção, <strong>nunca</strong> coloque senhas no código! Use variáveis de ambiente.</p>
+                <pre>
+<span class="comment">// appsettings.json (desenvolvimento)</span>
+{
+  <span class="string">"ConnectionStrings"</span>: {
+    <span class="string">"DefaultConnection"</span>: <span class="string">"Server=localhost;Database=MinhaDb;..."</span>
+  }
+}
+
+<span class="comment">// Em produção, use variáveis de ambiente:</span>
+$ <span class="keyword">export</span> ConnectionStrings__DefaultConnection=<span class="string">"Server=prod-server;..."</span>
+
+<span class="comment">// O ASP.NET Core lê automaticamente!</span>
+<span class="comment">// Prioridade: Variável de Ambiente > appsettings.Production.json > appsettings.json</span></pre>
+                <div class="box-warning" style="margin-top: 10px;">
+                    <p><strong>Importante:</strong> Adicione <span class="inline-code">appsettings.Development.json</span> ao <span class="inline-code">.gitignore</span> para não vazar credenciais!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Publicar e Dockerizar a Aplicação</h3>
+                    <ol>
+                        <li>Execute <span class="inline-code">dotnet publish -c Release -o ./publish</span></li>
+                        <li>Verifique os arquivos gerados na pasta <span class="inline-code">publish/</span></li>
+                        <li>Crie o <span class="inline-code">Dockerfile</span> na raiz do projeto</li>
+                        <li>Construa a imagem: <span class="inline-code">docker build -t minhaapp .</span></li>
+                        <li>Execute o container: <span class="inline-code">docker run -p 8080:80 minhaapp</span></li>
+                        <li>Acesse <span class="inline-code">http://localhost:8080</span> e teste a aplicação</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Deploy na Nuvem</h3>
+                    <ol>
+                        <li>Crie um repositório no GitHub para o projeto</li>
+                        <li>Faça push do código</li>
+                        <li>Crie o <span class="inline-code">.gitignore</span> adequado (bin/, obj/, appsettings.Development.json)</li>
+                        <li>No Railway (ou Azure), conecte o repositório GitHub</li>
+                        <li>Configure as variáveis de ambiente (connection string)</li>
+                        <li>Faça o deploy e acesse a URL pública</li>
+                        <li>Teste todas as funcionalidades no ambiente de produção</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 20 — Revisão e Projeto Final</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Revise todo o conteúdo do semestre</li>
+                        <li>Prepare dúvidas sobre os temas mais difíceis</li>
+                        <li>Pense em uma ideia de <strong>projeto final</strong> que use: MVC, EF Core, MySQL, autenticação e AJAX</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 60 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 19 — Publicação e Deploy</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

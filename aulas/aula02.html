@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 02 - Estrutura da Web e Redes | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- SLIDE 1: Capa -->
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 02 — Estrutura da Web e Redes</h2>
+            <p>TCP/IP, DNS, HTTP e HTTPS</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <!-- SLIDE 2: Revisão Pré-Aula -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <p>Na atividade pré-aula, vocês estudaram sobre o modelo OSI, TCP/IP e DNS. Vamos discutir:</p>
+                <div class="box-exercise" style="margin-top: 20px;">
+                    <h3>Discussão em Grupo (10 min)</h3>
+                    <ol>
+                        <li>O que é o modelo OSI e quantas camadas ele possui?</li>
+                        <li>Qual a diferença entre TCP e IP?</li>
+                        <li>O que acontece quando você digita um endereço no navegador?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Agenda -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>TCP/IP e o Modelo OSI</li>
+                    <li>DNS — Sistema de Nomes de Domínio</li>
+                    <li>Three-Way Handshake</li>
+                    <li>SSL/TLS e HTTPS</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: TCP/IP -->
+        <div class="slide slide-section">
+            <h1>TCP/IP</h1>
+            <h2>O conjunto de protocolos que faz a Internet funcionar</h2>
+        </div>
+
+        <!-- SLIDE 5: O que é TCP/IP -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>O que é TCP/IP?</h2></div>
+            <div class="slide-body">
+                <p><strong>TCP/IP</strong> é um conjunto de protocolos para troca de informações em redes. Foi criado em 1971 e formalizado em 1983.</p>
+                <p>Para padronizar a criação de protocolos, foi criado o modelo <strong>OSI</strong> (Open Systems Interconnection), que define uma arquitetura de protocolos para redes. Com ele, diferentes fabricantes podem produzir equipamentos que se comunicam entre si.</p>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p><strong>Analogia:</strong> Pense no TCP/IP como o sistema postal da Internet. Assim como uma carta precisa de endereço, selo e envelope, os dados na Internet precisam de protocolos para chegar ao destino correto.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Modelo OSI -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>O Modelo OSI — 7 Camadas</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Camada</th><th>Função</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>7</td><td><strong>Aplicação</strong></td><td>Funções especializadas (HTTP, FTP, SMTP)</td></tr>
+                        <tr><td>6</td><td><strong>Apresentação</strong></td><td>Formatação de dados e conversão de caracteres</td></tr>
+                        <tr><td>5</td><td><strong>Sessão</strong></td><td>Negociação e estabelecimento de conexão</td></tr>
+                        <tr><td>4</td><td><strong>Transporte</strong></td><td>Entrega de dados ponta-a-ponta (TCP/UDP)</td></tr>
+                        <tr><td>3</td><td><strong>Rede</strong></td><td>Roteamento de pacotes (IP)</td></tr>
+                        <tr><td>2</td><td><strong>Enlace</strong></td><td>Detecção e correção de erros</td></tr>
+                        <tr><td>1</td><td><strong>Física</strong></td><td>Transmissão dos bits pelo meio físico</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: DNS -->
+        <div class="slide slide-section">
+            <h1>DNS</h1>
+            <h2>Domain Name System — Sistema de Nomes de Domínio</h2>
+        </div>
+
+        <!-- SLIDE 8: O que é DNS -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>O que é DNS?</h2></div>
+            <div class="slide-body">
+                <p>O <strong>DNS</strong> (Domain Name System) converte nomes de domínio legíveis por humanos em endereços IP legíveis por máquina.</p>
+                <div class="two-columns" style="margin-top: 20px;">
+                    <div style="text-align: center;">
+                        <p style="font-size: 1.5em; color: #00274D;"><strong>www.uninove.br</strong></p>
+                        <p style="font-size: 0.9em;">Nome que humanos entendem</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 1.5em; color: #C84B31;"><strong>192.168.1.100</strong></p>
+                        <p style="font-size: 0.9em;">Endereço que máquinas entendem</p>
+                    </div>
+                </div>
+                <div style="text-align: center; font-size: 2em; margin: 15px 0;">⟵ DNS ⟶</div>
+                <div class="box-info">
+                    <p><strong>Analogia:</strong> O DNS funciona como uma agenda telefônica da Internet. Você procura pelo nome e ele retorna o número (IP).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: TLDs -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Tipos de Domínio (TLD)</h2></div>
+            <div class="slide-body">
+                <p>Um <strong>TLD</strong> (Top Level Domain) é o último segmento de um nome de domínio — o que aparece depois do último ponto.</p>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr><th>Tipo</th><th>Descrição</th><th>Exemplos</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>gTLD</strong></td><td>Genéricos</td><td>.com, .org, .net, .xyz</td></tr>
+                        <tr><td><strong>sTLD</strong></td><td>Patrocinados</td><td>.gov, .edu, .mil</td></tr>
+                        <tr><td><strong>ccTLD</strong></td><td>Código de País</td><td>.br, .us, .uk, .de</td></tr>
+                    </tbody>
+                </table>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p><strong>No Brasil:</strong> O <strong>Registro.br</strong> é a entidade responsável pelo registro de domínios .br</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Estrutura de um domínio -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Estrutura de um Domínio</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <pre style="font-size: 1.2em; text-align: center; background: #f8f9fa; color: #333; border-left-color: #00274D;">
+<span class="comment">portal</span>.<span class="type">uninove</span>.<span class="keyword">edu</span>.<span class="string">br</span>
+
+<span class="string">.br</span>       → Primeiro nível (ccTLD)
+<span class="keyword">.edu</span>      → Domínio de Nível Superior Patrocinado
+<span class="type">.uninove</span>  → Segundo nível (nome da organização)
+<span class="comment">portal</span>    → Terceiro nível (subdomínio)</pre>
+                <p style="margin-top: 20px;">Cada ponto separa um nível diferente, ajudando os computadores a encontrarem o conteúdo apropriado.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Three-Way Handshake -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Three-Way Handshake (TCP)</h2></div>
+            <div class="slide-body">
+                <p>O <strong>handshake de três vias</strong> é o processo usado em uma rede TCP/IP para estabelecer uma conexão entre cliente e servidor.</p>
+                <div class="timeline" style="margin-top: 30px;">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h3>1. SYN</h3>
+                        <p>Cliente envia um pacote SYN ao servidor solicitando conexão</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h3>2. SYN-ACK</h3>
+                        <p>Servidor responde com SYN-ACK confirmando o recebimento</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h3>3. ACK</h3>
+                        <p>Cliente envia ACK final e a conexão é estabelecida</p>
+                    </div>
+                </div>
+                <div class="box-info" style="margin-top: 20px;">
+                    <p><strong>Analogia:</strong> É como um aperto de mão. "Posso conectar?" → "Sim, pode!" → "Ok, conectado!"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: SSL/TLS -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>SSL/TLS e HTTPS</h2></div>
+            <div class="slide-body">
+                <p><strong>SSL</strong> (Secure Sockets Layer) é um tipo de segurança digital que permite a comunicação criptografada entre um site e um navegador. Atualmente foi substituído pelo <strong>TLS</strong> (Transport Layer Security).</p>
+                <div class="two-columns" style="margin-top: 20px;">
+                    <div class="box-warning">
+                        <h3 style="color: #E65100;">HTTP (inseguro)</h3>
+                        <p>Dados trafegam em texto puro. Qualquer pessoa na rede pode interceptar.</p>
+                    </div>
+                    <div class="box-success">
+                        <h3 style="color: #2E7D32;">HTTPS (seguro)</h3>
+                        <p>Dados são criptografados. Mesmo interceptados, não podem ser lidos.</p>
+                    </div>
+                </div>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p><strong>Dica:</strong> Sempre verifique o cadeado na barra de endereço do navegador antes de inserir dados sensíveis!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Exercício 1 -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Investigando o DNS</h3>
+                    <p>Utilizando o terminal (Prompt de Comando ou Terminal):</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Execute o comando <span class="inline-code">nslookup www.uninove.br</span></li>
+                        <li>Anote o endereço IP retornado</li>
+                        <li>Tente acessar o site diretamente pelo IP no navegador</li>
+                        <li>Execute <span class="inline-code">nslookup www.google.com</span> e compare</li>
+                        <li>Execute <span class="inline-code">ping www.uninove.br</span> e observe o tempo de resposta</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Exercício 2 -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Analisando Certificados SSL/TLS</h3>
+                    <ol style="margin-top: 10px;">
+                        <li>Acesse <strong>https://www.uninove.br</strong> no navegador</li>
+                        <li>Clique no <strong>cadeado</strong> na barra de endereço</li>
+                        <li>Visualize as informações do <strong>certificado</strong></li>
+                        <li>Anote: quem emitiu o certificado, data de validade e tipo de criptografia</li>
+                        <li>Repita para outros 2 sites (ex: Google, GitHub)</li>
+                        <li>Compare os certificados encontrados</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Exercício 3 -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 3</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Mapeando a Estrutura de Domínios</h3>
+                    <p>Para cada domínio abaixo, identifique os níveis (TLD, segundo nível, subdomínio):</p>
+                    <ol style="margin-top: 10px;">
+                        <li><span class="inline-code">portal.uninove.edu.br</span></li>
+                        <li><span class="inline-code">www.amazon.com.br</span></li>
+                        <li><span class="inline-code">docs.google.com</span></li>
+                        <li><span class="inline-code">github.io</span></li>
+                        <li><span class="inline-code">learn.microsoft.com</span></li>
+                    </ol>
+                    <p style="margin-top: 10px;">Classifique cada TLD como gTLD, sTLD ou ccTLD.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: Preparação próxima aula -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 03 — Introdução ao HTML</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Instale o <strong>Visual Studio Code</strong> (code.visualstudio.com)</li>
+                        <li>Instale a extensão <strong>Live Server</strong> no VS Code</li>
+                        <li>Leia sobre a <strong>estrutura básica de um documento HTML</strong></li>
+                        <li>Pesquise o que são <strong>tags semânticas</strong> no HTML5</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Encerramento -->
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 02 — Estrutura da Web e Redes</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

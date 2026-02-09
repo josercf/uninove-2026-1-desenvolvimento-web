@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 12 - CRUD Completo | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 12 — CRUD Completo com EF Core</h2>
+            <p>Create, Read, Update e Delete</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>O que significa CRUD? Dê um exemplo do dia a dia.</li>
+                        <li>Qual a diferença entre <span class="inline-code">Find()</span> e <span class="inline-code">FirstOrDefault()</span>?</li>
+                        <li>O que é scaffolding?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>O que é CRUD?</li>
+                    <li>Create — Cadastrar</li>
+                    <li>Read — Listar e Detalhar</li>
+                    <li>Update — Editar</li>
+                    <li>Delete — Excluir</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>O que é CRUD?</h2></div>
+            <div class="slide-body">
+                <p><strong>CRUD</strong> representa as 4 operações básicas de persistência de dados:</p>
+                <table style="margin-top: 15px;">
+                    <thead><tr><th>Operação</th><th>SQL</th><th>HTTP</th><th>EF Core</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Create</strong></td><td>INSERT</td><td>POST</td><td><span class="inline-code">Add()</span></td></tr>
+                        <tr><td><strong>Read</strong></td><td>SELECT</td><td>GET</td><td><span class="inline-code">ToList() / Find()</span></td></tr>
+                        <tr><td><strong>Update</strong></td><td>UPDATE</td><td>PUT/POST</td><td><span class="inline-code">Update()</span></td></tr>
+                        <tr><td><strong>Delete</strong></td><td>DELETE</td><td>DELETE/POST</td><td><span class="inline-code">Remove()</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Create — Cadastrar</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// GET: /Aluno/Create</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Create</span>()
+{
+    <span class="keyword">return</span> <span class="js-func">View</span>();
+}
+
+<span class="comment">// POST: /Aluno/Create</span>
+[<span class="type">HttpPost</span>]
+[<span class="type">ValidateAntiForgeryToken</span>]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Create</span>(<span class="type">Aluno</span> aluno)
+{
+    <span class="keyword">if</span> (ModelState.IsValid)
+    {
+        _context.<span class="js-func">Add</span>(aluno);
+        _context.<span class="js-func">SaveChanges</span>();
+        <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Index"</span>);
+    }
+    <span class="keyword">return</span> <span class="js-func">View</span>(aluno);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Read — Listar e Detalhar</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// GET: /Aluno (listar todos)</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Index</span>()
+{
+    <span class="keyword">var</span> alunos = _context.Alunos.<span class="js-func">ToList</span>();
+    <span class="keyword">return</span> <span class="js-func">View</span>(alunos);
+}
+
+<span class="comment">// GET: /Aluno/Details/5 (detalhar um)</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Details</span>(<span class="keyword">int</span>? id)
+{
+    <span class="keyword">if</span> (id == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+
+    <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
+    <span class="keyword">if</span> (aluno == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+
+    <span class="keyword">return</span> <span class="js-func">View</span>(aluno);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>View de Listagem (Index.cshtml)</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="keyword">@model</span> List&lt;Aluno&gt;
+
+<span class="html-name">&lt;h2&gt;</span>Lista de Alunos<span class="html-name">&lt;/h2&gt;</span>
+<span class="html-name">&lt;a</span> <span class="html-attr">asp-action=</span><span class="html-value">"Create"</span><span class="html-name">&gt;</span>Novo Aluno<span class="html-name">&lt;/a&gt;</span>
+
+<span class="html-name">&lt;table</span> <span class="html-attr">class=</span><span class="html-value">"table"</span><span class="html-name">&gt;</span>
+  <span class="html-name">&lt;thead&gt;</span>
+    <span class="html-name">&lt;tr&gt;</span><span class="html-name">&lt;th&gt;</span>Nome<span class="html-name">&lt;/th&gt;&lt;th&gt;</span>Email<span class="html-name">&lt;/th&gt;&lt;th&gt;</span>Ações<span class="html-name">&lt;/th&gt;&lt;/tr&gt;</span>
+  <span class="html-name">&lt;/thead&gt;</span>
+  <span class="html-name">&lt;tbody&gt;</span>
+  <span class="keyword">@foreach</span> (<span class="keyword">var</span> aluno <span class="keyword">in</span> Model)
+  {
+    <span class="html-name">&lt;tr&gt;</span>
+      <span class="html-name">&lt;td&gt;</span><span class="keyword">@</span>aluno.Nome<span class="html-name">&lt;/td&gt;</span>
+      <span class="html-name">&lt;td&gt;</span><span class="keyword">@</span>aluno.Email<span class="html-name">&lt;/td&gt;</span>
+      <span class="html-name">&lt;td&gt;</span>
+        <span class="html-name">&lt;a</span> <span class="html-attr">asp-action=</span><span class="html-value">"Edit"</span> <span class="html-attr">asp-route-id=</span><span class="html-value">"@aluno.Id"</span><span class="html-name">&gt;</span>Editar<span class="html-name">&lt;/a&gt;</span> |
+        <span class="html-name">&lt;a</span> <span class="html-attr">asp-action=</span><span class="html-value">"Delete"</span> <span class="html-attr">asp-route-id=</span><span class="html-value">"@aluno.Id"</span><span class="html-name">&gt;</span>Excluir<span class="html-name">&lt;/a&gt;</span>
+      <span class="html-name">&lt;/td&gt;</span>
+    <span class="html-name">&lt;/tr&gt;</span>
+  }
+  <span class="html-name">&lt;/tbody&gt;</span>
+<span class="html-name">&lt;/table&gt;</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Update — Editar</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// GET: /Aluno/Edit/5</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Edit</span>(<span class="keyword">int</span>? id)
+{
+    <span class="keyword">if</span> (id == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+    <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
+    <span class="keyword">if</span> (aluno == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+    <span class="keyword">return</span> <span class="js-func">View</span>(aluno);
+}
+
+<span class="comment">// POST: /Aluno/Edit/5</span>
+[<span class="type">HttpPost</span>]
+[<span class="type">ValidateAntiForgeryToken</span>]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Edit</span>(<span class="keyword">int</span> id, <span class="type">Aluno</span> aluno)
+{
+    <span class="keyword">if</span> (id != aluno.Id) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+    <span class="keyword">if</span> (ModelState.IsValid)
+    {
+        _context.<span class="js-func">Update</span>(aluno);
+        _context.<span class="js-func">SaveChanges</span>();
+        <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Index"</span>);
+    }
+    <span class="keyword">return</span> <span class="js-func">View</span>(aluno);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Delete — Excluir</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// GET: /Aluno/Delete/5 (confirmação)</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Delete</span>(<span class="keyword">int</span>? id)
+{
+    <span class="keyword">if</span> (id == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+    <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
+    <span class="keyword">if</span> (aluno == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+    <span class="keyword">return</span> <span class="js-func">View</span>(aluno);
+}
+
+<span class="comment">// POST: /Aluno/Delete/5 (executa exclusão)</span>
+[<span class="type">HttpPost</span>, <span class="type">ActionName</span>(<span class="string">"Delete"</span>)]
+[<span class="type">ValidateAntiForgeryToken</span>]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">DeleteConfirmed</span>(<span class="keyword">int</span> id)
+{
+    <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
+    <span class="keyword">if</span> (aluno != <span class="keyword">null</span>)
+    {
+        _context.Alunos.<span class="js-func">Remove</span>(aluno);
+        _context.<span class="js-func">SaveChanges</span>();
+    }
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Index"</span>);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>CRUD Completo de Alunos</h3>
+                    <ol>
+                        <li>Implemente todas as 4 operações CRUD no <span class="inline-code">AlunoController</span></li>
+                        <li>Crie as Views: Index (listar), Create (cadastrar), Edit (editar), Delete (confirmar exclusão), Details (detalhar)</li>
+                        <li>Use Tag Helpers em todos os formulários</li>
+                        <li>Adicione validação com Data Annotations</li>
+                        <li>Teste todas as operações: cadastre, liste, edite e exclua alunos</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>CRUD de Produtos</h3>
+                    <p>Crie um novo CRUD completo para a entidade <strong>Produto</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Model: Id, Nome, Descricao, Preco (decimal), Quantidade (int), Ativo (bool)</li>
+                        <li>Adicione o <span class="inline-code">DbSet&lt;Produto&gt;</span> no DbContext</li>
+                        <li>Crie e aplique a migration</li>
+                        <li>Implemente o CRUD completo (Controller + Views)</li>
+                        <li>Na listagem, destaque produtos com estoque zero em vermelho</li>
+                        <li>Formate o preço como moeda: <span class="inline-code">@produto.Preco.ToString("C")</span></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 13 — Cookies e Sessões</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Pesquise o que são <strong>cookies</strong> no contexto web</li>
+                        <li>Pesquise o que são <strong>sessões</strong> e como funcionam</li>
+                        <li>Leia sobre a diferença entre <strong>estado (stateful)</strong> e <strong>sem estado (stateless)</strong></li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 12 — CRUD Completo com EF Core</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 15 - Autenticação e Autorização | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 15 — Autenticação e Autorização</h2>
+            <p>Login, Registro, Hashing e [Authorize]</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>Qual a diferença entre autenticação e autorização?</li>
+                        <li>Por que não devemos armazenar senhas em texto puro?</li>
+                        <li>O que é hashing? Dê um exemplo.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>Autenticação vs. Autorização</li>
+                    <li>Hashing de Senhas</li>
+                    <li>Model de Usuário</li>
+                    <li>Registro e Login</li>
+                    <li>Protegendo Rotas com [Authorize]</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Autenticação vs. Autorização</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div class="box-info">
+                        <h3 style="color: #1565C0;">Autenticação</h3>
+                        <p><strong>"Quem é você?"</strong></p>
+                        <p>Processo de verificar a identidade do usuário (login/senha).</p>
+                    </div>
+                    <div class="box-success">
+                        <h3 style="color: #2E7D32;">Autorização</h3>
+                        <p><strong>"O que você pode fazer?"</strong></p>
+                        <p>Processo de verificar se o usuário tem permissão para acessar um recurso.</p>
+                    </div>
+                </div>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p><strong>Analogia:</strong> Autenticação é o crachá que te identifica. Autorização é a permissão para entrar em determinadas salas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Hashing de Senhas</h2></div>
+            <div class="slide-body">
+                <p>Nunca armazene senhas em texto puro! Use <strong>hashing</strong> — uma função que transforma a senha em um valor irreversível.</p>
+                <pre>
+<span class="keyword">using</span> BCrypt.Net;
+
+<span class="comment">// Gerar hash da senha</span>
+<span class="keyword">string</span> <span class="js-var">senhaHash</span> = <span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">HashPassword</span>(<span class="string">"minhasenha123"</span>);
+<span class="comment">// Resultado: "$2a$11$K3GG..."</span>
+
+<span class="comment">// Verificar a senha</span>
+<span class="keyword">bool</span> <span class="js-var">valida</span> = <span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">Verify</span>(<span class="string">"minhasenha123"</span>, <span class="js-var">senhaHash</span>);
+<span class="comment">// true</span></pre>
+                <pre style="margin-top: 10px;">
+<span class="comment"># Instalar o pacote BCrypt</span>
+$ dotnet add package BCrypt.Net-Next</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Model de Usuário</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Models/Usuario.cs</span>
+<span class="keyword">public class</span> <span class="type">Usuario</span>
+{
+    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+
+    [<span class="type">Required</span>(ErrorMessage = <span class="string">"Nome obrigatório"</span>)]
+    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
+
+    [<span class="type">Required</span>]
+    [<span class="type">EmailAddress</span>]
+    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
+
+    [<span class="type">Required</span>]
+    <span class="keyword">public string</span> SenhaHash { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
+
+    <span class="keyword">public string</span> Perfil { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">"Usuario"</span>;
+}
+
+<span class="comment">// Adicionar ao DbContext</span>
+<span class="keyword">public</span> <span class="type">DbSet</span>&lt;<span class="type">Usuario</span>&gt; Usuarios { <span class="keyword">get</span>; <span class="keyword">set</span>; }</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Registro de Usuário</h2></div>
+            <div class="slide-body">
+                <pre>
+[<span class="type">HttpPost</span>]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Registrar</span>(<span class="keyword">string</span> nome, <span class="keyword">string</span> email, <span class="keyword">string</span> senha)
+{
+    <span class="comment">// Verificar se e-mail já existe</span>
+    <span class="keyword">if</span> (_context.Usuarios.<span class="js-func">Any</span>(u => u.Email == email))
+    {
+        <span class="type">ViewBag</span>.Erro = <span class="string">"E-mail já cadastrado!"</span>;
+        <span class="keyword">return</span> <span class="js-func">View</span>();
+    }
+
+    <span class="keyword">var</span> usuario = <span class="keyword">new</span> <span class="type">Usuario</span>
+    {
+        Nome = nome,
+        Email = email,
+        SenhaHash = <span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">HashPassword</span>(senha)
+    };
+
+    _context.Usuarios.<span class="js-func">Add</span>(usuario);
+    _context.<span class="js-func">SaveChanges</span>();
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Login"</span>);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Login com Cookie Authentication</h2></div>
+            <div class="slide-body">
+                <pre style="font-size: 0.85em;">
+[<span class="type">HttpPost</span>]
+<span class="keyword">public async</span> <span class="type">Task</span>&lt;<span class="type">IActionResult</span>&gt; <span class="js-func">Login</span>(<span class="keyword">string</span> email, <span class="keyword">string</span> senha)
+{
+    <span class="keyword">var</span> usuario = _context.Usuarios
+        .<span class="js-func">FirstOrDefault</span>(u => u.Email == email);
+
+    <span class="keyword">if</span> (usuario == <span class="keyword">null</span> || !<span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">Verify</span>(senha, usuario.SenhaHash))
+    {
+        <span class="type">ViewBag</span>.Erro = <span class="string">"E-mail ou senha inválidos!"</span>;
+        <span class="keyword">return</span> <span class="js-func">View</span>();
+    }
+
+    <span class="comment">// Criar claims (informações do usuário)</span>
+    <span class="keyword">var</span> claims = <span class="keyword">new</span> <span class="type">List</span>&lt;<span class="type">Claim</span>&gt;
+    {
+        <span class="keyword">new</span> <span class="type">Claim</span>(<span class="type">ClaimTypes</span>.Name, usuario.Nome),
+        <span class="keyword">new</span> <span class="type">Claim</span>(<span class="type">ClaimTypes</span>.Email, usuario.Email),
+        <span class="keyword">new</span> <span class="type">Claim</span>(<span class="type">ClaimTypes</span>.Role, usuario.Perfil)
+    };
+    <span class="keyword">var</span> identity = <span class="keyword">new</span> <span class="type">ClaimsIdentity</span>(claims, <span class="string">"CookieAuth"</span>);
+    <span class="keyword">var</span> principal = <span class="keyword">new</span> <span class="type">ClaimsPrincipal</span>(identity);
+
+    <span class="keyword">await</span> HttpContext.<span class="js-func">SignInAsync</span>(<span class="string">"CookieAuth"</span>, principal);
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Index"</span>, <span class="string">"Home"</span>);
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Protegendo Rotas com [Authorize]</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Proteger uma Action específica</span>
+[<span class="type">Authorize</span>]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Painel</span>()
+{
+    <span class="keyword">var</span> nome = User.Identity.Name;
+    <span class="keyword">return</span> <span class="js-func">View</span>();
+}
+
+<span class="comment">// Proteger todo o Controller</span>
+[<span class="type">Authorize</span>]
+<span class="keyword">public class</span> <span class="type">AdminController</span> : <span class="type">Controller</span>
+{
+    <span class="comment">// Todas as Actions exigem login</span>
+}
+
+<span class="comment">// Permitir acesso anônimo em Controller protegido</span>
+[<span class="type">AllowAnonymous</span>]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Login</span>() => <span class="js-func">View</span>();
+
+<span class="comment">// Exigir perfil específico</span>
+[<span class="type">Authorize</span>(Roles = <span class="string">"Admin"</span>)]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">GerenciarUsuarios</span>() => <span class="js-func">View</span>();</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Sistema de Registro e Login</h3>
+                    <ol>
+                        <li>Crie o Model <span class="inline-code">Usuario</span> e adicione ao DbContext</li>
+                        <li>Crie e aplique a migration</li>
+                        <li>Implemente a tela de <strong>Registro</strong> com nome, e-mail e senha</li>
+                        <li>Armazene a senha com <strong>BCrypt</strong></li>
+                        <li>Implemente a tela de <strong>Login</strong></li>
+                        <li>Ao logar, grave os dados na sessão</li>
+                        <li>Implemente o <strong>Logout</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Área Restrita</h3>
+                    <ol>
+                        <li>Crie uma página <strong>"Painel"</strong> acessível apenas para usuários logados</li>
+                        <li>Se o usuário não estiver logado, redirecione para o Login</li>
+                        <li>No Painel, exiba o nome do usuário logado</li>
+                        <li>Adicione um menu de navegação que mostra "Login" ou "Logout" conforme o estado</li>
+                        <li><strong>Desafio:</strong> Proteja o CRUD de Alunos — apenas usuários logados podem acessar</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 16 — API REST com ASP.NET Core</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Pesquise o que é uma <strong>API REST</strong></li>
+                        <li>Leia sobre os <strong>verbos HTTP</strong> (GET, POST, PUT, DELETE) no contexto de APIs</li>
+                        <li>Pesquise o que é o <strong>Swagger</strong></li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 15 — Autenticação e Autorização</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

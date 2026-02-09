@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 07 - Ambiente .NET e Introdução ao C# | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 07 — Ambiente .NET e Introdução ao C#</h2>
+            <p>Configuração, Hello World e Fundamentos de C#</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Verificação (10 min)</h3>
+                    <ol>
+                        <li>Todos conseguiram instalar o .NET SDK? Execute: <span class="inline-code">dotnet --version</span></li>
+                        <li>A extensão C# Dev Kit está instalada no VS Code?</li>
+                        <li>O que vocês descobriram sobre a linguagem C#?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>O que é .NET?</li>
+                    <li>Configuração do Ambiente</li>
+                    <li>Hello World em C#</li>
+                    <li>Tipos de Dados e Variáveis</li>
+                    <li>Operadores</li>
+                    <li>Entrada e Saída de Dados</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>O que é .NET?</h2></div>
+            <div class="slide-body">
+                <p><strong>.NET</strong> é uma plataforma de desenvolvimento criada pela Microsoft. É <strong>open-source</strong>, <strong>multiplataforma</strong> (Windows, Linux, macOS) e suporta diversas linguagens, sendo <strong>C#</strong> a principal.</p>
+                <div class="two-columns" style="margin-top: 15px;">
+                    <div>
+                        <h3>Componentes</h3>
+                        <ul>
+                            <li><strong>.NET SDK</strong> — Ferramentas de desenvolvimento</li>
+                            <li><strong>CLR</strong> — Runtime que executa o código</li>
+                            <li><strong>BCL</strong> — Biblioteca de classes base</li>
+                            <li><strong>ASP.NET Core</strong> — Framework web</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Por que .NET?</h3>
+                        <ul>
+                            <li>Alta <strong>performance</strong></li>
+                            <li>Ecossistema <strong>robusto</strong></li>
+                            <li>Grande <strong>mercado de trabalho</strong></li>
+                            <li>Suporte da <strong>Microsoft</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Configuração do Ambiente</h2></div>
+            <div class="slide-body">
+                <h3>Ferramentas Necessárias</h3>
+                <table>
+                    <thead><tr><th>Ferramenta</th><th>Descrição</th><th>Download</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>.NET SDK 8</strong></td><td>Kit de desenvolvimento</td><td>dotnet.microsoft.com</td></tr>
+                        <tr><td><strong>VS Code</strong></td><td>Editor de código</td><td>code.visualstudio.com</td></tr>
+                        <tr><td><strong>C# Dev Kit</strong></td><td>Extensão para C# no VS Code</td><td>Marketplace do VS Code</td></tr>
+                    </tbody>
+                </table>
+                <h3 style="margin-top: 15px;">Verificando a Instalação</h3>
+                <pre>
+<span class="comment"># No terminal:</span>
+$ dotnet --version
+<span class="string">8.0.100</span>
+
+$ dotnet --list-sdks
+<span class="string">8.0.100 [/usr/share/dotnet/sdk]</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Hello World em C#</h2></div>
+            <div class="slide-body">
+                <h3>Criando o Primeiro Projeto</h3>
+                <pre>
+<span class="comment"># Criar um projeto console</span>
+$ dotnet new console -n MeuPrimeiroProjeto
+$ cd MeuPrimeiroProjeto
+$ code .    <span class="comment"># Abre no VS Code</span></pre>
+                <h3 style="margin-top: 15px;">Arquivo Program.cs</h3>
+                <pre>
+<span class="comment">// Program.cs</span>
+<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Olá, Mundo!"</span>);
+<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Bem-vindo ao C#!"</span>);</pre>
+                <pre>
+<span class="comment"># Executar o projeto</span>
+$ dotnet run
+<span class="string">Olá, Mundo!</span>
+<span class="string">Bem-vindo ao C#!</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Tipos de Dados em C#</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="inline-code">int</span></td><td>Número inteiro</td><td><span class="inline-code">int idade = 25;</span></td></tr>
+                        <tr><td><span class="inline-code">double</span></td><td>Número decimal</td><td><span class="inline-code">double preco = 19.99;</span></td></tr>
+                        <tr><td><span class="inline-code">string</span></td><td>Texto</td><td><span class="inline-code">string nome = "Maria";</span></td></tr>
+                        <tr><td><span class="inline-code">bool</span></td><td>Verdadeiro/Falso</td><td><span class="inline-code">bool ativo = true;</span></td></tr>
+                        <tr><td><span class="inline-code">char</span></td><td>Um caractere</td><td><span class="inline-code">char letra = 'A';</span></td></tr>
+                        <tr><td><span class="inline-code">decimal</span></td><td>Decimal de alta precisão</td><td><span class="inline-code">decimal salario = 5000.50m;</span></td></tr>
+                        <tr><td><span class="inline-code">var</span></td><td>Tipo inferido pelo compilador</td><td><span class="inline-code">var x = 10;</span></td></tr>
+                    </tbody>
+                </table>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>C# é uma linguagem <strong>fortemente tipada</strong>. Diferente do JavaScript, você precisa declarar o tipo da variável.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Variáveis e Constantes</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Variáveis</span>
+<span class="keyword">string</span> <span class="js-var">nome</span> = <span class="string">"João"</span>;
+<span class="keyword">int</span> <span class="js-var">idade</span> = <span class="number">20</span>;
+<span class="keyword">double</span> <span class="js-var">nota</span> = <span class="number">8.5</span>;
+<span class="keyword">bool</span> <span class="js-var">aprovado</span> = <span class="keyword">true</span>;
+
+<span class="comment">// Constantes (não podem ser alteradas)</span>
+<span class="keyword">const</span> <span class="keyword">double</span> <span class="js-var">PI</span> = <span class="number">3.14159</span>;
+<span class="keyword">const</span> <span class="keyword">string</span> <span class="js-var">UNIVERSIDADE</span> = <span class="string">"UNINOVE"</span>;
+
+<span class="comment">// Interpolação de strings</span>
+<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Aluno: {nome}, Idade: {idade}"</span>);
+<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Nota: {nota:F1} - Aprovado: {aprovado}"</span>);
+
+<span class="comment">// Conversão de tipos</span>
+<span class="keyword">string</span> <span class="js-var">textoNumero</span> = <span class="string">"42"</span>;
+<span class="keyword">int</span> <span class="js-var">numero</span> = <span class="keyword">int</span>.<span class="js-func">Parse</span>(<span class="js-var">textoNumero</span>);
+<span class="keyword">double</span> <span class="js-var">valor</span> = <span class="type">Convert</span>.<span class="js-func">ToDouble</span>(<span class="string">"3.14"</span>);</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Entrada de Dados pelo Console</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Lendo dados do usuário</span>
+<span class="type">Console</span>.<span class="js-func">Write</span>(<span class="string">"Digite seu nome: "</span>);
+<span class="keyword">string</span> <span class="js-var">nome</span> = <span class="type">Console</span>.<span class="js-func">ReadLine</span>();
+
+<span class="type">Console</span>.<span class="js-func">Write</span>(<span class="string">"Digite sua idade: "</span>);
+<span class="keyword">int</span> <span class="js-var">idade</span> = <span class="keyword">int</span>.<span class="js-func">Parse</span>(<span class="type">Console</span>.<span class="js-func">ReadLine</span>());
+
+<span class="type">Console</span>.<span class="js-func">Write</span>(<span class="string">"Digite sua nota: "</span>);
+<span class="keyword">double</span> <span class="js-var">nota</span> = <span class="keyword">double</span>.<span class="js-func">Parse</span>(<span class="type">Console</span>.<span class="js-func">ReadLine</span>());
+
+<span class="comment">// Exibindo resultado</span>
+<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Olá, {nome}! Você tem {idade} anos."</span>);
+<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Sua nota é: {nota:F1}"</span>);</pre>
+                <div class="box-warning" style="margin-top: 10px;">
+                    <p><span class="inline-code">Console.ReadLine()</span> sempre retorna uma <strong>string</strong>. Use <span class="inline-code">int.Parse()</span> ou <span class="inline-code">Convert.ToInt32()</span> para converter.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Hello World e Variáveis</h3>
+                    <ol>
+                        <li>Crie um projeto console: <span class="inline-code">dotnet new console -n Aula07</span></li>
+                        <li>Peça ao usuário: nome, idade, curso e nota</li>
+                        <li>Exiba uma mensagem formatada com todos os dados</li>
+                        <li>Calcule e exiba se o aluno está aprovado (nota >= 7)</li>
+                        <li>Calcule a idade que o aluno terá daqui a 5 anos</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Calculadora em C#</h3>
+                    <ol>
+                        <li>Crie um programa que peça dois números ao usuário</li>
+                        <li>Exiba um menu: 1-Soma, 2-Subtração, 3-Multiplicação, 4-Divisão</li>
+                        <li>Peça ao usuário para escolher a operação</li>
+                        <li>Calcule e exiba o resultado</li>
+                        <li>Trate a divisão por zero</li>
+                        <li><strong>Desafio:</strong> Faça o programa repetir até o usuário digitar 0 para sair</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 08 — Primeiros Passos com ASP.NET Core MVC</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Leia sobre o padrão de arquitetura <strong>MVC</strong> (Model-View-Controller)</li>
+                        <li>Pesquise o que é o <strong>ASP.NET Core</strong> e como ele se diferencia do .NET Framework</li>
+                        <li>Assista a um vídeo introdutório sobre <strong>ASP.NET Core MVC</strong></li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 07 — Ambiente .NET e Introdução ao C#</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

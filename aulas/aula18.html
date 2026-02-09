@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 18 - Layout, Partial Views e Bootstrap | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 18 — Layout, Partial Views e Bootstrap</h2>
+            <p>Reutilização de código e interface profissional</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>O que é o _Layout.cshtml e qual sua função?</li>
+                        <li>O que são Partial Views?</li>
+                        <li>O que é o Bootstrap e por que usá-lo?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>_Layout.cshtml — Template Mestre</li>
+                    <li>@RenderBody() e @RenderSection()</li>
+                    <li>Partial Views</li>
+                    <li>Bootstrap no ASP.NET Core</li>
+                    <li>Componentes Bootstrap</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>_Layout.cshtml — Template Mestre</h2></div>
+            <div class="slide-body">
+                <p>O <strong>_Layout.cshtml</strong> é o template mestre que define a estrutura comum de todas as páginas (menu, rodapé, CSS, JS).</p>
+                <pre>
+<span class="comment">&lt;!-- Views/Shared/_Layout.cshtml --&gt;</span>
+<span class="html-name">&lt;!DOCTYPE html&gt;</span>
+<span class="html-name">&lt;html&gt;</span>
+<span class="html-name">&lt;head&gt;</span>
+    <span class="html-name">&lt;title&gt;</span><span class="keyword">@</span>ViewData[<span class="string">"Title"</span>] - Minha App<span class="html-name">&lt;/title&gt;</span>
+    <span class="html-name">&lt;link</span> <span class="html-attr">rel=</span><span class="html-value">"stylesheet"</span> <span class="html-attr">href=</span><span class="html-value">"~/lib/bootstrap/css/bootstrap.min.css"</span> <span class="html-name">/&gt;</span>
+    <span class="html-name">&lt;link</span> <span class="html-attr">rel=</span><span class="html-value">"stylesheet"</span> <span class="html-attr">href=</span><span class="html-value">"~/css/site.css"</span> <span class="html-name">/&gt;</span>
+<span class="html-name">&lt;/head&gt;</span>
+<span class="html-name">&lt;body&gt;</span>
+    <span class="html-name">&lt;nav&gt;</span>...<span class="html-name">&lt;/nav&gt;</span>
+    <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"container"</span><span class="html-name">&gt;</span>
+        <span class="keyword">@RenderBody()</span>  <span class="comment">&lt;!-- Conteúdo da página --&gt;</span>
+    <span class="html-name">&lt;/div&gt;</span>
+    <span class="html-name">&lt;footer&gt;</span>...<span class="html-name">&lt;/footer&gt;</span>
+    <span class="keyword">@RenderSection</span>(<span class="string">"Scripts"</span>, required: <span class="keyword">false</span>)
+<span class="html-name">&lt;/body&gt;</span>
+<span class="html-name">&lt;/html&gt;</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Usando o Layout nas Views</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">&lt;!-- Views/Aluno/Index.cshtml --&gt;</span>
+<span class="keyword">@</span>{
+    ViewData[<span class="string">"Title"</span>] = <span class="string">"Lista de Alunos"</span>;
+}
+
+<span class="html-name">&lt;h2&gt;</span>Lista de Alunos<span class="html-name">&lt;/h2&gt;</span>
+<span class="comment">&lt;!-- Este conteúdo será inserido no @RenderBody() --&gt;</span>
+<span class="html-name">&lt;table</span> <span class="html-attr">class=</span><span class="html-value">"table table-striped"</span><span class="html-name">&gt;</span>
+    ...
+<span class="html-name">&lt;/table&gt;</span>
+
+<span class="keyword">@section</span> Scripts {
+    <span class="html-name">&lt;script&gt;</span>
+        <span class="comment">// Scripts específicos desta página</span>
+        console.log(<span class="js-string">"Página de alunos carregada"</span>);
+    <span class="html-name">&lt;/script&gt;</span>
+}</pre>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>O <span class="inline-code">_ViewStart.cshtml</span> define o layout padrão: <span class="inline-code">@{ Layout = "_Layout"; }</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Partial Views</h2></div>
+            <div class="slide-body">
+                <p><strong>Partial Views</strong> são fragmentos reutilizáveis de HTML/Razor. Úteis para menus, cards, formulários repetidos.</p>
+                <div class="two-columns">
+                    <div>
+                        <h3>Criar a Partial</h3>
+                        <pre>
+<span class="comment">&lt;!-- Views/Shared/_CardAluno.cshtml --&gt;</span>
+<span class="keyword">@model</span> Aluno
+
+<span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"card mb-3"</span><span class="html-name">&gt;</span>
+  <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"card-body"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;h5&gt;</span><span class="keyword">@</span>Model.Nome<span class="html-name">&lt;/h5&gt;</span>
+    <span class="html-name">&lt;p&gt;</span><span class="keyword">@</span>Model.Email<span class="html-name">&lt;/p&gt;</span>
+    <span class="html-name">&lt;p&gt;</span><span class="keyword">@</span>Model.Curso.Nome<span class="html-name">&lt;/p&gt;</span>
+  <span class="html-name">&lt;/div&gt;</span>
+<span class="html-name">&lt;/div&gt;</span></pre>
+                    </div>
+                    <div>
+                        <h3>Usar a Partial</h3>
+                        <pre>
+<span class="comment">&lt;!-- Na View principal --&gt;</span>
+<span class="keyword">@model</span> List&lt;Aluno&gt;
+
+<span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"row"</span><span class="html-name">&gt;</span>
+<span class="keyword">@foreach</span> (<span class="keyword">var</span> aluno <span class="keyword">in</span> Model)
+{
+  <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"col-md-4"</span><span class="html-name">&gt;</span>
+    <span class="keyword">@await</span> Html
+      .<span class="js-func">PartialAsync</span>(
+        <span class="string">"_CardAluno"</span>, aluno)
+  <span class="html-name">&lt;/div&gt;</span>
+}
+<span class="html-name">&lt;/div&gt;</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Bootstrap — Navbar</h2></div>
+            <div class="slide-body">
+                <pre style="font-size: 0.82em;">
+<span class="comment">&lt;!-- No _Layout.cshtml --&gt;</span>
+<span class="html-name">&lt;nav</span> <span class="html-attr">class=</span><span class="html-value">"navbar navbar-expand-lg navbar-dark bg-dark"</span><span class="html-name">&gt;</span>
+  <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"container"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;a</span> <span class="html-attr">class=</span><span class="html-value">"navbar-brand"</span> <span class="html-attr">asp-controller=</span><span class="html-value">"Home"</span> <span class="html-attr">asp-action=</span><span class="html-value">"Index"</span><span class="html-name">&gt;</span>
+      Minha App
+    <span class="html-name">&lt;/a&gt;</span>
+    <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"navbar-nav"</span><span class="html-name">&gt;</span>
+      <span class="html-name">&lt;a</span> <span class="html-attr">class=</span><span class="html-value">"nav-link"</span> <span class="html-attr">asp-controller=</span><span class="html-value">"Aluno"</span> <span class="html-attr">asp-action=</span><span class="html-value">"Index"</span><span class="html-name">&gt;</span>
+        Alunos
+      <span class="html-name">&lt;/a&gt;</span>
+      <span class="html-name">&lt;a</span> <span class="html-attr">class=</span><span class="html-value">"nav-link"</span> <span class="html-attr">asp-controller=</span><span class="html-value">"Curso"</span> <span class="html-attr">asp-action=</span><span class="html-value">"Index"</span><span class="html-name">&gt;</span>
+        Cursos
+      <span class="html-name">&lt;/a&gt;</span>
+      <span class="keyword">@if</span> (User.Identity.IsAuthenticated)
+      {
+        <span class="html-name">&lt;a</span> <span class="html-attr">class=</span><span class="html-value">"nav-link"</span> <span class="html-attr">asp-controller=</span><span class="html-value">"Auth"</span> <span class="html-attr">asp-action=</span><span class="html-value">"Logout"</span><span class="html-name">&gt;</span>
+          Sair (<span class="keyword">@</span>User.Identity.Name)
+        <span class="html-name">&lt;/a&gt;</span>
+      }
+    <span class="html-name">&lt;/div&gt;</span>
+  <span class="html-name">&lt;/div&gt;</span>
+<span class="html-name">&lt;/nav&gt;</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Bootstrap — Componentes Úteis</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Componente</th><th>Classe CSS</th><th>Uso</th></tr></thead>
+                    <tbody>
+                        <tr><td>Tabela</td><td><span class="inline-code">table table-striped</span></td><td>Listagens de dados</td></tr>
+                        <tr><td>Formulário</td><td><span class="inline-code">form-control, form-label</span></td><td>Inputs estilizados</td></tr>
+                        <tr><td>Botão</td><td><span class="inline-code">btn btn-primary</span></td><td>Ações do usuário</td></tr>
+                        <tr><td>Card</td><td><span class="inline-code">card, card-body</span></td><td>Exibir informações</td></tr>
+                        <tr><td>Alert</td><td><span class="inline-code">alert alert-success</span></td><td>Mensagens de feedback</td></tr>
+                        <tr><td>Grid</td><td><span class="inline-code">row, col-md-6</span></td><td>Layout responsivo</td></tr>
+                        <tr><td>Modal</td><td><span class="inline-code">modal, modal-dialog</span></td><td>Diálogos popup</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Refatorar com Layout e Bootstrap</h3>
+                    <ol>
+                        <li>Configure o <span class="inline-code">_Layout.cshtml</span> com Bootstrap</li>
+                        <li>Adicione uma <strong>Navbar</strong> com links para Alunos, Cursos e Login/Logout</li>
+                        <li>Adicione um <strong>Footer</strong> com informações do projeto</li>
+                        <li>Refatore todas as Views existentes para usar classes Bootstrap</li>
+                        <li>Use <span class="inline-code">table-striped</span> nas tabelas e <span class="inline-code">btn</span> nos botões</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Dashboard com Partial Views</h3>
+                    <ol>
+                        <li>Crie uma Partial View <span class="inline-code">_CardAluno</span> para exibir dados de um aluno em um card</li>
+                        <li>Crie uma Partial View <span class="inline-code">_CardEstatistica</span> para exibir um número e um título</li>
+                        <li>Crie uma página <strong>Dashboard</strong> que exiba: total de alunos, total de cursos, últimos 5 alunos cadastrados</li>
+                        <li>Use o grid do Bootstrap para organizar os cards</li>
+                        <li><strong>Desafio:</strong> Adicione um <span class="inline-code">alert</span> de boas-vindas com o nome do usuário logado</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 19 — Publicação e Deploy</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Pesquise o que é <strong>deploy</strong> de uma aplicação web</li>
+                        <li>Leia sobre <strong>Docker</strong> e <strong>containers</strong></li>
+                        <li>Crie uma conta gratuita no <strong>Azure</strong> (portal.azure.com) ou <strong>Railway</strong> (railway.app)</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 40 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 18 — Layout, Partial Views e Bootstrap</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

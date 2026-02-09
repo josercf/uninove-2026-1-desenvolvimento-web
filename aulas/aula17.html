@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 17 - Relacionamentos e EF Core Avançado | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 17 — Relacionamentos e EF Core Avançado</h2>
+            <p>1:N, N:N, LINQ e Include</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>O que é um relacionamento 1:N? Dê um exemplo.</li>
+                        <li>O que é uma chave estrangeira?</li>
+                        <li>O que é LINQ?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>Relacionamento 1:N (Um para Muitos)</li>
+                    <li>Configurando Relacionamentos no EF Core</li>
+                    <li>Include e Eager Loading</li>
+                    <li>LINQ — Consultas em C#</li>
+                    <li>Select com DropDown</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Relacionamento 1:N</h2></div>
+            <div class="slide-body">
+                <p>Um <strong>Curso</strong> possui muitos <strong>Alunos</strong>. Um Aluno pertence a um Curso. Isso é um relacionamento <strong>1:N</strong> (um para muitos).</p>
+                <div class="two-columns" style="margin-top: 15px;">
+                    <div>
+                        <h3>Model Curso</h3>
+                        <pre>
+<span class="keyword">public class</span> <span class="type">Curso</span>
+{
+    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public int</span> CargaHoraria { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+
+    <span class="comment">// Navegação: 1 Curso → N Alunos</span>
+    <span class="keyword">public</span> <span class="type">List</span>&lt;<span class="type">Aluno</span>&gt; Alunos { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+}</pre>
+                    </div>
+                    <div>
+                        <h3>Model Aluno (atualizado)</h3>
+                        <pre>
+<span class="keyword">public class</span> <span class="type">Aluno</span>
+{
+    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+
+    <span class="comment">// Chave estrangeira</span>
+    <span class="keyword">public int</span> CursoId { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="comment">// Navegação: N Alunos → 1 Curso</span>
+    <span class="keyword">public</span> <span class="type">Curso</span> Curso { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Include — Eager Loading</h2></div>
+            <div class="slide-body">
+                <p>Por padrão, o EF Core <strong>não carrega</strong> os dados relacionados. Use <span class="inline-code">Include()</span> para carregar junto.</p>
+                <pre>
+<span class="keyword">using</span> Microsoft.EntityFrameworkCore;
+
+<span class="comment">// SEM Include — Curso será null</span>
+<span class="keyword">var</span> alunos = _context.Alunos.<span class="js-func">ToList</span>();
+<span class="comment">// alunos[0].Curso → null</span>
+
+<span class="comment">// COM Include — Curso é carregado</span>
+<span class="keyword">var</span> alunos = _context.Alunos
+    .<span class="js-func">Include</span>(a => a.Curso)
+    .<span class="js-func">ToList</span>();
+<span class="comment">// alunos[0].Curso.Nome → "ADS"</span>
+
+<span class="comment">// Carregar Curso com seus Alunos</span>
+<span class="keyword">var</span> cursos = _context.Cursos
+    .<span class="js-func">Include</span>(c => c.Alunos)
+    .<span class="js-func">ToList</span>();</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>LINQ — Consultas em C#</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Filtrar alunos por curso</span>
+<span class="keyword">var</span> alunosADS = _context.Alunos
+    .<span class="js-func">Where</span>(a => a.Curso.Nome == <span class="string">"ADS"</span>)
+    .<span class="js-func">ToList</span>();
+
+<span class="comment">// Ordenar por nome</span>
+<span class="keyword">var</span> ordenados = _context.Alunos
+    .<span class="js-func">OrderBy</span>(a => a.Nome)
+    .<span class="js-func">ToList</span>();
+
+<span class="comment">// Contar alunos</span>
+<span class="keyword">int</span> total = _context.Alunos.<span class="js-func">Count</span>();
+
+<span class="comment">// Selecionar apenas nome e email</span>
+<span class="keyword">var</span> nomes = _context.Alunos
+    .<span class="js-func">Select</span>(a => <span class="keyword">new</span> { a.Nome, a.Email })
+    .<span class="js-func">ToList</span>();
+
+<span class="comment">// Buscar o primeiro ou null</span>
+<span class="keyword">var</span> aluno = _context.Alunos
+    .<span class="js-func">FirstOrDefault</span>(a => a.Email == <span class="string">"maria@email.com"</span>);</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>DropDown de Cursos no Formulário</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div>
+                        <h3>Controller</h3>
+                        <pre>
+[<span class="type">HttpGet</span>]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Create</span>()
+{
+    <span class="type">ViewBag</span>.Cursos = <span class="keyword">new</span> 
+      <span class="type">SelectList</span>(
+        _context.Cursos, 
+        <span class="string">"Id"</span>, 
+        <span class="string">"Nome"</span>);
+    <span class="keyword">return</span> <span class="js-func">View</span>();
+}</pre>
+                    </div>
+                    <div>
+                        <h3>View</h3>
+                        <pre>
+<span class="html-name">&lt;div&gt;</span>
+  <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"CursoId"</span><span class="html-name">&gt;</span>
+    Curso
+  <span class="html-name">&lt;/label&gt;</span>
+  <span class="html-name">&lt;select</span> <span class="html-attr">asp-for=</span><span class="html-value">"CursoId"</span>
+    <span class="html-attr">asp-items=</span><span class="html-value">"ViewBag.Cursos"</span>
+    <span class="html-attr">class=</span><span class="html-value">"form-control"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">""</span><span class="html-name">&gt;</span>
+      Selecione...
+    <span class="html-name">&lt;/option&gt;</span>
+  <span class="html-name">&lt;/select&gt;</span>
+<span class="html-name">&lt;/div&gt;</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Relacionamento Curso → Alunos</h3>
+                    <ol>
+                        <li>Crie o Model <span class="inline-code">Curso</span> e adicione ao DbContext</li>
+                        <li>Adicione <span class="inline-code">CursoId</span> ao Model Aluno</li>
+                        <li>Crie e aplique a migration</li>
+                        <li>Crie o CRUD completo de Cursos</li>
+                        <li>No formulário de Aluno, adicione um DropDown para selecionar o Curso</li>
+                        <li>Na listagem de Alunos, exiba o nome do Curso usando <span class="inline-code">Include()</span></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Consultas com LINQ</h3>
+                    <ol>
+                        <li>Crie uma página que liste alunos <strong>filtrados por curso</strong></li>
+                        <li>Adicione um DropDown de cursos para filtrar</li>
+                        <li>Exiba a <strong>quantidade de alunos</strong> por curso</li>
+                        <li>Ordene os alunos por nome</li>
+                        <li>Crie uma página de <strong>estatísticas</strong>: total de alunos, total de cursos, curso com mais alunos</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 18 — Layout, Partial Views e Bootstrap</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Pesquise o que é o <strong>_Layout.cshtml</strong> no ASP.NET Core</li>
+                        <li>Leia sobre <strong>Partial Views</strong> e <strong>View Components</strong></li>
+                        <li>Acesse <strong>getbootstrap.com</strong> e explore os componentes disponíveis</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 17 — Relacionamentos e EF Core Avançado</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

@@ -1,0 +1,663 @@
+/* ============================================
+   UNINOVE - Desenvolvimento Web
+   Template de Slides HTML
+   ============================================ */
+
+/* Reset e base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a2e;
+    color: #333;
+    overflow: hidden;
+}
+
+/* Container de apresentação */
+.presentation {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Slide individual */
+.slide {
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    padding: 60px 80px 80px 80px;
+    overflow: hidden;
+}
+
+.slide.active {
+    display: flex;
+}
+
+/* ============================================
+   DECORAÇÕES DO TEMPLATE UNINOVE
+   ============================================ */
+
+/* Triângulo superior esquerdo (azul escuro) */
+.slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 120px 120px 0 0;
+    border-color: #00274D transparent transparent transparent;
+    z-index: 10;
+}
+
+/* Triângulo inferior direito (azul escuro) */
+.slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 80px 80px;
+    border-color: transparent transparent #00274D transparent;
+    z-index: 10;
+}
+
+/* Decoração coral no canto superior direito */
+.slide-decor-tr {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 100px 100px 0;
+    border-color: transparent #C84B31 transparent transparent;
+    z-index: 10;
+    opacity: 0.7;
+}
+
+/* Barra lateral esquerda decorativa */
+.slide-bar-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg, #00274D 0%, #C84B31 100%);
+    z-index: 10;
+}
+
+/* Logo UNINOVE no rodapé */
+.slide-footer {
+    position: absolute;
+    bottom: 15px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+}
+
+.slide-footer img {
+    height: 40px;
+}
+
+.slide-footer .footer-text {
+    font-size: 10px;
+    color: #666;
+    line-height: 1.3;
+}
+
+/* Número do slide */
+.slide-number {
+    position: absolute;
+    bottom: 15px;
+    right: 30px;
+    font-size: 12px;
+    color: #999;
+    z-index: 20;
+}
+
+/* ============================================
+   TIPOGRAFIA
+   ============================================ */
+
+h1 {
+    color: #00274D;
+    font-size: 2.8em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+h2 {
+    color: #00274D;
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+h3 {
+    color: #C84B31;
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.25em;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* ============================================
+   LISTAS
+   ============================================ */
+
+ul, ol {
+    padding-left: 30px;
+    margin-bottom: 15px;
+}
+
+li {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+ul li::marker {
+    color: #C84B31;
+    font-size: 1.2em;
+}
+
+ol li::marker {
+    color: #00274D;
+    font-weight: 700;
+}
+
+/* ============================================
+   LAYOUTS DE SLIDE
+   ============================================ */
+
+/* Slide de capa */
+.slide-cover {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #00274D 0%, #003366 50%, #004080 100%);
+    padding: 60px;
+}
+
+.slide-cover h1 {
+    color: #ffffff;
+    font-size: 3.2em;
+    margin-bottom: 10px;
+}
+
+.slide-cover h2 {
+    color: #C84B31;
+    font-size: 1.8em;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.slide-cover p {
+    color: rgba(255,255,255,0.8);
+    font-size: 1.2em;
+}
+
+.slide-cover::before {
+    border-color: rgba(255,255,255,0.1) transparent transparent transparent;
+}
+
+.slide-cover::after {
+    border-color: transparent transparent rgba(255,255,255,0.1) transparent;
+}
+
+.slide-cover .slide-decor-tr {
+    border-color: transparent rgba(200,75,49,0.5) transparent transparent;
+}
+
+/* Slide de seção / divisor */
+.slide-section {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.slide-section h1 {
+    font-size: 3em;
+    color: #00274D;
+}
+
+.slide-section h2 {
+    color: #C84B31;
+    font-weight: 400;
+}
+
+/* Slide de conteúdo padrão */
+.slide-content {
+    padding-top: 40px;
+}
+
+.slide-content .slide-header {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #C84B31;
+}
+
+.slide-content .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Layout duas colunas */
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.two-columns-60-40 {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* ============================================
+   BLOCOS DE CÓDIGO
+   ============================================ */
+
+pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px 25px;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: 15px 0;
+    border-left: 4px solid #C84B31;
+}
+
+code {
+    font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.inline-code {
+    background-color: #f0f0f0;
+    color: #C84B31;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+/* Syntax highlighting */
+.keyword { color: #569CD6; }
+.string { color: #CE9178; }
+.comment { color: #6A9955; }
+.type { color: #4EC9B0; }
+.number { color: #B5CEA8; }
+.tag { color: #569CD6; }
+.attr { color: #9CDCFE; }
+.value { color: #CE9178; }
+.html-tag { color: #808080; }
+.html-name { color: #569CD6; }
+.html-attr { color: #9CDCFE; }
+.html-value { color: #CE9178; }
+.css-prop { color: #9CDCFE; }
+.css-val { color: #CE9178; }
+.css-sel { color: #D7BA7D; }
+.js-keyword { color: #C586C0; }
+.js-func { color: #DCDCAA; }
+.js-string { color: #CE9178; }
+.js-var { color: #9CDCFE; }
+
+/* ============================================
+   CAIXAS DE DESTAQUE
+   ============================================ */
+
+.box-info {
+    background-color: #E8F4FD;
+    border-left: 5px solid #2196F3;
+    padding: 20px 25px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+}
+
+.box-info p {
+    color: #1565C0;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.box-warning {
+    background-color: #FFF3E0;
+    border-left: 5px solid #FF9800;
+    padding: 20px 25px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+}
+
+.box-warning p {
+    color: #E65100;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.box-success {
+    background-color: #E8F5E9;
+    border-left: 5px solid #4CAF50;
+    padding: 20px 25px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+}
+
+.box-success p {
+    color: #2E7D32;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.box-exercise {
+    background: linear-gradient(135deg, #FFF8E1, #FFF3E0);
+    border: 2px solid #FFB74D;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.box-exercise h3 {
+    color: #E65100;
+    margin-bottom: 10px;
+}
+
+.box-exercise p {
+    color: #BF360C;
+    font-size: 1.05em;
+}
+
+/* Caixa de atividade pré-aula */
+.box-preclass {
+    background: linear-gradient(135deg, #E8EAF6, #C5CAE9);
+    border: 2px solid #5C6BC0;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.box-preclass h3 {
+    color: #283593;
+    margin-bottom: 10px;
+}
+
+.box-preclass h3::before {
+    content: '📖 ';
+}
+
+.box-preclass p, .box-preclass li {
+    color: #1A237E;
+    font-size: 1.05em;
+}
+
+/* ============================================
+   TABELAS
+   ============================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 1em;
+}
+
+th {
+    background-color: #00274D;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #e9ecef;
+}
+
+/* ============================================
+   IMAGENS E FIGURAS
+   ============================================ */
+
+.slide img.diagram {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+figure {
+    text-align: center;
+    margin: 15px 0;
+}
+
+figcaption {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* ============================================
+   BADGES E TAGS
+   ============================================ */
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin: 2px;
+}
+
+.badge-blue { background: #E3F2FD; color: #1565C0; }
+.badge-red { background: #FFEBEE; color: #C62828; }
+.badge-green { background: #E8F5E9; color: #2E7D32; }
+.badge-orange { background: #FFF3E0; color: #E65100; }
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   NAVEGAÇÃO
+   ============================================ */
+
+.nav-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.nav-controls button {
+    background-color: #00274D;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    opacity: 0.7;
+}
+
+.nav-controls button:hover {
+    background-color: #C84B31;
+    opacity: 1;
+}
+
+/* Barra de progresso */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #C84B31, #00274D);
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
+
+/* ============================================
+   RESPONSIVIDADE (para projeção)
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .slide {
+        padding: 40px 50px 60px 50px;
+    }
+    h1 { font-size: 2.2em; }
+    h2 { font-size: 1.6em; }
+    p, li { font-size: 1em; }
+    pre { font-size: 0.85em; }
+}
+
+/* ============================================
+   SLIDE DE AGENDA
+   ============================================ */
+
+.agenda-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: agenda;
+}
+
+.agenda-list li {
+    counter-increment: agenda;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #C84B31;
+    font-size: 1.2em;
+    transition: transform 0.2s;
+}
+
+.agenda-list li::before {
+    content: counter(agenda) ". ";
+    color: #00274D;
+    font-weight: 700;
+}
+
+.agenda-list li:hover {
+    transform: translateX(5px);
+    background: #e9ecef;
+}
+
+/* ============================================
+   TIMELINE / METODOLOGIA
+   ============================================ */
+
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #C84B31;
+}
+
+.timeline-item {
+    text-align: center;
+    flex: 1;
+    position: relative;
+    padding: 0 10px;
+}
+
+.timeline-dot {
+    width: 20px;
+    height: 20px;
+    background: #00274D;
+    border-radius: 50%;
+    margin: 20px auto 15px;
+    border: 3px solid #C84B31;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-item h3 {
+    font-size: 1em;
+    color: #00274D;
+    margin-bottom: 5px;
+}
+
+.timeline-item p {
+    font-size: 0.85em;
+    color: #666;
+}
+
+/* ============================================
+   ÍCONES INLINE (usando Unicode)
+   ============================================ */
+
+.icon-check::before { content: '✓ '; color: #4CAF50; font-weight: bold; }
+.icon-arrow::before { content: '→ '; color: #C84B31; }
+.icon-star::before { content: '★ '; color: #FFB74D; }
+.icon-book::before { content: '📖 '; }
+.icon-code::before { content: '💻 '; }
+.icon-exercise::before { content: '✏️ '; }

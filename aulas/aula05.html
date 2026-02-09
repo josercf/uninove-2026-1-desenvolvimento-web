@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 05 - CSS Avançado e Formulários | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 05 — CSS Avançado e Formulários HTML</h2>
+            <p>Unidades de Medida e Elementos de Formulário</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>Qual a diferença entre medidas absolutas e relativas?</li>
+                        <li>Quando usar <span class="inline-code">px</span> e quando usar <span class="inline-code">em</span> ou <span class="inline-code">rem</span>?</li>
+                        <li>Quais elementos de formulário vocês encontraram na pesquisa?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>Unidades de Medida no CSS</li>
+                    <li>Medidas Absolutas (px)</li>
+                    <li>Medidas Relativas (em, rem, %, vw, vh)</li>
+                    <li>Formulários HTML</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-section">
+            <h1>Unidades de Medida</h1>
+            <h2>Absolutas vs. Relativas</h2>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Medidas Absolutas</h2></div>
+            <div class="slide-body">
+                <p>Medidas absolutas são <strong>fixas</strong> e não mudam de acordo com o dispositivo. A mais comum é o <strong>pixel (px)</strong>.</p>
+                <table>
+                    <thead><tr><th>Unidade</th><th>Nome</th><th>Equivalência</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>px</strong></td><td>Pixel</td><td>1px = 1 ponto na tela</td></tr>
+                        <tr><td>cm</td><td>Centímetro</td><td>1cm = 37.8px</td></tr>
+                        <tr><td>mm</td><td>Milímetro</td><td>1mm = 3.78px</td></tr>
+                        <tr><td>pt</td><td>Ponto</td><td>1pt = 1.33px</td></tr>
+                    </tbody>
+                </table>
+                <div class="box-warning" style="margin-top: 10px;">
+                    <p><strong>Atenção:</strong> O pixel do CSS não é exatamente o pixel físico da tela. É um "pixel de referência" que pode variar conforme a densidade da tela.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Medidas Relativas</h2></div>
+            <div class="slide-body">
+                <p>Medidas relativas são calculadas com base em <strong>outra unidade de referência</strong>, permitindo layouts mais flexíveis.</p>
+                <table>
+                    <thead><tr><th>Unidade</th><th>Referência</th><th>Exemplo</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>em</strong></td><td>Font-size do elemento pai</td><td>Se pai = 16px, 2em = 32px</td></tr>
+                        <tr><td><strong>rem</strong></td><td>Font-size do &lt;html&gt; (raiz)</td><td>Se raiz = 16px, 1.5rem = 24px</td></tr>
+                        <tr><td><strong>%</strong></td><td>Tamanho do elemento pai</td><td>50% da largura do pai</td></tr>
+                        <tr><td><strong>vw</strong></td><td>Largura da viewport</td><td>100vw = largura total da tela</td></tr>
+                        <tr><td><strong>vh</strong></td><td>Altura da viewport</td><td>100vh = altura total da tela</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exemplo: em vs. rem</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div>
+                        <h3>Usando em</h3>
+                        <pre>
+<span class="css-sel">.pai</span> {
+    <span class="css-prop">font-size</span>: <span class="css-val">16px</span>;
+}
+<span class="css-sel">.filho</span> {
+    <span class="css-prop">font-size</span>: <span class="css-val">2em</span>;
+    <span class="comment">/* 2 × 16px = 32px */</span>
+    <span class="css-prop">padding</span>: <span class="css-val">1em</span>;
+    <span class="comment">/* 1 × 32px = 32px */</span>
+}</pre>
+                        <div class="box-warning" style="margin-top: 10px;">
+                            <p style="font-size: 0.9em;">O <span class="inline-code">em</span> pode gerar efeito cascata!</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Usando rem</h3>
+                        <pre>
+<span class="css-sel">html</span> {
+    <span class="css-prop">font-size</span>: <span class="css-val">16px</span>;
+}
+<span class="css-sel">.elemento</span> {
+    <span class="css-prop">font-size</span>: <span class="css-val">2rem</span>;
+    <span class="comment">/* 2 × 16px = 32px */</span>
+    <span class="css-prop">padding</span>: <span class="css-val">1rem</span>;
+    <span class="comment">/* 1 × 16px = 16px */</span>
+}</pre>
+                        <div class="box-success" style="margin-top: 10px;">
+                            <p style="font-size: 0.9em;">O <span class="inline-code">rem</span> é sempre relativo à raiz!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-section">
+            <h1>Formulários HTML</h1>
+            <h2>Interação entre usuário e aplicação</h2>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Formulários HTML</h2></div>
+            <div class="slide-body">
+                <p>Formulários são o principal ponto de <strong>interação</strong> entre o usuário e a aplicação web. Permitem que os usuários enviem dados para o servidor.</p>
+                <pre>
+<span class="html-name">&lt;form</span> <span class="html-attr">action=</span><span class="html-value">"/processar"</span> <span class="html-attr">method=</span><span class="html-value">"POST"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;label</span> <span class="html-attr">for=</span><span class="html-value">"nome"</span><span class="html-name">&gt;</span>Nome:<span class="html-name">&lt;/label&gt;</span>
+    <span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"text"</span> <span class="html-attr">id=</span><span class="html-value">"nome"</span> <span class="html-attr">name=</span><span class="html-value">"nome"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;button</span> <span class="html-attr">type=</span><span class="html-value">"submit"</span><span class="html-name">&gt;</span>Enviar<span class="html-name">&lt;/button&gt;</span>
+<span class="html-name">&lt;/form&gt;</span></pre>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p><strong>action</strong> define para onde os dados serão enviados. <strong>method</strong> define o método HTTP (GET ou POST).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Tipos de Input</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Tipo</th><th>Código</th><th>Uso</th></tr></thead>
+                    <tbody>
+                        <tr><td>Texto</td><td><span class="inline-code">&lt;input type="text"&gt;</span></td><td>Nome, endereço</td></tr>
+                        <tr><td>E-mail</td><td><span class="inline-code">&lt;input type="email"&gt;</span></td><td>Validação automática</td></tr>
+                        <tr><td>Senha</td><td><span class="inline-code">&lt;input type="password"&gt;</span></td><td>Oculta caracteres</td></tr>
+                        <tr><td>Número</td><td><span class="inline-code">&lt;input type="number"&gt;</span></td><td>Valores numéricos</td></tr>
+                        <tr><td>Data</td><td><span class="inline-code">&lt;input type="date"&gt;</span></td><td>Seletor de data</td></tr>
+                        <tr><td>Checkbox</td><td><span class="inline-code">&lt;input type="checkbox"&gt;</span></td><td>Múltipla escolha</td></tr>
+                        <tr><td>Radio</td><td><span class="inline-code">&lt;input type="radio"&gt;</span></td><td>Escolha única</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Outros Elementos de Formulário</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">&lt;!-- Área de texto (múltiplas linhas) --&gt;</span>
+<span class="html-name">&lt;textarea</span> <span class="html-attr">name=</span><span class="html-value">"mensagem"</span> <span class="html-attr">rows=</span><span class="html-value">"4"</span> <span class="html-attr">cols=</span><span class="html-value">"50"</span><span class="html-name">&gt;&lt;/textarea&gt;</span>
+
+<span class="comment">&lt;!-- Lista suspensa --&gt;</span>
+<span class="html-name">&lt;select</span> <span class="html-attr">name=</span><span class="html-value">"estado"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">"SP"</span><span class="html-name">&gt;</span>São Paulo<span class="html-name">&lt;/option&gt;</span>
+    <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">"RJ"</span><span class="html-name">&gt;</span>Rio de Janeiro<span class="html-name">&lt;/option&gt;</span>
+    <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">"MG"</span><span class="html-name">&gt;</span>Minas Gerais<span class="html-name">&lt;/option&gt;</span>
+<span class="html-name">&lt;/select&gt;</span>
+
+<span class="comment">&lt;!-- Botão de envio --&gt;</span>
+<span class="html-name">&lt;button</span> <span class="html-attr">type=</span><span class="html-value">"submit"</span><span class="html-name">&gt;</span>Enviar<span class="html-name">&lt;/button&gt;</span></pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Página de Apresentação com Unidades de Medida</h3>
+                    <ol>
+                        <li>Crie uma página HTML com um cabeçalho "Bem-vindo à Minha Página"</li>
+                        <li>Defina a largura da página como <strong>800px</strong> e centralize</li>
+                        <li>Configure o cabeçalho com altura de <strong>100px</strong> e texto centralizado</li>
+                        <li>Adicione um parágrafo com largura de <strong>600px</strong> e margem superior de <strong>20px</strong></li>
+                        <li>Agora refaça o mesmo exercício substituindo <strong>px</strong> por <strong>em</strong></li>
+                        <li>Compare os resultados ao redimensionar a janela do navegador</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Formulário de Cadastro Completo</h3>
+                    <p>Crie um formulário de cadastro com os seguintes campos:</p>
+                    <ol style="margin-top: 10px;">
+                        <li><strong>Nome completo</strong> (text, obrigatório)</li>
+                        <li><strong>E-mail</strong> (email, obrigatório)</li>
+                        <li><strong>Senha</strong> (password, mínimo 6 caracteres)</li>
+                        <li><strong>Data de nascimento</strong> (date)</li>
+                        <li><strong>Gênero</strong> (radio buttons: Masculino/Feminino/Outro)</li>
+                        <li><strong>Estado</strong> (select com pelo menos 5 opções)</li>
+                        <li><strong>Interesses</strong> (checkboxes: Tecnologia, Esportes, Música, Leitura)</li>
+                        <li><strong>Observações</strong> (textarea)</li>
+                        <li>Botões de <strong>Enviar</strong> e <strong>Limpar</strong></li>
+                    </ol>
+                    <p style="margin-top: 10px;">Estilize o formulário com CSS externo usando unidades <strong>rem</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 06 — Introdução ao JavaScript</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Assista a um tutorial básico de <strong>JavaScript</strong> (variáveis, tipos de dados, operadores)</li>
+                        <li>Pesquise o que é o <strong>DOM</strong> (Document Object Model)</li>
+                        <li>Leia sobre <span class="inline-code">document.getElementById()</span> e <span class="inline-code">document.querySelector()</span></li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 40 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 05 — CSS Avançado e Formulários HTML</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>

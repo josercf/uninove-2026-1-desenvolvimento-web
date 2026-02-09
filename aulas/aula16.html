@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 16 - API REST | Desenvolvimento Web - UNINOVE</title>
+    <link rel="stylesheet" href="css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <div class="slide slide-cover active">
+            <h1>Desenvolvimento Web</h1>
+            <h2>Aula 16 — API REST com ASP.NET Core</h2>
+            <p>Web API, Endpoints, Swagger e Consumo</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Discussão (10 min)</h3>
+                    <ol>
+                        <li>O que é uma API REST?</li>
+                        <li>Quais verbos HTTP são usados em uma API REST?</li>
+                        <li>O que é o Swagger e para que serve?</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Agenda</h2></div>
+            <div class="slide-body">
+                <ul class="agenda-list">
+                    <li>O que é uma API REST?</li>
+                    <li>MVC Controller vs. API Controller</li>
+                    <li>Criando uma Web API</li>
+                    <li>Status Codes HTTP</li>
+                    <li>Swagger / OpenAPI</li>
+                    <li>Consumindo a API com Fetch</li>
+                    <li>Exercícios Práticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>O que é uma API REST?</h2></div>
+            <div class="slide-body">
+                <p><strong>API</strong> (Application Programming Interface) é uma interface que permite que diferentes sistemas se comuniquem. <strong>REST</strong> (Representational State Transfer) é um estilo arquitetural que usa HTTP para essa comunicação.</p>
+                <table style="margin-top: 15px;">
+                    <thead><tr><th>Verbo HTTP</th><th>Operação</th><th>Endpoint</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="badge badge-green">GET</span></td><td>Listar todos</td><td><span class="inline-code">/api/alunos</span></td></tr>
+                        <tr><td><span class="badge badge-green">GET</span></td><td>Buscar por ID</td><td><span class="inline-code">/api/alunos/5</span></td></tr>
+                        <tr><td><span class="badge badge-blue">POST</span></td><td>Criar novo</td><td><span class="inline-code">/api/alunos</span></td></tr>
+                        <tr><td><span class="badge badge-orange">PUT</span></td><td>Atualizar</td><td><span class="inline-code">/api/alunos/5</span></td></tr>
+                        <tr><td><span class="badge badge-red">DELETE</span></td><td>Excluir</td><td><span class="inline-code">/api/alunos/5</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>API Controller</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Controllers/Api/AlunosApiController.cs</span>
+[<span class="type">Route</span>(<span class="string">"api/[controller]"</span>)]
+[<span class="type">ApiController</span>]
+<span class="keyword">public class</span> <span class="type">AlunosApiController</span> : <span class="type">ControllerBase</span>
+{
+    <span class="keyword">private readonly</span> <span class="type">AppDbContext</span> _context;
+
+    <span class="keyword">public</span> <span class="type">AlunosApiController</span>(<span class="type">AppDbContext</span> context)
+    {
+        _context = context;
+    }
+
+    <span class="comment">// GET: api/AlunosApi</span>
+    [<span class="type">HttpGet</span>]
+    <span class="keyword">public</span> <span class="type">ActionResult</span>&lt;<span class="type">IEnumerable</span>&lt;<span class="type">Aluno</span>&gt;&gt; <span class="js-func">GetAlunos</span>()
+    {
+        <span class="keyword">return</span> _context.Alunos.<span class="js-func">ToList</span>();
+    }
+
+    <span class="comment">// GET: api/AlunosApi/5</span>
+    [<span class="type">HttpGet</span>(<span class="string">"{id}"</span>)]
+    <span class="keyword">public</span> <span class="type">ActionResult</span>&lt;<span class="type">Aluno</span>&gt; <span class="js-func">GetAluno</span>(<span class="keyword">int</span> id)
+    {
+        <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
+        <span class="keyword">if</span> (aluno == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+        <span class="keyword">return</span> aluno;
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>POST, PUT e DELETE</h2></div>
+            <div class="slide-body">
+                <pre style="font-size: 0.85em;">
+<span class="comment">// POST: api/AlunosApi</span>
+[<span class="type">HttpPost</span>]
+<span class="keyword">public</span> <span class="type">ActionResult</span>&lt;<span class="type">Aluno</span>&gt; <span class="js-func">PostAluno</span>(<span class="type">Aluno</span> aluno)
+{
+    _context.Alunos.<span class="js-func">Add</span>(aluno);
+    _context.<span class="js-func">SaveChanges</span>();
+    <span class="keyword">return</span> <span class="js-func">CreatedAtAction</span>(<span class="keyword">nameof</span>(GetAluno), <span class="keyword">new</span> { id = aluno.Id }, aluno);
+}
+
+<span class="comment">// PUT: api/AlunosApi/5</span>
+[<span class="type">HttpPut</span>(<span class="string">"{id}"</span>)]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">PutAluno</span>(<span class="keyword">int</span> id, <span class="type">Aluno</span> aluno)
+{
+    <span class="keyword">if</span> (id != aluno.Id) <span class="keyword">return</span> <span class="js-func">BadRequest</span>();
+    _context.<span class="js-func">Update</span>(aluno);
+    _context.<span class="js-func">SaveChanges</span>();
+    <span class="keyword">return</span> <span class="js-func">NoContent</span>();
+}
+
+<span class="comment">// DELETE: api/AlunosApi/5</span>
+[<span class="type">HttpDelete</span>(<span class="string">"{id}"</span>)]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">DeleteAluno</span>(<span class="keyword">int</span> id)
+{
+    <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
+    <span class="keyword">if</span> (aluno == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+    _context.Alunos.<span class="js-func">Remove</span>(aluno);
+    _context.<span class="js-func">SaveChanges</span>();
+    <span class="keyword">return</span> <span class="js-func">NoContent</span>();
+}</pre>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Status Codes HTTP</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Código</th><th>Significado</th><th>Método no ASP.NET</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="badge badge-green">200</span></td><td>OK — Sucesso</td><td><span class="inline-code">Ok()</span></td></tr>
+                        <tr><td><span class="badge badge-green">201</span></td><td>Created — Recurso criado</td><td><span class="inline-code">CreatedAtAction()</span></td></tr>
+                        <tr><td><span class="badge badge-blue">204</span></td><td>No Content — Sucesso sem corpo</td><td><span class="inline-code">NoContent()</span></td></tr>
+                        <tr><td><span class="badge badge-orange">400</span></td><td>Bad Request — Dados inválidos</td><td><span class="inline-code">BadRequest()</span></td></tr>
+                        <tr><td><span class="badge badge-red">404</span></td><td>Not Found — Não encontrado</td><td><span class="inline-code">NotFound()</span></td></tr>
+                        <tr><td><span class="badge badge-red">500</span></td><td>Internal Server Error</td><td>Exceção não tratada</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Swagger / OpenAPI</h2></div>
+            <div class="slide-body">
+                <p>O <strong>Swagger</strong> gera automaticamente uma documentação interativa da sua API, permitindo testar os endpoints diretamente no navegador.</p>
+                <pre>
+<span class="comment">// Program.cs — já vem configurado no template</span>
+builder.Services.<span class="js-func">AddEndpointsApiExplorer</span>();
+builder.Services.<span class="js-func">AddSwaggerGen</span>();
+
+<span class="comment">// Habilitar Swagger (apenas em desenvolvimento)</span>
+<span class="keyword">if</span> (app.Environment.<span class="js-func">IsDevelopment</span>())
+{
+    app.<span class="js-func">UseSwagger</span>();
+    app.<span class="js-func">UseSwaggerUI</span>();
+}</pre>
+                <div class="box-success" style="margin-top: 15px;">
+                    <p>Acesse <strong>https://localhost:5001/swagger</strong> para ver a documentação interativa!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>API REST de Alunos</h3>
+                    <ol>
+                        <li>Crie um <span class="inline-code">AlunosApiController</span> com os 5 endpoints REST</li>
+                        <li>Configure o Swagger no projeto</li>
+                        <li>Teste todos os endpoints pelo Swagger: GET, POST, PUT, DELETE</li>
+                        <li>Cadastre 3 alunos via POST</li>
+                        <li>Liste todos via GET</li>
+                        <li>Edite um aluno via PUT</li>
+                        <li>Exclua um aluno via DELETE</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-body">
+                <div class="box-exercise">
+                    <h3>Consumindo a API com JavaScript</h3>
+                    <ol>
+                        <li>Crie uma página HTML que consuma a API de Alunos</li>
+                        <li>Use <span class="inline-code">fetch()</span> para listar todos os alunos em uma tabela</li>
+                        <li>Adicione um formulário para cadastrar alunos via POST</li>
+                        <li>Adicione botões de "Editar" e "Excluir" em cada linha</li>
+                        <li>Tudo deve funcionar <strong>sem recarregar a página</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="box-preclass">
+                    <h3>Atividade Pré-Aula (Obrigatória)</h3>
+                    <p>Para a <strong>Aula 17 — Relacionamentos e EF Core Avançado</strong>:</p>
+                    <ol style="margin-top: 10px;">
+                        <li>Pesquise sobre <strong>relacionamentos</strong> em banco de dados (1:N, N:N)</li>
+                        <li>Leia sobre <strong>chaves estrangeiras</strong> (Foreign Keys)</li>
+                        <li>Pesquise o que é <strong>LINQ</strong> no C#</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide slide-cover">
+            <h1>Obrigado!</h1>
+            <h2>Dúvidas?</h2>
+            <p>jose.romualdo@uni9.pro.br</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 16 — API REST com ASP.NET Core</p>
+        </div>
+
+    </div>
+    <script src="js/slides.js"></script>
+</body>
+</html>
