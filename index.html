@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvimento Web — UNINOVE 2026.1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(229, 75, 75, 0.15);
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(229, 75, 75, 0.15);
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        }
+        .header img {
+            height: 60px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+        .header h1 {
+            font-size: 2.2em;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.1em;
+            color: rgba(255,255,255,0.7);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+        .bloco {
+            margin-bottom: 30px;
+        }
+        .bloco-title {
+            font-size: 1.1em;
+            color: #e54b4b;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 15px;
+            border-left: 4px solid #e54b4b;
+        }
+        .aulas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .aula-card {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 18px 20px;
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .aula-card:hover {
+            background: #1a2a4a;
+            border-color: #e54b4b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .aula-num {
+            background: #e54b4b;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85em;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .aula-info h3 {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        .aula-info p {
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.5);
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85em;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer a {
+            color: #e54b4b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="aulas/img/uninove-logo.png" alt="UNINOVE">
+        <h1>Desenvolvimento Web</h1>
+        <p>2026.1 &mdash; ASP.NET Core MVC &bull; C# &bull; MySQL &bull; 20 aulas &times; 120 min</p>
+    </div>
+
+    <div class="container">
+
+        <div class="bloco">
+            <div class="bloco-title">Bloco 1 &mdash; Fundamentos Web</div>
+            <div class="aulas-grid">
+                <a class="aula-card" href="aulas/aula01.html">
+                    <div class="aula-num">01</div>
+                    <div class="aula-info">
+                        <h3>Apresentação da Disciplina</h3>
+                        <p>Introdução ao Desenvolvimento Web</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula02.html">
+                    <div class="aula-num">02</div>
+                    <div class="aula-info">
+                        <h3>Estrutura da Web</h3>
+                        <p>Redes TCP/IP, HTTP, DNS</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula03.html">
+                    <div class="aula-num">03</div>
+                    <div class="aula-info">
+                        <h3>Introdução ao HTML</h3>
+                        <p>Tags, semântica, estrutura</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula04.html">
+                    <div class="aula-num">04</div>
+                    <div class="aula-info">
+                        <h3>Introdução ao CSS</h3>
+                        <p>Seletores, box model, flexbox</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula05.html">
+                    <div class="aula-num">05</div>
+                    <div class="aula-info">
+                        <h3>CSS Avançado e Formulários</h3>
+                        <p>Grid, medidas, inputs HTML5</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula06.html">
+                    <div class="aula-num">06</div>
+                    <div class="aula-info">
+                        <h3>Introdução ao JavaScript</h3>
+                        <p>Variáveis, DOM, eventos</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="bloco">
+            <div class="bloco-title">Bloco 2 &mdash; ASP.NET Core MVC</div>
+            <div class="aulas-grid">
+                <a class="aula-card" href="aulas/aula07.html">
+                    <div class="aula-num">07</div>
+                    <div class="aula-info">
+                        <h3>Ambiente de Desenvolvimento .NET</h3>
+                        <p>SDK, CLI, Visual Studio, projeto</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula08.html">
+                    <div class="aula-num">08</div>
+                    <div class="aula-info">
+                        <h3>Primeiros Passos com MVC</h3>
+                        <p>Controllers, Views, Razor, ViewBag</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula09.html">
+                    <div class="aula-num">09</div>
+                    <div class="aula-info">
+                        <h3>Estruturas de Controle em C#</h3>
+                        <p>if/else, for, foreach, List&lt;T&gt;</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula10.html">
+                    <div class="aula-num">10</div>
+                    <div class="aula-info">
+                        <h3>Formulários e Models</h3>
+                        <p>Tag Helpers, Model Binding, validação</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="bloco">
+            <div class="bloco-title">Bloco 3 &mdash; Banco de Dados e Recursos</div>
+            <div class="aulas-grid">
+                <a class="aula-card" href="aulas/aula11.html">
+                    <div class="aula-num">11</div>
+                    <div class="aula-info">
+                        <h3>Entity Framework Core e MySQL</h3>
+                        <p>ORM, DbContext, Migrations</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula12.html">
+                    <div class="aula-num">12</div>
+                    <div class="aula-info">
+                        <h3>CRUD Completo</h3>
+                        <p>Create, Read, Update, Delete</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula13.html">
+                    <div class="aula-num">13</div>
+                    <div class="aula-info">
+                        <h3>Cookies e Sessões</h3>
+                        <p>Gerenciamento de estado</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula14.html">
+                    <div class="aula-num">14</div>
+                    <div class="aula-info">
+                        <h3>Requisições Assíncronas (AJAX)</h3>
+                        <p>Fetch API, JSON</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula15.html">
+                    <div class="aula-num">15</div>
+                    <div class="aula-info">
+                        <h3>Autenticação e Autorização</h3>
+                        <p>Login, BCrypt, [Authorize]</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="bloco">
+            <div class="bloco-title">Bloco 4 &mdash; Avançado e Deploy</div>
+            <div class="aulas-grid">
+                <a class="aula-card" href="aulas/aula16.html">
+                    <div class="aula-num">16</div>
+                    <div class="aula-info">
+                        <h3>API REST</h3>
+                        <p>Web API, Swagger, endpoints</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula17.html">
+                    <div class="aula-num">17</div>
+                    <div class="aula-info">
+                        <h3>Relacionamentos e EF Core Avançado</h3>
+                        <p>1:N, Include, LINQ</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula18.html">
+                    <div class="aula-num">18</div>
+                    <div class="aula-info">
+                        <h3>Layout, Partial Views e Bootstrap</h3>
+                        <p>_Layout, componentes, grid</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula19.html">
+                    <div class="aula-num">19</div>
+                    <div class="aula-info">
+                        <h3>Publicação e Deploy</h3>
+                        <p>Docker, variáveis de ambiente, nuvem</p>
+                    </div>
+                </a>
+                <a class="aula-card" href="aulas/aula20.html">
+                    <div class="aula-num">20</div>
+                    <div class="aula-info">
+                        <h3>Revisão Geral e Projeto Final</h3>
+                        <p>Consolidação e especificação</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Prof. José Romualdo &mdash; <a href="mailto:jose.romualdo@uni9.pro.br">jose.romualdo@uni9.pro.br</a></p>
+        <p style="margin-top: 5px;">UNINOVE &mdash; Desenvolvimento Web &mdash; 2026.1</p>
+    </div>
+
+</body>
+</html>
