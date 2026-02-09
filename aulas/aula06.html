@@ -9,6 +9,7 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 06 — Introdução ao JavaScript</h2>
@@ -16,77 +17,104 @@
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 05</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é JavaScript e para que serve?</li>
-                        <li>O que é o DOM (Document Object Model)?</li>
-                        <li>Qual a diferença entre <span class="inline-code">getElementById</span> e <span class="inline-code">querySelector</span>?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>Flexbox:</strong> Layout em 1 dimensão — justify-content, align-items, gap</li>
+                        <li class="recap-item"><strong>Grid:</strong> Layout em 2 dimensões — grid-template-columns, grid-template-rows</li>
+                        <li class="recap-item"><strong>Formulários:</strong> &lt;form&gt;, &lt;input&gt;, &lt;select&gt;, &lt;textarea&gt; para coletar dados</li>
+                        <li class="recap-item"><strong>Validação HTML:</strong> required, minlength, type="email" para validação nativa</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Mini Quiz (início — reforço aulas passadas) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz — Revisão</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Vamos relembrar!</h3>
+                    <p class="quiz-question">Qual propriedade CSS transforma um elemento em um <strong>container Flexbox</strong>?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) position: flex;</button></li>
+                        <li><button class="quiz-option" data-option="b">b) flex: 1;</button></li>
+                        <li><button class="quiz-option" data-option="c">c) display: flex;</button></li>
+                        <li><button class="quiz-option" data-option="d">d) layout: flexbox;</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. <span class="inline-code">display: flex;</span> ativa o Flexbox no container. <span class="inline-code">flex: 1;</span> é uma propriedade dos itens filhos.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
                     <li>O que é JavaScript?</li>
                     <li>Variáveis e Tipos de Dados</li>
-                    <li>Operadores</li>
-                    <li>Estruturas de Controle</li>
+                    <li>Operadores e Estruturas de Controle</li>
                     <li>Manipulação do DOM</li>
-                    <li>Validação de Formulários</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Eventos e Validação de Formulários</li>
+                    <li>Caso de Uso Real: Mercado Livre</li>
+                    <li>Exercício Guiado: Validação interativa</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 5: O que é JavaScript -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>O que é JavaScript?</h2></div>
             <div class="slide-body">
-                <p>JavaScript é a linguagem de programação da Web. Enquanto HTML define a estrutura e CSS define a aparência, o JavaScript define o <strong>comportamento</strong> e a <strong>interatividade</strong> das páginas.</p>
-                <div class="two-columns" style="margin-top: 15px;">
-                    <div>
-                        <h3>Características</h3>
-                        <ul>
-                            <li>Linguagem <strong>interpretada</strong></li>
-                            <li>Executada no <strong>navegador</strong></li>
-                            <li><strong>Tipagem dinâmica</strong></li>
-                            <li>Baseada em <strong>eventos</strong></li>
-                        </ul>
+                <p>JavaScript é a linguagem de programação da Web. Enquanto HTML define a estrutura e CSS a aparência, o JS define o <strong>comportamento</strong> e a <strong>interatividade</strong>.</p>
+                <div class="concept-cards" style="margin-top: 15px;">
+                    <div class="concept-card">
+                        <span class="card-icon">🏗️</span>
+                        <h4>HTML</h4>
+                        <p>Estrutura (paredes)</p>
                     </div>
-                    <div>
-                        <h3>O que pode fazer?</h3>
-                        <ul>
-                            <li>Validar formulários</li>
-                            <li>Alterar conteúdo da página</li>
-                            <li>Reagir a cliques e eventos</li>
-                            <li>Fazer requisições ao servidor</li>
-                        </ul>
+                    <div class="concept-card">
+                        <span class="card-icon">🎨</span>
+                        <h4>CSS</h4>
+                        <p>Aparência (pintura)</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">⚡</span>
+                        <h4>JavaScript</h4>
+                        <p>Comportamento (automação)</p>
+                    </div>
+                </div>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">💡</span>
+                    <div class="analogy-text">
+                        <h4>Onde o JS roda?</h4>
+                        <p>No <strong>navegador</strong> (front-end) e também no <strong>servidor</strong> (Node.js). Nesta disciplina, usaremos JS no front-end e C# no back-end.</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: Variáveis -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Variáveis e Tipos de Dados</h2></div>
             <div class="slide-body">
                 <pre>
 <span class="comment">// Declaração de variáveis</span>
-<span class="js-keyword">let</span> <span class="js-var">nome</span> = <span class="js-string">"Maria"</span>;        <span class="comment">// String</span>
-<span class="js-keyword">let</span> <span class="js-var">idade</span> = <span class="number">25</span>;              <span class="comment">// Number</span>
-<span class="js-keyword">let</span> <span class="js-var">ativo</span> = <span class="keyword">true</span>;            <span class="comment">// Boolean</span>
-<span class="js-keyword">let</span> <span class="js-var">notas</span> = [<span class="number">8</span>, <span class="number">9</span>, <span class="number">7</span>];       <span class="comment">// Array</span>
-<span class="js-keyword">let</span> <span class="js-var">endereco</span> = <span class="keyword">null</span>;         <span class="comment">// Null</span>
+<span class="js-keyword">let</span> <span class="js-var">nome</span> = <span class="js-string">"Maria"</span>;        <span class="comment">// String (texto)</span>
+<span class="js-keyword">let</span> <span class="js-var">idade</span> = <span class="number">25</span>;              <span class="comment">// Number (número)</span>
+<span class="js-keyword">let</span> <span class="js-var">ativo</span> = <span class="keyword">true</span>;            <span class="comment">// Boolean (verdadeiro/falso)</span>
+<span class="js-keyword">let</span> <span class="js-var">notas</span> = [<span class="number">8</span>, <span class="number">9</span>, <span class="number">7</span>];       <span class="comment">// Array (lista)</span>
+<span class="js-keyword">let</span> <span class="js-var">endereco</span> = <span class="keyword">null</span>;         <span class="comment">// Null (vazio intencional)</span>
 
 <span class="comment">// Constante (não pode ser reatribuída)</span>
 <span class="js-keyword">const</span> <span class="js-var">PI</span> = <span class="number">3.14159</span>;
 
-<span class="comment">// Exibir no console</span>
+<span class="comment">// Exibir no console do navegador (F12)</span>
 <span class="js-var">console</span>.<span class="js-func">log</span>(<span class="js-var">nome</span>);           <span class="comment">// "Maria"</span>
 <span class="js-var">console</span>.<span class="js-func">log</span>(<span class="keyword">typeof</span> <span class="js-var">idade</span>);   <span class="comment">// "number"</span></pre>
                 <div class="box-info" style="margin-top: 10px;">
@@ -95,6 +123,7 @@
             </div>
         </div>
 
+        <!-- SLIDE 7: Operadores -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Operadores</h2></div>
             <div class="slide-body">
@@ -116,16 +145,16 @@
 <span class="js-var">a</span> === <span class="js-var">b</span>   <span class="comment">// idêntico (valor+tipo)</span>
 <span class="js-var">a</span> != <span class="js-var">b</span>    <span class="comment">// diferente</span>
 <span class="js-var">a</span> > <span class="js-var">b</span>     <span class="comment">// maior que</span>
-<span class="js-var">a</span> < <span class="js-var">b</span>     <span class="comment">// menor que</span>
-<span class="js-var">a</span> >= <span class="js-var">b</span>    <span class="comment">// maior ou igual</span></pre>
+<span class="js-var">a</span> < <span class="js-var">b</span>     <span class="comment">// menor que</span></pre>
+                        <div class="box-warning" style="margin-top: 10px;">
+                            <p>Sempre use <span class="inline-code">===</span> em vez de <span class="inline-code">==</span>!</p>
+                        </div>
                     </div>
-                </div>
-                <div class="box-warning" style="margin-top: 10px;">
-                    <p>Sempre use <span class="inline-code">===</span> (igualdade estrita) em vez de <span class="inline-code">==</span> para evitar conversões inesperadas.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: Estruturas de Controle -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Estruturas de Controle</h2></div>
             <div class="slide-body">
@@ -149,37 +178,33 @@
 <span class="js-keyword">let</span> <span class="js-var">frutas</span> = [<span class="js-string">"Maçã"</span>, 
   <span class="js-string">"Banana"</span>, <span class="js-string">"Laranja"</span>];
 
+<span class="js-keyword">for</span> (<span class="js-keyword">let</span> <span class="js-var">fruta</span> <span class="js-keyword">of</span> <span class="js-var">frutas</span>) {
+    <span class="js-var">console</span>.<span class="js-func">log</span>(<span class="js-var">fruta</span>);
+}
+
+<span class="comment">// for clássico</span>
 <span class="js-keyword">for</span> (<span class="js-keyword">let</span> <span class="js-var">i</span> = <span class="number">0</span>; 
      <span class="js-var">i</span> < <span class="js-var">frutas</span>.length; 
      <span class="js-var">i</span>++) {
     <span class="js-var">console</span>.<span class="js-func">log</span>(<span class="js-var">frutas</span>[<span class="js-var">i</span>]);
-}
-
-<span class="comment">// Ou com for...of</span>
-<span class="js-keyword">for</span> (<span class="js-keyword">let</span> <span class="js-var">fruta</span> <span class="js-keyword">of</span> <span class="js-var">frutas</span>) {
-    <span class="js-var">console</span>.<span class="js-func">log</span>(<span class="js-var">fruta</span>);
 }</pre>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="slide slide-section">
-            <h1>Manipulação do DOM</h1>
-            <h2>Alterando a página com JavaScript</h2>
-        </div>
-
+        <!-- SLIDE 9: Manipulação do DOM -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>O que é o DOM?</h2></div>
+            <div class="slide-header"><h2>Manipulação do DOM</h2></div>
             <div class="slide-body">
-                <p>O <strong>DOM</strong> (Document Object Model) é a representação em árvore de todos os elementos HTML da página. JavaScript pode acessar e modificar qualquer elemento do DOM.</p>
+                <p>O <strong>DOM</strong> é a representação em árvore do HTML. JavaScript pode acessar e modificar qualquer elemento:</p>
                 <pre>
 <span class="comment">// Selecionar elementos</span>
 <span class="js-keyword">let</span> <span class="js-var">titulo</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"meuTitulo"</span>);
 <span class="js-keyword">let</span> <span class="js-var">paragrafo</span> = <span class="js-var">document</span>.<span class="js-func">querySelector</span>(<span class="js-string">".destaque"</span>);
 <span class="js-keyword">let</span> <span class="js-var">itens</span> = <span class="js-var">document</span>.<span class="js-func">querySelectorAll</span>(<span class="js-string">"li"</span>);
 
-<span class="comment">// Modificar conteúdo</span>
+<span class="comment">// Modificar conteúdo e estilo</span>
 <span class="js-var">titulo</span>.<span class="js-var">textContent</span> = <span class="js-string">"Novo Título"</span>;
 <span class="js-var">titulo</span>.<span class="js-var">style</span>.<span class="js-var">color</span> = <span class="js-string">"blue"</span>;
 
@@ -190,63 +215,126 @@
             </div>
         </div>
 
+        <!-- SLIDE 10: Eventos -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Eventos JavaScript</h2></div>
+            <div class="slide-body">
+                <p>Eventos permitem que o JS <strong>reaja a ações do usuário</strong>:</p>
+                <table>
+                    <thead><tr><th>Evento</th><th>Quando dispara</th><th>Exemplo de uso</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="inline-code">click</span></td><td>Clique do mouse</td><td>Botões, links</td></tr>
+                        <tr><td><span class="inline-code">submit</span></td><td>Envio de formulário</td><td>Validação antes de enviar</td></tr>
+                        <tr><td><span class="inline-code">input</span></td><td>Digitação em campo</td><td>Busca em tempo real</td></tr>
+                        <tr><td><span class="inline-code">change</span></td><td>Valor alterado</td><td>Select, checkbox</td></tr>
+                        <tr><td><span class="inline-code">mouseover</span></td><td>Mouse sobre elemento</td><td>Tooltips, menus</td></tr>
+                        <tr><td><span class="inline-code">keydown</span></td><td>Tecla pressionada</td><td>Atalhos de teclado</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Validação de Formulários -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Validação de Formulários com JS</h2></div>
             <div class="slide-body">
                 <pre>
-<span class="html-name">&lt;form</span> <span class="html-attr">id=</span><span class="html-value">"meuForm"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"text"</span> <span class="html-attr">id=</span><span class="html-value">"nome"</span> <span class="html-attr">placeholder=</span><span class="html-value">"Seu nome"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"email"</span> <span class="html-attr">id=</span><span class="html-value">"email"</span> <span class="html-attr">placeholder=</span><span class="html-value">"Seu e-mail"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;button</span> <span class="html-attr">type=</span><span class="html-value">"submit"</span><span class="html-name">&gt;</span>Enviar<span class="html-name">&lt;/button&gt;</span>
-<span class="html-name">&lt;/form&gt;</span>
+<span class="js-keyword">const</span> <span class="js-var">form</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"meuForm"</span>);
 
-<span class="html-name">&lt;script&gt;</span>
-<span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"meuForm"</span>)
-  .<span class="js-func">addEventListener</span>(<span class="js-string">"submit"</span>, <span class="js-keyword">function</span>(<span class="js-var">e</span>) {
-    <span class="js-keyword">let</span> <span class="js-var">nome</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"nome"</span>).<span class="js-var">value</span>;
+<span class="js-var">form</span>.<span class="js-func">addEventListener</span>(<span class="js-string">"submit"</span>, <span class="js-keyword">function</span>(<span class="js-var">event</span>) {
+    <span class="js-keyword">const</span> <span class="js-var">nome</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"nome"</span>).<span class="js-var">value</span>;
+    <span class="js-keyword">const</span> <span class="js-var">email</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"email"</span>).<span class="js-var">value</span>;
+    <span class="js-keyword">const</span> <span class="js-var">erro</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"erro"</span>);
+
     <span class="js-keyword">if</span> (<span class="js-var">nome</span>.<span class="js-var">trim</span>() === <span class="js-string">""</span>) {
-        <span class="js-var">e</span>.<span class="js-func">preventDefault</span>();
-        <span class="js-func">alert</span>(<span class="js-string">"O nome é obrigatório!"</span>);
+        <span class="js-var">event</span>.<span class="js-func">preventDefault</span>();  <span class="comment">// Impede o envio</span>
+        <span class="js-var">erro</span>.<span class="js-var">textContent</span> = <span class="js-string">"O nome é obrigatório!"</span>;
+        <span class="js-var">erro</span>.<span class="js-var">style</span>.<span class="js-var">color</span> = <span class="js-string">"red"</span>;
     }
-});
-<span class="html-name">&lt;/script&gt;</span></pre>
+
+    <span class="js-keyword">if</span> (!<span class="js-var">email</span>.<span class="js-func">includes</span>(<span class="js-string">"@"</span>)) {
+        <span class="js-var">event</span>.<span class="js-func">preventDefault</span>();
+        <span class="js-var">erro</span>.<span class="js-var">textContent</span> = <span class="js-string">"E-mail inválido!"</span>;
+    }
+});</pre>
             </div>
         </div>
 
+        <!-- SLIDE 12: Caso de Uso Real -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Calculadora Simples</h3>
-                    <ol>
-                        <li>Crie um formulário com 2 campos numéricos e 4 botões (+, -, ×, ÷)</li>
-                        <li>Ao clicar em cada botão, calcule o resultado e exiba em um <span class="inline-code">&lt;p&gt;</span></li>
-                        <li>Valide se os campos estão preenchidos antes de calcular</li>
-                        <li>Trate a divisão por zero com uma mensagem de erro</li>
-                        <li>Estilize a calculadora com CSS</li>
+                <div class="real-world">
+                    <h3>Busca em tempo real no Mercado Livre</h3>
+                    <span class="company-tag">Mercado Livre</span>
+                    <span class="company-tag">JavaScript</span>
+                    <span class="company-tag">DOM + Eventos</span>
+                    <p style="margin-top: 10px;">Quando você digita na barra de busca do Mercado Livre, sugestões aparecem <strong>em tempo real</strong>. Isso é JavaScript manipulando o DOM com base no evento <span class="inline-code">input</span>.</p>
+                </div>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">Usuário digita</span>
+                        <span class="box-desc">evento "input"</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">JS captura</span>
+                        <span class="box-desc">addEventListener</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">Busca dados</span>
+                        <span class="box-desc">fetch / AJAX</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 120px;">
+                        <span class="box-label">Atualiza DOM</span>
+                        <span class="box-desc">Sugestões aparecem</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Validação Interativa de Formulário</h3>
+                    <div class="timebox">30 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie <span class="inline-code">validacao.html</span> com um formulário: Nome, Email e Idade</li>
+                        <li>Crie <span class="inline-code">validacao.js</span> e vincule com <span class="inline-code">&lt;script src="validacao.js"&gt;&lt;/script&gt;</span> antes do <span class="inline-code">&lt;/body&gt;</span></li>
+                        <li>Selecione o formulário com <span class="inline-code">document.getElementById()</span></li>
+                        <li>Adicione um <span class="inline-code">addEventListener("submit", ...)</span> no formulário</li>
+                        <li>Dentro do evento, valide: nome não pode estar vazio, email deve conter "@", idade deve ser &gt; 0</li>
+                        <li>Use <span class="inline-code">event.preventDefault()</span> para impedir o envio se houver erro</li>
+                        <li>Exiba mensagens de erro em um <span class="inline-code">&lt;p id="erro"&gt;</span> usando <span class="inline-code">textContent</span></li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 14: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Validação do Formulário de Cadastro</h3>
-                    <p>Retome o formulário de cadastro da Aula 05 e adicione validações com JavaScript:</p>
-                    <ol style="margin-top: 10px;">
-                        <li>Nome deve ter no mínimo <strong>3 caracteres</strong></li>
-                        <li>E-mail deve conter <strong>@</strong> e <strong>.</strong></li>
-                        <li>Senha deve ter no mínimo <strong>6 caracteres</strong></li>
-                        <li>Pelo menos um <strong>interesse</strong> deve ser selecionado</li>
-                        <li>Exiba mensagens de erro <strong>ao lado de cada campo</strong> (não use alert)</li>
-                        <li>Destaque os campos com erro com <strong>borda vermelha</strong></li>
+                <div class="guided-exercise">
+                    <h3>Contador Interativo</h3>
+                    <div class="timebox">15 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie <span class="inline-code">contador.html</span> com um <span class="inline-code">&lt;h1 id="numero"&gt;0&lt;/h1&gt;</span></li>
+                        <li>Adicione 3 botões: "Incrementar", "Decrementar" e "Zerar"</li>
+                        <li>No JS, crie uma variável <span class="inline-code">let contador = 0;</span></li>
+                        <li>Adicione um <span class="inline-code">addEventListener("click")</span> em cada botão</li>
+                        <li>Cada clique deve atualizar a variável e o <span class="inline-code">textContent</span> do h1</li>
+                        <li>Bônus: mude a cor para vermelho quando negativo e verde quando positivo</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 15: Preparação para próxima aula -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -254,16 +342,17 @@
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
                     <p>Para a <strong>Aula 07 — Ambiente de Desenvolvimento .NET</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Instale o <strong>.NET SDK 8</strong> (dotnet.microsoft.com)</li>
-                        <li>Instale a extensão <strong>C# Dev Kit</strong> no VS Code</li>
-                        <li>Execute no terminal: <span class="inline-code">dotnet --version</span> e confirme a instalação</li>
-                        <li>Leia sobre o que é <strong>C#</strong> e suas principais características</li>
+                        <li>Instale o <strong>.NET SDK 8.0</strong> (ou superior): <a href="https://dotnet.microsoft.com/download" style="color: #E8505B;">dotnet.microsoft.com/download</a></li>
+                        <li>Instale o <strong>Visual Studio 2022 Community</strong> (ou VS Code com extensão C#)</li>
+                        <li>Pesquise o que é <strong>ASP.NET Core</strong></li>
+                        <li>Descubra o que é o padrão <strong>MVC</strong> (Model-View-Controller)</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 40 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 45 minutos (inclui downloads)</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 16: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

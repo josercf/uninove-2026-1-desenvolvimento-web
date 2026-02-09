@@ -3,253 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 09 - Estruturas de Controle e Coleções | Desenvolvimento Web - UNINOVE</title>
+    <title>Aula 09 - Estruturas de Controle em C# | Desenvolvimento Web - UNINOVE</title>
     <link rel="stylesheet" href="css/slides.css">
 </head>
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
-            <h2>Aula 09 — Estruturas de Controle e Coleções em C#</h2>
-            <p>if/else, switch, for, foreach, List&lt;T&gt; e Razor</p>
+            <h2>Aula 09 — Estruturas de Controle em C# com MVC</h2>
+            <p>Condicionais, laços e coleções no Razor</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 08</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>Qual a diferença entre <span class="inline-code">for</span> e <span class="inline-code">foreach</span>?</li>
-                        <li>O que é uma <span class="inline-code">List&lt;T&gt;</span> e como ela difere de um array?</li>
-                        <li>Alguém conseguiu criar o programa com foreach?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>Razor:</strong> Engine de templates — @ para expressões, @{ } para blocos de código</li>
+                        <li class="recap-item"><strong>Controller:</strong> Classe C# com Actions que respondem a URLs</li>
+                        <li class="recap-item"><strong>View:</strong> Arquivo .cshtml em Views/[Controller]/[Action].cshtml</li>
+                        <li class="recap-item"><strong>Rotas:</strong> {controller}/{action}/{id?} — mapeamento URL → Controller</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Mini Quiz (início — reforço aula passada) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz — Revisão</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="a">
+                    <h3>Vamos relembrar!</h3>
+                    <p class="quiz-question">Qual símbolo é usado no Razor para inserir uma <strong>expressão C#</strong> dentro do HTML?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) @ — arroba</button></li>
+                        <li><button class="quiz-option" data-option="b">b) # — cerquilha</button></li>
+                        <li><button class="quiz-option" data-option="c">c) $ — cifrão</button></li>
+                        <li><button class="quiz-option" data-option="d">d) % — porcentagem</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(a)</strong>. O <span class="inline-code">@</span> é o caractere especial do Razor. Exemplo: <span class="inline-code">@ViewBag.Nome</span> ou <span class="inline-code">@DateTime.Now</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>Estruturas Condicionais (if/else, switch)</li>
-                    <li>Estruturas de Repetição (for, while, foreach)</li>
-                    <li>Arrays e Listas em C#</li>
-                    <li>Usando Estruturas de Controle nas Views Razor</li>
-                    <li>Exercícios Práticos</li>
+                    <li>if/else e switch em Razor</li>
+                    <li>Laços: for, foreach, while</li>
+                    <li>Arrays e List&lt;T&gt; em C#</li>
+                    <li>Passando listas do Controller para a View</li>
+                    <li>Caso de Uso Real: Amazon — Lista de Produtos</li>
+                    <li>Exercício Guiado: Catálogo de Produtos</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 5: if/else no Razor -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Condicional: if / else</h2></div>
+            <div class="slide-header"><h2>Condicionais no Razor</h2></div>
             <div class="slide-body">
                 <pre>
-<span class="keyword">int</span> <span class="js-var">nota</span> = <span class="number">8</span>;
+<span class="keyword">@{</span>
+    <span class="keyword">var</span> <span class="js-var">nota</span> = <span class="number">8.5</span>;
+<span class="keyword">}</span>
 
-<span class="keyword">if</span> (<span class="js-var">nota</span> >= <span class="number">7</span>)
-{
-    <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Aprovado!"</span>);
-}
-<span class="keyword">else if</span> (<span class="js-var">nota</span> >= <span class="number">5</span>)
-{
-    <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Recuperação"</span>);
-}
-<span class="keyword">else</span>
-{
-    <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Reprovado"</span>);
-}
-
-<span class="comment">// Operador ternário</span>
-<span class="keyword">string</span> <span class="js-var">resultado</span> = <span class="js-var">nota</span> >= <span class="number">7</span> ? <span class="string">"Aprovado"</span> : <span class="string">"Reprovado"</span>;</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Condicional: switch</h2></div>
-            <div class="slide-body">
-                <pre>
-<span class="keyword">string</span> <span class="js-var">diaSemana</span> = <span class="string">"segunda"</span>;
-
-<span class="keyword">switch</span> (<span class="js-var">diaSemana</span>)
-{
-    <span class="keyword">case</span> <span class="string">"segunda"</span>:
-    <span class="keyword">case</span> <span class="string">"terça"</span>:
-    <span class="keyword">case</span> <span class="string">"quarta"</span>:
-    <span class="keyword">case</span> <span class="string">"quinta"</span>:
-    <span class="keyword">case</span> <span class="string">"sexta"</span>:
-        <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Dia útil"</span>);
-        <span class="keyword">break</span>;
-    <span class="keyword">case</span> <span class="string">"sábado"</span>:
-    <span class="keyword">case</span> <span class="string">"domingo"</span>:
-        <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Final de semana!"</span>);
-        <span class="keyword">break</span>;
-    <span class="keyword">default</span>:
-        <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Dia inválido"</span>);
-        <span class="keyword">break</span>;
+<span class="keyword">@if</span> (<span class="js-var">nota</span> >= <span class="number">7</span>) {
+    <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"alert alert-success"</span><span class="html-name">&gt;</span>
+        Aprovado com nota <span class="keyword">@</span><span class="js-var">nota</span>
+    <span class="html-name">&lt;/div&gt;</span>
+} <span class="keyword">else if</span> (<span class="js-var">nota</span> >= <span class="number">5</span>) {
+    <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"alert alert-warning"</span><span class="html-name">&gt;</span>
+        Recuperação
+    <span class="html-name">&lt;/div&gt;</span>
+} <span class="keyword">else</span> {
+    <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"alert alert-danger"</span><span class="html-name">&gt;</span>
+        Reprovado
+    <span class="html-name">&lt;/div&gt;</span>
 }</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Repetição: for e while</h2></div>
-            <div class="slide-body">
-                <div class="two-columns">
-                    <div>
-                        <h3>for</h3>
-                        <pre>
-<span class="comment">// Contar de 1 a 10</span>
-<span class="keyword">for</span> (<span class="keyword">int</span> <span class="js-var">i</span> = <span class="number">1</span>; <span class="js-var">i</span> <= <span class="number">10</span>; <span class="js-var">i</span>++)
-{
-    <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="js-var">i</span>);
-}
-
-<span class="comment">// Tabuada do 5</span>
-<span class="keyword">for</span> (<span class="keyword">int</span> <span class="js-var">i</span> = <span class="number">1</span>; <span class="js-var">i</span> <= <span class="number">10</span>; <span class="js-var">i</span>++)
-{
-    <span class="type">Console</span>.<span class="js-func">WriteLine</span>(
-        <span class="string">$"5 x {i} = {5 * i}"</span>);
-}</pre>
-                    </div>
-                    <div>
-                        <h3>while</h3>
-                        <pre>
-<span class="comment">// Enquanto condição for verdadeira</span>
-<span class="keyword">int</span> <span class="js-var">contador</span> = <span class="number">0</span>;
-<span class="keyword">while</span> (<span class="js-var">contador</span> < <span class="number">5</span>)
-{
-    <span class="type">Console</span>.<span class="js-func">WriteLine</span>(
-        <span class="string">$"Contagem: {contador}"</span>);
-    <span class="js-var">contador</span>++;
-}
-
-<span class="comment">// do-while (executa ao menos 1x)</span>
-<span class="keyword">do</span>
-{
-    <span class="type">Console</span>.<span class="js-func">Write</span>(<span class="string">"Opção: "</span>);
-} <span class="keyword">while</span> (<span class="js-var">opcao</span> != <span class="number">0</span>);</pre>
-                    </div>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>No Razor, o <span class="inline-code">@if</span> alterna entre C# e HTML automaticamente. As chaves <span class="inline-code">{ }</span> delimitam o bloco.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: switch -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Arrays e Listas</h2></div>
+            <div class="slide-header"><h2>Switch no Razor</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="keyword">@{</span>
+    <span class="keyword">var</span> <span class="js-var">diaSemana</span> = DateTime.Now.DayOfWeek;
+<span class="keyword">}</span>
+
+<span class="keyword">@switch</span> (<span class="js-var">diaSemana</span>) {
+    <span class="keyword">case</span> DayOfWeek.Monday:
+        <span class="html-name">&lt;p&gt;</span>Segunda-feira — Início da semana!<span class="html-name">&lt;/p&gt;</span>
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> DayOfWeek.Friday:
+        <span class="html-name">&lt;p&gt;</span>Sexta-feira — Quase fim de semana!<span class="html-name">&lt;/p&gt;</span>
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        <span class="html-name">&lt;p&gt;</span>Hoje é <span class="keyword">@</span><span class="js-var">diaSemana</span><span class="html-name">&lt;/p&gt;</span>
+        <span class="keyword">break</span>;
+}</pre>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>Use <span class="inline-code">switch</span> quando tiver muitas condições sobre o mesmo valor. Para poucas condições, <span class="inline-code">if/else</span> é mais simples.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Listas em C# -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Arrays e List&lt;T&gt; em C#</h2></div>
             <div class="slide-body">
                 <div class="two-columns">
                     <div>
                         <h3>Array (tamanho fixo)</h3>
-                        <pre>
-<span class="comment">// Declaração</span>
-<span class="keyword">string</span>[] <span class="js-var">frutas</span> = { <span class="string">"Maçã"</span>, 
-    <span class="string">"Banana"</span>, <span class="string">"Laranja"</span> };
-
-<span class="comment">// Acesso por índice</span>
-<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="js-var">frutas</span>[<span class="number">0</span>]);
-<span class="comment">// "Maçã"</span>
-
-<span class="comment">// Percorrer</span>
-<span class="keyword">foreach</span> (<span class="keyword">var</span> <span class="js-var">f</span> <span class="keyword">in</span> <span class="js-var">frutas</span>)
-{
-    <span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="js-var">f</span>);
-}</pre>
-                    </div>
-                    <div>
-                        <h3>List&lt;T&gt; (tamanho dinâmico)</h3>
-                        <pre>
-<span class="comment">// Declaração</span>
-<span class="type">List</span>&lt;<span class="keyword">string</span>&gt; <span class="js-var">alunos</span> = <span class="keyword">new</span>()
-{
-    <span class="string">"Maria"</span>, <span class="string">"João"</span>, <span class="string">"Ana"</span>
+                        <pre style="font-size: 0.85em;">
+<span class="keyword">string</span>[] <span class="js-var">frutas</span> = { 
+    <span class="js-string">"Maçã"</span>, 
+    <span class="js-string">"Banana"</span>, 
+    <span class="js-string">"Laranja"</span> 
 };
 
-<span class="comment">// Adicionar</span>
-<span class="js-var">alunos</span>.<span class="js-func">Add</span>(<span class="string">"Pedro"</span>);
-
-<span class="comment">// Remover</span>
-<span class="js-var">alunos</span>.<span class="js-func">Remove</span>(<span class="string">"João"</span>);
-
-<span class="comment">// Quantidade</span>
-<span class="js-var">alunos</span>.Count; <span class="comment">// 3</span></pre>
+<span class="comment">// Acessar por índice</span>
+<span class="js-var">frutas</span>[<span class="number">0</span>]; <span class="comment">// "Maçã"</span></pre>
                     </div>
+                    <div>
+                        <h3>List&lt;T&gt; (dinâmica)</h3>
+                        <pre style="font-size: 0.85em;">
+<span class="keyword">var</span> <span class="js-var">frutas</span> = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;
+{
+    <span class="js-string">"Maçã"</span>, 
+    <span class="js-string">"Banana"</span>
+};
+
+<span class="comment">// Adicionar item</span>
+<span class="js-var">frutas</span>.<span class="js-func">Add</span>(<span class="js-string">"Laranja"</span>);
+<span class="js-var">frutas</span>.Count; <span class="comment">// 3</span></pre>
+                    </div>
+                </div>
+                <div class="box-warning" style="margin-top: 10px;">
+                    <p>Prefira <span class="inline-code">List&lt;T&gt;</span> na maioria dos casos. Possui métodos úteis: <span class="inline-code">Add()</span>, <span class="inline-code">Remove()</span>, <span class="inline-code">Find()</span>.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: foreach no Razor -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Usando Listas nas Views Razor</h2></div>
+            <div class="slide-header"><h2>Laços de Repetição no Razor</h2></div>
             <div class="slide-body">
-                <div class="two-columns">
-                    <div>
-                        <h3>Controller</h3>
-                        <pre>
-<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Alunos</span>()
+                <pre>
+<span class="comment">// Controller: passa uma lista via ViewBag</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Index</span>()
 {
-    <span class="keyword">var</span> <span class="js-var">lista</span> = <span class="keyword">new</span> <span class="type">List</span>&lt;<span class="keyword">string</span>&gt;
+    ViewBag.Produtos = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;
     {
-        <span class="string">"Maria"</span>, <span class="string">"João"</span>,
-        <span class="string">"Ana"</span>, <span class="string">"Pedro"</span>
+        <span class="js-string">"Notebook"</span>, <span class="js-string">"Mouse"</span>, <span class="js-string">"Teclado"</span>, <span class="js-string">"Monitor"</span>
     };
-    <span class="type">ViewBag</span>.Alunos = <span class="js-var">lista</span>;
     <span class="keyword">return</span> <span class="js-func">View</span>();
-}</pre>
-                    </div>
-                    <div>
-                        <h3>View (Alunos.cshtml)</h3>
-                        <pre>
-<span class="html-name">&lt;h2&gt;</span>Lista de Alunos<span class="html-name">&lt;/h2&gt;</span>
-<span class="html-name">&lt;ul&gt;</span>
-<span class="keyword">@foreach</span> (<span class="keyword">var</span> aluno 
-    <span class="keyword">in</span> ViewBag.Alunos)
-{
-    <span class="html-name">&lt;li&gt;</span><span class="keyword">@</span>aluno<span class="html-name">&lt;/li&gt;</span>
 }
-<span class="html-name">&lt;/ul&gt;</span>
-<span class="html-name">&lt;p&gt;</span>Total: 
-  <span class="keyword">@</span>ViewBag.Alunos.Count
-<span class="html-name">&lt;/p&gt;</span></pre>
+
+<span class="comment">@* View: exibe a lista com foreach *@</span>
+<span class="html-name">&lt;ul&gt;</span>
+    <span class="keyword">@foreach</span> (<span class="keyword">var</span> <span class="js-var">produto</span> <span class="keyword">in</span> ViewBag.Produtos)
+    {
+        <span class="html-name">&lt;li&gt;</span><span class="keyword">@</span><span class="js-var">produto</span><span class="html-name">&lt;/li&gt;</span>
+    }
+<span class="html-name">&lt;/ul&gt;</span></pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>Amazon — Lista de Produtos Dinâmica</h3>
+                    <span class="company-tag">Amazon</span>
+                    <span class="company-tag">foreach</span>
+                    <span class="company-tag">Renderização dinâmica</span>
+                    <p style="margin-top: 10px;">Quando você busca um produto na Amazon, o servidor retorna uma <strong>lista de objetos</strong>. A View usa um laço <span class="inline-code">foreach</span> para renderizar cada card de produto dinamicamente.</p>
+                </div>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">Busca: "notebook"</span>
+                        <span class="box-desc">Requisição GET</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 120px;">
+                        <span class="box-label">Controller</span>
+                        <span class="box-desc">Busca no banco</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">List&lt;Produto&gt;</span>
+                        <span class="box-desc">50 resultados</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 120px;">
+                        <span class="box-label">@foreach</span>
+                        <span class="box-desc">Renderiza cards</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 10: Exercício Guiado 1 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Tabela de Multiplicação no MVC</h3>
-                    <ol>
-                        <li>Crie um Controller chamado <span class="inline-code">TabelaController</span></li>
-                        <li>A Action <span class="inline-code">Index(int numero)</span> recebe um número como parâmetro</li>
-                        <li>Passe o número via ViewBag para a View</li>
-                        <li>Na View, use <span class="inline-code">@for</span> para gerar a tabuada de 1 a 10</li>
-                        <li>Exiba em uma tabela HTML estilizada</li>
-                        <li>Teste acessando: <span class="inline-code">/Tabela/Index/7</span></li>
+                <div class="guided-exercise">
+                    <h3>Catálogo de Produtos com Condicionais</h3>
+                    <div class="timebox">35 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie <span class="inline-code">Controllers/ProdutoController.cs</span></li>
+                        <li>No método <span class="inline-code">Index()</span>, crie uma <span class="inline-code">List&lt;string&gt;</span> com 5 nomes de produtos</li>
+                        <li>Crie uma <span class="inline-code">List&lt;double&gt;</span> com os preços correspondentes</li>
+                        <li>Passe ambas as listas via ViewBag</li>
+                        <li>Na View, use <span class="inline-code">@for</span> para criar uma tabela com #, Nome e Preço</li>
+                        <li>Use <span class="inline-code">@if</span> para colorir de verde os produtos com preço &lt; R$ 100</li>
+                        <li>Adicione um contador no final: "Total: X produtos"</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 11: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Lista de Tarefas (To-Do List)</h3>
-                    <ol>
-                        <li>Crie um Controller <span class="inline-code">TarefaController</span></li>
-                        <li>Na Action Index, crie uma <span class="inline-code">List&lt;string&gt;</span> com 5 tarefas</li>
-                        <li>Passe a lista via ViewBag para a View</li>
-                        <li>Na View, exiba as tarefas em uma lista HTML</li>
-                        <li>Use <span class="inline-code">@if</span> para verificar se a lista está vazia</li>
-                        <li>Numere as tarefas usando o índice do loop</li>
-                        <li>Estilize com CSS (cores alternadas nas linhas)</li>
+                <div class="guided-exercise">
+                    <h3>Boletim de Notas</h3>
+                    <div class="timebox">20 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie uma Action <span class="inline-code">Boletim()</span> no HomeController</li>
+                        <li>Crie listas com nomes de disciplinas e notas (ViewBag)</li>
+                        <li>Na View, crie uma tabela com Disciplina, Nota e Status</li>
+                        <li>Use <span class="inline-code">@if</span> para exibir "Aprovado" (verde) ou "Reprovado" (vermelho)</li>
+                        <li>Calcule e exiba a média geral no final da tabela</li>
+                        <li>Use <span class="inline-code">@switch</span> para classificar: A (&gt;=9), B (&gt;=7), C (&gt;=5), D (&lt;5)</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 12: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -257,20 +264,22 @@
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
                     <p>Para a <strong>Aula 10 — Formulários e Models no MVC</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Pesquise sobre <strong>classes</strong> e <strong>objetos</strong> em C# (propriedades, construtores)</li>
-                        <li>Leia sobre o atributo <span class="inline-code">[HttpPost]</span> no ASP.NET Core</li>
-                        <li>Pesquise o que são <strong>Tag Helpers</strong> no Razor (asp-for, asp-action)</li>
+                        <li>Pesquise a diferença entre <strong>[HttpGet]</strong> e <strong>[HttpPost]</strong></li>
+                        <li>Leia sobre <strong>Model Binding</strong> no ASP.NET Core</li>
+                        <li>Revise formulários HTML: &lt;form&gt;, &lt;input&gt;, method="POST"</li>
+                        <li>Pesquise o que são <strong>Data Annotations</strong> em C#</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 25 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>
             <p>jose.romualdo@uni9.pro.br</p>
-            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 09 — Estruturas de Controle e Coleções em C#</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 09 — Estruturas de Controle em C# com MVC</p>
         </div>
 
     </div>

@@ -9,68 +9,84 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 03 — Introdução ao HTML</h2>
-            <p>Estrutura, Tags e Semântica</p>
+            <p>A linguagem de marcação que estrutura a Web</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 02</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão em Grupo (10 min)</h3>
-                    <ol>
-                        <li>Conseguiram instalar o VS Code e a extensão Live Server?</li>
-                        <li>O que vocês entenderam sobre a estrutura básica do HTML?</li>
-                        <li>O que são tags semânticas? Alguém pode dar um exemplo?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>TCP/IP:</strong> Modelo de 4 camadas que faz a internet funcionar</li>
+                        <li class="recap-item"><strong>DNS:</strong> Traduz nomes de domínio (google.com) em endereços IP</li>
+                        <li class="recap-item"><strong>Handshake:</strong> SYN → SYN-ACK → ACK para estabelecer conexão TCP</li>
+                        <li class="recap-item"><strong>HTTPS:</strong> HTTP + criptografia SSL/TLS para proteger dados</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
                     <li>O que é HTML?</li>
                     <li>Estrutura básica de um documento HTML</li>
-                    <li>Principais Tags</li>
-                    <li>Tags Semânticas</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Tags, atributos e elementos</li>
+                    <li>A Árvore DOM</li>
+                    <li>Tags semânticas do HTML5</li>
+                    <li>Caso de Uso Real: Estrutura de uma notícia do G1</li>
+                    <li>Exercício Guiado: Criando sua primeira página</li>
+                    <li>Mini Quiz</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 4: O que é HTML -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>O que é HTML?</h2></div>
             <div class="slide-body">
-                <p><strong>HTML</strong> (HyperText Markup Language) é o bloco de construção mais básico da web. Define o significado e a estrutura do conteúdo.</p>
-                <div class="two-columns" style="margin-top: 20px;">
-                    <div>
-                        <h3>HTML existe desde 1991</h3>
-                        <p style="font-size: 1em;">Atualmente na versão <strong>5</strong>, com recursos modernos para o desenvolvimento web.</p>
-                        <br>
-                        <h3>Responsabilidade</h3>
-                        <p style="font-size: 1em;">Demarcar a <strong>estrutura</strong> de uma página da web.</p>
+                <p><strong>HTML</strong> (HyperText Markup Language) é a linguagem de marcação usada para estruturar o conteúdo das páginas web. Existe desde 1991 e está na versão <strong>5</strong>.</p>
+                <div class="concept-cards" style="margin-top: 15px;">
+                    <div class="concept-card">
+                        <span class="card-icon">📝</span>
+                        <h4>HyperText</h4>
+                        <p>Texto com links que conectam páginas entre si</p>
                     </div>
-                    <div>
-                        <h3>Três pilares da Web</h3>
-                        <ul>
-                            <li><strong>HTML</strong> → Estrutura</li>
-                            <li><strong>CSS</strong> → Aparência</li>
-                            <li><strong>JavaScript</strong> → Comportamento</li>
-                        </ul>
+                    <div class="concept-card">
+                        <span class="card-icon">🏷️</span>
+                        <h4>Markup</h4>
+                        <p>Marcação que define a estrutura do conteúdo</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🗣️</span>
+                        <h4>Language</h4>
+                        <p>Linguagem padrão entendida por todos os navegadores</p>
+                    </div>
+                </div>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">🏗️</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Construção de uma casa</h4>
+                        <p><strong>HTML</strong> = estrutura (paredes, portas, janelas) | <strong>CSS</strong> = decoração (pintura, móveis) | <strong>JavaScript</strong> = automação (luzes, alarme)</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 5: Tags HTML -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Tags HTML</h2></div>
             <div class="slide-body">
-                <p>Os elementos HTML (tags) informam ao navegador que tipo de estrutura está sendo construída. Para que um documento seja interpretado, o arquivo deve ter a extensão <span class="inline-code">.html</span>.</p>
+                <p>Os elementos HTML (tags) informam ao navegador que tipo de estrutura está sendo construída. O arquivo deve ter a extensão <span class="inline-code">.html</span>.</p>
                 <pre>
 <span class="comment">&lt;!-- Tag com fechamento --&gt;</span>
 <span class="html-name">&lt;p&gt;</span>Este é um parágrafo<span class="html-name">&lt;/p&gt;</span>
@@ -79,228 +95,248 @@
 <span class="html-name">&lt;img</span> <span class="html-attr">src=</span><span class="html-value">"foto.jpg"</span> <span class="html-attr">alt=</span><span class="html-value">"Uma foto"</span> <span class="html-name">/&gt;</span>
 <span class="html-name">&lt;br /&gt;</span>
 <span class="html-name">&lt;hr /&gt;</span></pre>
-                <div class="box-info">
-                    <p>Tags iniciam com <span class="inline-code">&lt;</span>, seguidas do nome do elemento, e terminam com <span class="inline-code">&gt;</span>. O fechamento usa <span class="inline-code">/</span>.</p>
+                <div class="concept-cards two-cols" style="margin-top: 15px;">
+                    <div class="concept-card">
+                        <h4>Tags com fechamento</h4>
+                        <p><span class="inline-code">&lt;p&gt;...&lt;/p&gt;</span>, <span class="inline-code">&lt;h1&gt;...&lt;/h1&gt;</span>, <span class="inline-code">&lt;div&gt;...&lt;/div&gt;</span></p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Tags auto-fechantes</h4>
+                        <p><span class="inline-code">&lt;img&gt;</span>, <span class="inline-code">&lt;br&gt;</span>, <span class="inline-code">&lt;hr&gt;</span>, <span class="inline-code">&lt;input&gt;</span></p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: Atributos -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Estrutura Básica do HTML</h2></div>
+            <div class="slide-header"><h2>Tags e Atributos</h2></div>
             <div class="slide-body">
-                <pre>
+                <p>Um <strong>atributo</strong> fornece informações extras sobre um elemento HTML:</p>
+                <pre style="font-size: 1.1em; text-align: center; background: #f8f9fa; color: #333; border-left-color: #00274D;">
+<span class="html-tag">&lt;</span><span class="html-name">a</span> <span class="html-attr">href</span>=<span class="html-value">"https://uninove.br"</span> <span class="html-attr">target</span>=<span class="html-value">"_blank"</span><span class="html-tag">&gt;</span>Visite a UNINOVE<span class="html-tag">&lt;/</span><span class="html-name">a</span><span class="html-tag">&gt;</span>
+
+<span class="html-name">tag</span>     <span class="html-attr">atributo</span>    <span class="html-value">valor</span>          <span class="html-attr">atributo</span>  <span class="html-value">valor</span>      conteúdo</pre>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p>Atributos sempre ficam na <strong>tag de abertura</strong> e seguem o formato <span class="inline-code">nome="valor"</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Estrutura básica -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Estrutura Básica de um Documento HTML</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div>
+                        <pre>
 <span class="html-name">&lt;!DOCTYPE html&gt;</span>
 <span class="html-name">&lt;html</span> <span class="html-attr">lang=</span><span class="html-value">"pt-BR"</span><span class="html-name">&gt;</span>
 <span class="html-name">&lt;head&gt;</span>
     <span class="html-name">&lt;meta</span> <span class="html-attr">charset=</span><span class="html-value">"UTF-8"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;meta</span> <span class="html-attr">name=</span><span class="html-value">"viewport"</span> <span class="html-attr">content=</span><span class="html-value">"width=device-width, initial-scale=1.0"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;title&gt;</span>Minha Primeira Página<span class="html-name">&lt;/title&gt;</span>
+    <span class="html-name">&lt;title&gt;</span>Minha Página<span class="html-name">&lt;/title&gt;</span>
 <span class="html-name">&lt;/head&gt;</span>
 <span class="html-name">&lt;body&gt;</span>
     <span class="html-name">&lt;h1&gt;</span>Olá, Mundo!<span class="html-name">&lt;/h1&gt;</span>
-    <span class="html-name">&lt;p&gt;</span>Meu primeiro parágrafo.<span class="html-name">&lt;/p&gt;</span>
+    <span class="html-name">&lt;p&gt;</span>Meu primeiro site.<span class="html-name">&lt;/p&gt;</span>
 <span class="html-name">&lt;/body&gt;</span>
 <span class="html-name">&lt;/html&gt;</span></pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Principais Tags do &lt;head&gt;</h2></div>
-            <div class="slide-body">
-                <table>
-                    <thead><tr><th>Tag</th><th>Função</th></tr></thead>
-                    <tbody>
-                        <tr><td><span class="inline-code">&lt;!DOCTYPE html&gt;</span></td><td>Informa ao navegador que é HTML5</td></tr>
-                        <tr><td><span class="inline-code">&lt;html&gt;</span></td><td>Raiz do documento, container de tudo</td></tr>
-                        <tr><td><span class="inline-code">&lt;head&gt;</span></td><td>Metadados interpretados pelo navegador</td></tr>
-                        <tr><td><span class="inline-code">&lt;meta&gt;</span></td><td>Informações sobre o documento (charset, viewport)</td></tr>
-                        <tr><td><span class="inline-code">&lt;title&gt;</span></td><td>Título exibido na aba do navegador</td></tr>
-                        <tr><td><span class="inline-code">&lt;link&gt;</span></td><td>Vincula recursos externos (CSS, favicon)</td></tr>
-                        <tr><td><span class="inline-code">&lt;script&gt;</span></td><td>Instruções JavaScript ou referência a arquivo externo</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Cabeçalhos e Parágrafos</h2></div>
-            <div class="slide-body">
-                <p>O conteúdo estruturado torna a experiência de leitura mais fácil e agradável.</p>
-                <div class="two-columns">
-                    <div>
-                        <pre>
-<span class="html-name">&lt;h1&gt;</span>Título Principal<span class="html-name">&lt;/h1&gt;</span>
-<span class="html-name">&lt;h2&gt;</span>Subtítulo<span class="html-name">&lt;/h2&gt;</span>
-<span class="html-name">&lt;h3&gt;</span>Sub-subtítulo<span class="html-name">&lt;/h3&gt;</span>
-<span class="html-name">&lt;h4&gt;</span>Nível 4<span class="html-name">&lt;/h4&gt;</span>
-<span class="html-name">&lt;h5&gt;</span>Nível 5<span class="html-name">&lt;/h5&gt;</span>
-<span class="html-name">&lt;h6&gt;</span>Nível 6<span class="html-name">&lt;/h6&gt;</span>
-
-<span class="html-name">&lt;p&gt;</span>Este é um parágrafo 
-de texto.<span class="html-name">&lt;/p&gt;</span></pre>
                     </div>
                     <div>
-                        <div class="box-info">
-                            <p>Existem 6 níveis de cabeçalho: <span class="inline-code">&lt;h1&gt;</span> a <span class="inline-code">&lt;h6&gt;</span>.</p>
-                            <p style="margin-top: 10px;"><span class="inline-code">&lt;h1&gt;</span> é o título principal e deve ser usado apenas uma vez por página.</p>
-                            <p style="margin-top: 10px;">Parágrafos são envolvidos em <span class="inline-code">&lt;p&gt;</span>.</p>
+                        <ul>
+                            <li><span class="inline-code">&lt;!DOCTYPE html&gt;</span> — HTML5</li>
+                            <li><span class="inline-code">&lt;html&gt;</span> — Elemento raiz</li>
+                            <li><span class="inline-code">&lt;head&gt;</span> — Metadados</li>
+                            <li><span class="inline-code">&lt;body&gt;</span> — Conteúdo visível</li>
+                        </ul>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <p>No VS Code, digite <span class="inline-code">!</span> e pressione <strong>Tab</strong> para gerar essa estrutura automaticamente!</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: Principais Tags -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Emmet no VS Code</h2></div>
-            <div class="slide-body" style="justify-content: center;">
-                <p>O VS Code utiliza o <strong>Emmet Abbreviations</strong>, que gera automaticamente a estrutura básica do HTML ao digitar <span class="inline-code">!</span> e pressionar <strong>Tab</strong>.</p>
-                <pre style="margin-top: 20px;">
-<span class="comment">// Digite ! e pressione Tab no VS Code</span>
-<span class="comment">// O resultado será:</span>
-
-<span class="html-name">&lt;!DOCTYPE html&gt;</span>
-<span class="html-name">&lt;html</span> <span class="html-attr">lang=</span><span class="html-value">"en"</span><span class="html-name">&gt;</span>
-<span class="html-name">&lt;head&gt;</span>
-    <span class="html-name">&lt;meta</span> <span class="html-attr">charset=</span><span class="html-value">"UTF-8"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;meta</span> <span class="html-attr">name=</span><span class="html-value">"viewport"</span> <span class="html-attr">content=</span><span class="html-value">"width=device-width, initial-scale=1.0"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;title&gt;</span>Document<span class="html-name">&lt;/title&gt;</span>
-<span class="html-name">&lt;/head&gt;</span>
-<span class="html-name">&lt;body&gt;</span>
-    
-<span class="html-name">&lt;/body&gt;</span>
-<span class="html-name">&lt;/html&gt;</span></pre>
+            <div class="slide-header"><h2>Principais Tags HTML</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Tag</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="inline-code">&lt;h1&gt;</span> a <span class="inline-code">&lt;h6&gt;</span></td><td>Títulos (h1 = maior)</td><td>Título da página</td></tr>
+                        <tr><td><span class="inline-code">&lt;p&gt;</span></td><td>Parágrafo de texto</td><td>Texto corrido</td></tr>
+                        <tr><td><span class="inline-code">&lt;a&gt;</span></td><td>Link (âncora)</td><td>Links para outras páginas</td></tr>
+                        <tr><td><span class="inline-code">&lt;img&gt;</span></td><td>Imagem</td><td>Fotos, ícones, logos</td></tr>
+                        <tr><td><span class="inline-code">&lt;ul&gt;</span> / <span class="inline-code">&lt;ol&gt;</span></td><td>Listas (não-ordenada / ordenada)</td><td>Menus, itens</td></tr>
+                        <tr><td><span class="inline-code">&lt;div&gt;</span></td><td>Divisão genérica (bloco)</td><td>Agrupamento</td></tr>
+                        <tr><td><span class="inline-code">&lt;span&gt;</span></td><td>Marcação genérica (inline)</td><td>Destacar texto</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="slide slide-section">
-            <h1>Tags Semânticas</h1>
-            <h2>Dando significado à estrutura</h2>
-        </div>
-
+        <!-- SLIDE 9: Árvore DOM - Visual -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>O que são Tags Semânticas?</h2></div>
+            <div class="slide-header"><h2>A Árvore DOM</h2></div>
             <div class="slide-body">
-                <p>Tags semânticas possuem um <strong>significado</strong>, dando sentido à informação para o navegador e buscadores.</p>
-                <div class="two-columns" style="margin-top: 15px;">
-                    <div>
-                        <h3>Benefícios</h3>
-                        <ul>
-                            <li>Melhor <strong>SEO</strong> (ranking no Google)</li>
-                            <li>Acessibilidade para <strong>leitores de tela</strong></li>
-                            <li>Código mais <strong>legível</strong> e organizado</li>
-                            <li>Facilita a <strong>manutenção</strong></li>
-                        </ul>
+                <p>O navegador organiza o HTML em uma <strong>árvore DOM</strong> (Document Object Model). Cada tag é um "nó":</p>
+                <div style="text-align: center; margin-top: 15px;">
+                    <div class="diagram-stack">
+                        <div class="diagram-box highlight" style="min-width: 200px;">
+                            <span class="box-label">&lt;html&gt;</span>
+                        </div>
+                        <span class="diagram-arrow" style="transform: none;">↓</span>
+                        <div class="diagram-flow">
+                            <div class="diagram-box" style="min-width: 150px;">
+                                <span class="box-label">&lt;head&gt;</span>
+                                <span class="box-desc">&lt;title&gt;, &lt;meta&gt;</span>
+                            </div>
+                            <div style="width: 40px;"></div>
+                            <div class="diagram-box highlight-coral" style="min-width: 150px;">
+                                <span class="box-label">&lt;body&gt;</span>
+                                <span class="box-desc">Conteúdo visível</span>
+                            </div>
+                        </div>
+                        <span class="diagram-arrow" style="transform: none;">↓</span>
+                        <div class="diagram-flow">
+                            <div class="diagram-box" style="min-width: 100px;">
+                                <span class="box-label">&lt;h1&gt;</span>
+                            </div>
+                            <div class="diagram-box" style="min-width: 100px;">
+                                <span class="box-label">&lt;p&gt;</span>
+                            </div>
+                            <div class="diagram-box" style="min-width: 100px;">
+                                <span class="box-label">&lt;div&gt;</span>
+                            </div>
+                            <div class="diagram-box" style="min-width: 100px;">
+                                <span class="box-label">&lt;img&gt;</span>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h3>Principais Tags</h3>
-                        <ul>
-                            <li><span class="inline-code">&lt;header&gt;</span> — Cabeçalho</li>
-                            <li><span class="inline-code">&lt;nav&gt;</span> — Navegação</li>
-                            <li><span class="inline-code">&lt;main&gt;</span> — Conteúdo principal</li>
-                            <li><span class="inline-code">&lt;section&gt;</span> — Seção</li>
-                            <li><span class="inline-code">&lt;article&gt;</span> — Artigo</li>
-                            <li><span class="inline-code">&lt;aside&gt;</span> — Conteúdo lateral</li>
-                            <li><span class="inline-code">&lt;footer&gt;</span> — Rodapé</li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="tip-box" style="margin-top: 10px;">
+                    <p>Use a aba <strong>Elements</strong> do DevTools (F12) para visualizar a árvore DOM de qualquer site!</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 10: Tags Semânticas -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Estrutura Semântica vs. Não Semântica</h2></div>
+            <div class="slide-header"><h2>Tags Semânticas do HTML5</h2></div>
             <div class="slide-body">
-                <div class="two-columns">
+                <p>Tags semânticas dão <strong>significado</strong> ao conteúdo, ajudando navegadores, leitores de tela e mecanismos de busca.</p>
+                <div class="two-columns" style="margin-top: 10px;">
                     <div>
-                        <h3 style="color: #C62828;">Sem semântica</h3>
-                        <pre>
-<span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"header"</span><span class="html-name">&gt;</span>
-  <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"nav"</span><span class="html-name">&gt;</span>...<span class="html-name">&lt;/div&gt;</span>
-<span class="html-name">&lt;/div&gt;</span>
-<span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"content"</span><span class="html-name">&gt;</span>
-  <span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"article"</span><span class="html-name">&gt;</span>...<span class="html-name">&lt;/div&gt;</span>
-<span class="html-name">&lt;/div&gt;</span>
-<span class="html-name">&lt;div</span> <span class="html-attr">class=</span><span class="html-value">"footer"</span><span class="html-name">&gt;</span>...<span class="html-name">&lt;/div&gt;</span></pre>
+                        <div class="comparison-card">
+                            <h4>Sem semântica (ruim)</h4>
+                            <pre style="font-size: 0.85em;">
+<span class="html-name">&lt;div</span> <span class="html-attr">id=</span><span class="html-value">"cabecalho"</span><span class="html-name">&gt;</span>...<span class="html-name">&lt;/div&gt;</span>
+<span class="html-name">&lt;div</span> <span class="html-attr">id=</span><span class="html-value">"menu"</span><span class="html-name">&gt;</span>...<span class="html-name">&lt;/div&gt;</span>
+<span class="html-name">&lt;div</span> <span class="html-attr">id=</span><span class="html-value">"conteudo"</span><span class="html-name">&gt;</span>...<span class="html-name">&lt;/div&gt;</span>
+<span class="html-name">&lt;div</span> <span class="html-attr">id=</span><span class="html-value">"rodape"</span><span class="html-name">&gt;</span>...<span class="html-name">&lt;/div&gt;</span></pre>
+                        </div>
                     </div>
                     <div>
-                        <h3 style="color: #2E7D32;">Com semântica</h3>
-                        <pre>
-<span class="html-name">&lt;header&gt;</span>
-  <span class="html-name">&lt;nav&gt;</span>...<span class="html-name">&lt;/nav&gt;</span>
-<span class="html-name">&lt;/header&gt;</span>
-<span class="html-name">&lt;main&gt;</span>
-  <span class="html-name">&lt;article&gt;</span>...<span class="html-name">&lt;/article&gt;</span>
-<span class="html-name">&lt;/main&gt;</span>
+                        <div class="comparison-card alt">
+                            <h4>Com semântica (bom)</h4>
+                            <pre style="font-size: 0.85em;">
+<span class="html-name">&lt;header&gt;</span>...<span class="html-name">&lt;/header&gt;</span>
+<span class="html-name">&lt;nav&gt;</span>...<span class="html-name">&lt;/nav&gt;</span>
+<span class="html-name">&lt;main&gt;</span>...<span class="html-name">&lt;/main&gt;</span>
 <span class="html-name">&lt;footer&gt;</span>...<span class="html-name">&lt;/footer&gt;</span></pre>
+                        </div>
                     </div>
                 </div>
-                <div class="box-success" style="margin-top: 15px;">
-                    <p><strong>Dica:</strong> Sempre prefira tags semânticas! Use <span class="inline-code">&lt;div&gt;</span> e <span class="inline-code">&lt;span&gt;</span> apenas quando não houver uma tag semântica adequada.</p>
+                <div class="concept-cards four-cols" style="margin-top: 10px;">
+                    <div class="concept-card"><h4>&lt;header&gt;</h4><p>Cabeçalho</p></div>
+                    <div class="concept-card"><h4>&lt;nav&gt;</h4><p>Navegação</p></div>
+                    <div class="concept-card"><h4>&lt;main&gt;</h4><p>Conteúdo principal</p></div>
+                    <div class="concept-card"><h4>&lt;footer&gt;</h4><p>Rodapé</p></div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 11: Caso de Uso Real -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Comentários em HTML</h2></div>
-            <div class="slide-body" style="justify-content: center;">
-                <p>Comentários são notas no código-fonte que <strong>não são exibidas</strong> no navegador. Servem para documentar e organizar o código.</p>
-                <pre style="margin-top: 20px;">
-<span class="comment">&lt;!-- Este é um comentário em HTML --&gt;</span>
-
-<span class="comment">&lt;!-- 
-    Comentários podem ocupar
-    múltiplas linhas
---&gt;</span>
-
-<span class="html-name">&lt;p&gt;</span>Este parágrafo será exibido<span class="html-name">&lt;/p&gt;</span>
-<span class="comment">&lt;!-- &lt;p&gt;Este parágrafo NÃO será exibido&lt;/p&gt; --&gt;</span></pre>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p><strong>Atalho no VS Code:</strong> Selecione o texto e pressione <strong>Ctrl + /</strong> para comentar/descomentar.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
+                <div class="real-world">
+                    <h3>Estrutura HTML de uma notícia do G1</h3>
+                    <span class="company-tag">G1 / Globo</span>
+                    <span class="company-tag">Portal de Notícias</span>
+                    <span class="company-tag">SEO</span>
+                    <p style="margin-top: 10px;">O Google usa as <strong>tags semânticas</strong> para entender o conteúdo. O <span class="inline-code">&lt;h1&gt;</span> é o título, os <span class="inline-code">&lt;p&gt;</span> são os parágrafos, e o <span class="inline-code">&lt;article&gt;</span> delimita a notícia.</p>
+                </div>
+                <pre style="font-size: 0.9em; margin-top: 10px;">
+<span class="html-name">&lt;article&gt;</span>
+    <span class="html-name">&lt;h1&gt;</span>Brasil vence e avança na Copa<span class="html-name">&lt;/h1&gt;</span>
+    <span class="html-name">&lt;p</span> <span class="html-attr">class=</span><span class="html-value">"data"</span><span class="html-name">&gt;</span>09/02/2026<span class="html-name">&lt;/p&gt;</span>
+    <span class="html-name">&lt;img</span> <span class="html-attr">src=</span><span class="html-value">"foto.jpg"</span> <span class="html-attr">alt=</span><span class="html-value">"Seleção comemorando"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;p&gt;</span>A seleção brasileira venceu por 2 a 0...<span class="html-name">&lt;/p&gt;</span>
+<span class="html-name">&lt;/article&gt;</span></pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Exercício Guiado 1 -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
                     <h3>Criando sua Primeira Página HTML</h3>
-                    <ol>
-                        <li>Crie uma pasta chamada <span class="inline-code">aula03</span> no seu computador</li>
-                        <li>Abra a pasta no VS Code</li>
-                        <li>Crie um arquivo <span class="inline-code">index.html</span></li>
-                        <li>Use o Emmet (<span class="inline-code">!</span> + Tab) para gerar a estrutura básica</li>
-                        <li>Adicione um título <span class="inline-code">&lt;h1&gt;</span> com seu nome</li>
-                        <li>Adicione um parágrafo <span class="inline-code">&lt;p&gt;</span> com uma breve apresentação</li>
-                        <li>Adicione subtítulos <span class="inline-code">&lt;h2&gt;</span> para "Formação" e "Hobbies"</li>
-                        <li>Adicione listas <span class="inline-code">&lt;ul&gt;</span> com itens em cada seção</li>
-                        <li>Abra com o <strong>Live Server</strong> (botão direito → Open with Live Server)</li>
+                    <div class="timebox">25 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra o <strong>VS Code</strong> e crie uma pasta chamada <span class="inline-code">meu-site</span></li>
+                        <li>Crie o arquivo <span class="inline-code">index.html</span> dentro da pasta</li>
+                        <li>Digite <span class="inline-code">!</span> e pressione <strong>Tab</strong> para gerar a estrutura básica</li>
+                        <li>Dentro do <span class="inline-code">&lt;body&gt;</span>, adicione um <span class="inline-code">&lt;h1&gt;</span> com seu nome</li>
+                        <li>Adicione um <span class="inline-code">&lt;p&gt;</span> com uma breve descrição sobre você</li>
+                        <li>Adicione uma <span class="inline-code">&lt;img&gt;</span> (pode ser qualquer imagem da internet)</li>
+                        <li>Adicione um link <span class="inline-code">&lt;a&gt;</span> para o site da UNINOVE</li>
+                        <li>Clique com botão direito no arquivo e selecione <strong>"Open with Live Server"</strong></li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Página com Estrutura Semântica</h3>
-                    <p>Crie um arquivo <span class="inline-code">semantico.html</span> com a seguinte estrutura:</p>
-                    <ol style="margin-top: 10px;">
-                        <li>Um <span class="inline-code">&lt;header&gt;</span> com o nome do site e um <span class="inline-code">&lt;nav&gt;</span> com 3 links</li>
-                        <li>Um <span class="inline-code">&lt;main&gt;</span> contendo:
-                            <ul>
-                                <li>Um <span class="inline-code">&lt;article&gt;</span> com título e 2 parágrafos</li>
-                                <li>Um <span class="inline-code">&lt;aside&gt;</span> com informações complementares</li>
-                            </ul>
-                        </li>
-                        <li>Um <span class="inline-code">&lt;footer&gt;</span> com informações de contato</li>
-                        <li>Use comentários para documentar cada seção</li>
+                <div class="guided-exercise">
+                    <h3>Usando Tags Semânticas</h3>
+                    <div class="timebox">20 minutos</div>
+                    <ol class="guided-steps">
+                        <li>No mesmo arquivo, organize o conteúdo usando <span class="inline-code">&lt;header&gt;</span>, <span class="inline-code">&lt;main&gt;</span> e <span class="inline-code">&lt;footer&gt;</span></li>
+                        <li>Dentro do <span class="inline-code">&lt;header&gt;</span>, coloque o <span class="inline-code">&lt;h1&gt;</span> com seu nome</li>
+                        <li>Dentro do <span class="inline-code">&lt;main&gt;</span>, crie uma <span class="inline-code">&lt;section&gt;</span> "Sobre Mim" e outra "Hobbies"</li>
+                        <li>Na seção "Hobbies", crie uma lista <span class="inline-code">&lt;ul&gt;</span> com pelo menos 3 itens</li>
+                        <li>No <span class="inline-code">&lt;footer&gt;</span>, adicione seu e-mail de contato</li>
+                        <li>Abra o DevTools (F12) e explore a <strong>árvore DOM</strong> na aba Elements</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 14: Mini Quiz -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Teste seus conhecimentos!</h3>
+                    <p class="quiz-question">Qual tag HTML é usada para o <strong>título principal</strong> visível na página?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) &lt;p&gt; — parágrafo de texto</button></li>
+                        <li><button class="quiz-option" data-option="b">b) &lt;title&gt; — título na aba do navegador</button></li>
+                        <li><button class="quiz-option" data-option="c">c) &lt;h1&gt; — título principal visível na página</button></li>
+                        <li><button class="quiz-option" data-option="d">d) &lt;div&gt; — divisão genérica</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. A tag <span class="inline-code">&lt;h1&gt;</span> é o título principal visível na página. Já <span class="inline-code">&lt;title&gt;</span> define o título que aparece na aba do navegador.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Preparação para próxima aula -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -308,15 +344,17 @@ de texto.<span class="html-name">&lt;/p&gt;</span></pre>
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
                     <p>Para a <strong>Aula 04 — Introdução ao CSS</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Leia sobre a <strong>sintaxe do CSS</strong> (seletores, propriedades, valores)</li>
-                        <li>Pesquise as 3 formas de adicionar CSS: <strong>inline, interno e externo</strong></li>
+                        <li>Pesquise o que é <strong>CSS</strong> e para que serve</li>
+                        <li>Descubra as 3 formas de aplicar CSS (inline, interno, externo)</li>
                         <li>Pesquise o que é o <strong>Box Model</strong> no CSS</li>
+                        <li>Leia sobre <strong>seletores CSS</strong>: tag, classe e id</li>
                     </ol>
                     <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 16: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

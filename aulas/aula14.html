@@ -9,27 +9,49 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 14 — Requisições HTTP Assíncronas</h2>
-            <p>AJAX, Fetch API e JSON</p>
+            <p>AJAX, Fetch API e JSON com ASP.NET Core MVC</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 13</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é AJAX? Qual problema ele resolve?</li>
-                        <li>O que é JSON? Como ele se parece?</li>
-                        <li>Qual a diferença entre uma requisição síncrona e assíncrona?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>HTTP Stateless:</strong> O servidor não lembra de requisições anteriores</li>
+                        <li class="recap-item"><strong>Cookies:</strong> Dados armazenados no navegador — identificam o usuário</li>
+                        <li class="recap-item"><strong>Sessões:</strong> Dados armazenados no servidor — mais seguros</li>
+                        <li class="recap-item"><strong>Carrinho de compras:</strong> Exemplo prático com sessão + JSON</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Mini Quiz (início — reforço) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz — Revisão</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="d">
+                    <h3>Vamos relembrar!</h3>
+                    <p class="quiz-question">Qual método é usado para <strong>limpar toda a sessão</strong> do usuário no ASP.NET Core?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) Session.Remove()</button></li>
+                        <li><button class="quiz-option" data-option="b">b) Session.Destroy()</button></li>
+                        <li><button class="quiz-option" data-option="c">c) Session.Reset()</button></li>
+                        <li><button class="quiz-option" data-option="d">d) Session.Clear()</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(d)</strong>. <span class="inline-code">HttpContext.Session.Clear()</span> remove todos os dados da sessão do usuário.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
@@ -37,184 +59,220 @@
                     <li>Requisições Síncronas vs. Assíncronas</li>
                     <li>O que é AJAX?</li>
                     <li>Formato JSON</li>
-                    <li>Fetch API</li>
-                    <li>Retornando JSON do ASP.NET Core</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Fetch API — GET e POST</li>
+                    <li>Retornando JSON do Controller</li>
+                    <li>Caso de Uso Real: Google Search</li>
+                    <li>Exercício Guiado: Busca Dinâmica</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 5: Síncrono vs Assíncrono -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Síncrono vs. Assíncrono</h2></div>
             <div class="slide-body">
-                <div class="two-columns">
-                    <div class="box-warning">
-                        <h3>Síncrono (tradicional)</h3>
-                        <p>O navegador envia a requisição e <strong>recarrega toda a página</strong> ao receber a resposta. O usuário fica esperando.</p>
+                <div class="concept-cards two-cols" style="margin-top: 10px;">
+                    <div class="concept-card" style="border-left: 4px solid #e74c3c;">
+                        <h4>Síncrono (tradicional)</h4>
+                        <p>O navegador envia a requisição e <strong>recarrega toda a página</strong>. O usuário fica esperando.</p>
+                        <p style="font-size: 0.8em; margin-top: 5px;">Clicou → Tela branca → Página nova</p>
                     </div>
-                    <div class="box-success">
-                        <h3>Assíncrono (AJAX)</h3>
-                        <p>O JavaScript envia a requisição <strong>em segundo plano</strong>. A página <strong>não recarrega</strong>. Apenas a parte necessária é atualizada.</p>
+                    <div class="concept-card" style="border-left: 4px solid #2ecc71;">
+                        <h4>Assíncrono (AJAX)</h4>
+                        <p>O JavaScript envia a requisição <strong>em segundo plano</strong>. Apenas a parte necessária é atualizada.</p>
+                        <p style="font-size: 0.8em; margin-top: 5px;">Digitou → Resultados aparecem</p>
                     </div>
                 </div>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p><strong>Exemplos do dia a dia:</strong> Autocompletar do Google, feed infinito do Instagram, chat em tempo real.</p>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">📱</span>
+                    <div class="analogy-text">
+                        <h4>Exemplos do dia a dia</h4>
+                        <p>Autocompletar do Google, feed infinito do Instagram, curtir no Facebook, chat do WhatsApp Web — todos usam requisições assíncronas!</p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: JSON -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Formato JSON</h2></div>
             <div class="slide-body">
                 <p><strong>JSON</strong> (JavaScript Object Notation) é o formato padrão para troca de dados na web moderna.</p>
                 <pre>
 {
-    <span class="string">"id"</span>: <span class="number">1</span>,
-    <span class="string">"nome"</span>: <span class="string">"Maria Silva"</span>,
-    <span class="string">"email"</span>: <span class="string">"maria@email.com"</span>,
-    <span class="string">"idade"</span>: <span class="number">20</span>,
-    <span class="string">"ativo"</span>: <span class="keyword">true</span>,
-    <span class="string">"cursos"</span>: [<span class="string">"ADS"</span>, <span class="string">"Web"</span>],
-    <span class="string">"endereco"</span>: {
-        <span class="string">"cidade"</span>: <span class="string">"São Paulo"</span>,
-        <span class="string">"estado"</span>: <span class="string">"SP"</span>
+    <span class="js-string">"id"</span>: <span class="number">1</span>,
+    <span class="js-string">"nome"</span>: <span class="js-string">"Maria Silva"</span>,
+    <span class="js-string">"email"</span>: <span class="js-string">"maria@email.com"</span>,
+    <span class="js-string">"idade"</span>: <span class="number">20</span>,
+    <span class="js-string">"ativo"</span>: <span class="keyword">true</span>,
+    <span class="js-string">"cursos"</span>: [<span class="js-string">"ADS"</span>, <span class="js-string">"Web"</span>],
+    <span class="js-string">"endereco"</span>: {
+        <span class="js-string">"cidade"</span>: <span class="js-string">"São Paulo"</span>,
+        <span class="js-string">"estado"</span>: <span class="js-string">"SP"</span>
     }
 }</pre>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>JSON é leve, legível e suportado por todas as linguagens. É o "idioma universal" da web.</p>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 7: Fetch GET -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Fetch API — GET</h2></div>
+            <div class="slide-header"><h2>Fetch API — Requisição GET</h2></div>
             <div class="slide-body">
                 <pre>
 <span class="comment">// Requisição GET com Fetch API</span>
-<span class="js-func">fetch</span>(<span class="js-string">"/api/alunos"</span>)
+<span class="js-func">fetch</span>(<span class="js-string">"/Produto/ListarJson"</span>)
     .<span class="js-func">then</span>(<span class="js-var">response</span> => <span class="js-var">response</span>.<span class="js-func">json</span>())
     .<span class="js-func">then</span>(<span class="js-var">data</span> => {
         <span class="js-var">console</span>.<span class="js-func">log</span>(<span class="js-var">data</span>);
         <span class="comment">// Atualizar a página com os dados</span>
-        <span class="js-keyword">let</span> <span class="js-var">lista</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"listaAlunos"</span>);
-        <span class="js-var">data</span>.<span class="js-func">forEach</span>(<span class="js-var">aluno</span> => {
-            <span class="js-var">lista</span>.<span class="js-var">innerHTML</span> += <span class="js-string">`&lt;li&gt;${aluno.nome}&lt;/li&gt;`</span>;
+        <span class="js-keyword">let</span> <span class="js-var">lista</span> = <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"listaProdutos"</span>);
+        <span class="js-var">data</span>.<span class="js-func">forEach</span>(<span class="js-var">produto</span> => {
+            <span class="js-var">lista</span>.<span class="js-var">innerHTML</span> += 
+                <span class="js-string">`&lt;li&gt;${produto.nome} - R$ ${produto.preco}&lt;/li&gt;`</span>;
         });
     })
     .<span class="js-func">catch</span>(<span class="js-var">error</span> => <span class="js-var">console</span>.<span class="js-func">error</span>(<span class="js-string">"Erro:"</span>, <span class="js-var">error</span>));</pre>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">fetch()</span>
+                        <span class="box-desc">Envia GET</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 120px;">
+                        <span class="box-label">Controller</span>
+                        <span class="box-desc">Retorna JSON</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 120px;">
+                        <span class="box-label">.then()</span>
+                        <span class="box-desc">Atualiza DOM</span>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: Fetch POST -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Fetch API — POST</h2></div>
+            <div class="slide-header"><h2>Fetch API — Requisição POST</h2></div>
             <div class="slide-body">
                 <pre>
 <span class="comment">// Requisição POST com Fetch API</span>
-<span class="js-keyword">const</span> <span class="js-var">aluno</span> = {
-    nome: <span class="js-string">"João"</span>,
-    email: <span class="js-string">"joao@email.com"</span>,
-    idade: <span class="number">22</span>
+<span class="js-keyword">const</span> <span class="js-var">produto</span> = {
+    nome: <span class="js-string">"Notebook"</span>,
+    preco: <span class="number">3500.00</span>,
+    estoque: <span class="number">10</span>
 };
 
-<span class="js-func">fetch</span>(<span class="js-string">"/api/alunos"</span>, {
+<span class="js-func">fetch</span>(<span class="js-string">"/Produto/CriarJson"</span>, {
     method: <span class="js-string">"POST"</span>,
     headers: {
         <span class="js-string">"Content-Type"</span>: <span class="js-string">"application/json"</span>
     },
-    body: <span class="type">JSON</span>.<span class="js-func">stringify</span>(<span class="js-var">aluno</span>)
+    body: JSON.<span class="js-func">stringify</span>(<span class="js-var">produto</span>)
 })
 .<span class="js-func">then</span>(<span class="js-var">response</span> => <span class="js-var">response</span>.<span class="js-func">json</span>())
 .<span class="js-func">then</span>(<span class="js-var">data</span> => {
-    <span class="js-func">alert</span>(<span class="js-string">"Aluno cadastrado com sucesso!"</span>);
+    <span class="js-func">alert</span>(<span class="js-string">"Produto cadastrado com sucesso!"</span>);
 });</pre>
             </div>
         </div>
 
+        <!-- SLIDE 9: Controller retornando JSON -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Retornando JSON do Controller</h2></div>
             <div class="slide-body">
                 <pre>
-<span class="keyword">public class</span> <span class="type">AlunoController</span> : <span class="type">Controller</span>
+<span class="keyword">public class</span> <span class="type">ProdutoController</span> : <span class="type">Controller</span>
 {
-    <span class="keyword">private readonly</span> <span class="type">AppDbContext</span> _context;
-
     <span class="comment">// Retornar lista em JSON</span>
     <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">ListarJson</span>()
     {
-        <span class="keyword">var</span> alunos = _context.Alunos.<span class="js-func">ToList</span>();
-        <span class="keyword">return</span> <span class="js-func">Json</span>(alunos);
+        <span class="keyword">var</span> <span class="js-var">produtos</span> = _context.Produtos.<span class="js-func">ToList</span>();
+        <span class="keyword">return</span> <span class="js-func">Json</span>(<span class="js-var">produtos</span>);
     }
 
-    <span class="comment">// Buscar por ID em JSON</span>
-    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">BuscarJson</span>(<span class="keyword">int</span> id)
+    <span class="comment">// Buscar com filtro</span>
+    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Buscar</span>(<span class="keyword">string</span> <span class="js-var">termo</span>)
     {
-        <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
-        <span class="keyword">if</span> (aluno == <span class="keyword">null</span>)
-            <span class="keyword">return</span> <span class="js-func">NotFound</span>();
-        <span class="keyword">return</span> <span class="js-func">Json</span>(aluno);
+        <span class="keyword">var</span> <span class="js-var">resultados</span> = _context.Produtos
+            .<span class="js-func">Where</span>(p => p.Nome.<span class="js-func">Contains</span>(<span class="js-var">termo</span>))
+            .<span class="js-func">ToList</span>();
+        <span class="keyword">return</span> <span class="js-func">Json</span>(<span class="js-var">resultados</span>);
+    }
+
+    <span class="comment">// Receber JSON via POST</span>
+    [<span class="type">HttpPost</span>]
+    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">CriarJson</span>([<span class="type">FromBody</span>] <span class="type">Produto</span> <span class="js-var">produto</span>)
+    {
+        _context.Produtos.<span class="js-func">Add</span>(<span class="js-var">produto</span>);
+        _context.<span class="js-func">SaveChanges</span>();
+        <span class="keyword">return</span> <span class="js-func">Json</span>(<span class="keyword">new</span> { sucesso = <span class="keyword">true</span> });
     }
 }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 10: Caso de Uso Real -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exemplo Completo: Busca Dinâmica</h2></div>
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
             <div class="slide-body">
-                <pre style="font-size: 0.85em;">
-<span class="comment">&lt;!-- View --&gt;</span>
-<span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"text"</span> <span class="html-attr">id=</span><span class="html-value">"busca"</span> <span class="html-attr">placeholder=</span><span class="html-value">"Buscar aluno..."</span><span class="html-name">&gt;</span>
-<span class="html-name">&lt;div</span> <span class="html-attr">id=</span><span class="html-value">"resultados"</span><span class="html-name">&gt;&lt;/div&gt;</span>
-
-<span class="html-name">&lt;script&gt;</span>
-<span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"busca"</span>)
-  .<span class="js-func">addEventListener</span>(<span class="js-string">"input"</span>, <span class="js-keyword">function</span>() {
-    <span class="js-keyword">const</span> <span class="js-var">termo</span> = <span class="js-keyword">this</span>.<span class="js-var">value</span>;
-    <span class="js-keyword">if</span> (<span class="js-var">termo</span>.<span class="js-var">length</span> < <span class="number">2</span>) <span class="js-keyword">return</span>;
-
-    <span class="js-func">fetch</span>(<span class="js-string">`/Aluno/Buscar?termo=${termo}`</span>)
-      .<span class="js-func">then</span>(<span class="js-var">r</span> => <span class="js-var">r</span>.<span class="js-func">json</span>())
-      .<span class="js-func">then</span>(<span class="js-var">alunos</span> => {
-        <span class="js-keyword">let</span> <span class="js-var">html</span> = <span class="js-string">""</span>;
-        <span class="js-var">alunos</span>.<span class="js-func">forEach</span>(<span class="js-var">a</span> => {
-          <span class="js-var">html</span> += <span class="js-string">`&lt;p&gt;${a.nome} - ${a.email}&lt;/p&gt;`</span>;
-        });
-        <span class="js-var">document</span>.<span class="js-func">getElementById</span>(<span class="js-string">"resultados"</span>).<span class="js-var">innerHTML</span> = <span class="js-var">html</span>;
-      });
-});
-<span class="html-name">&lt;/script&gt;</span></pre>
+                <div class="real-world">
+                    <h3>Google Search — Autocompletar</h3>
+                    <span class="company-tag">Google</span>
+                    <span class="company-tag">AJAX</span>
+                    <span class="company-tag">UX</span>
+                    <p style="margin-top: 10px;">Quando você digita no Google, sugestões aparecem <strong>instantaneamente</strong> sem recarregar a página. A cada tecla, uma requisição AJAX é enviada ao servidor, que retorna sugestões em JSON. O JavaScript atualiza apenas a lista de sugestões.</p>
+                </div>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">⌨️</span>
+                        <h4>Usuário digita</h4>
+                        <p>Evento "input" dispara</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🔄</span>
+                        <h4>fetch() envia</h4>
+                        <p>Requisição GET em background</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">📋</span>
+                        <h4>JSON retorna</h4>
+                        <p>Lista de sugestões</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">✨</span>
+                        <h4>DOM atualiza</h4>
+                        <p>Sugestões aparecem</p>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 11: Exercício Guiado -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Busca Dinâmica de Alunos</h3>
-                    <ol>
-                        <li>Crie uma Action que recebe um termo de busca e retorna JSON</li>
-                        <li>Use LINQ: <span class="inline-code">_context.Alunos.Where(a => a.Nome.Contains(termo)).ToList()</span></li>
-                        <li>Na View, crie um campo de busca</li>
-                        <li>Use Fetch API para buscar enquanto o usuário digita</li>
-                        <li>Exiba os resultados dinamicamente sem recarregar a página</li>
+                <div class="guided-exercise">
+                    <h3>Busca Dinâmica de Produtos</h3>
+                    <div class="timebox">35 minutos</div>
+                    <ol class="guided-steps">
+                        <li>No Controller, crie a Action <span class="inline-code">Buscar(string termo)</span> que retorna <span class="inline-code">Json()</span></li>
+                        <li>Use LINQ: <span class="inline-code">_context.Produtos.Where(p => p.Nome.Contains(termo)).ToList()</span></li>
+                        <li>Na View Index, adicione um campo <span class="inline-code">&lt;input id="busca"&gt;</span></li>
+                        <li>Adicione um <span class="inline-code">&lt;div id="resultados"&gt;</span> para os resultados</li>
+                        <li>No JavaScript, escute o evento <span class="inline-code">input</span> do campo de busca</li>
+                        <li>Use <span class="inline-code">fetch()</span> para chamar a Action Buscar</li>
+                        <li>Exiba os resultados dinamicamente no div, sem recarregar a página</li>
+                        <li>Teste: digite parte do nome de um produto e veja os resultados</li>
                     </ol>
                 </div>
             </div>
         </div>
 
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
-            <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Cadastro com AJAX (sem recarregar)</h3>
-                    <ol>
-                        <li>Crie um formulário de cadastro de aluno</li>
-                        <li>Ao clicar em "Enviar", use <span class="inline-code">fetch()</span> com método POST</li>
-                        <li>Envie os dados em formato JSON</li>
-                        <li>No Controller, receba com <span class="inline-code">[FromBody]</span></li>
-                        <li>Exiba uma mensagem de sucesso sem recarregar a página</li>
-                        <li>Atualize a lista de alunos automaticamente após o cadastro</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
+        <!-- SLIDE 12: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -225,12 +283,14 @@
                         <li>Pesquise a diferença entre <strong>autenticação</strong> e <strong>autorização</strong></li>
                         <li>Leia sobre <strong>hashing de senhas</strong> (por que nunca armazenar senhas em texto puro)</li>
                         <li>Pesquise o que é o atributo <span class="inline-code">[Authorize]</span> no ASP.NET Core</li>
+                        <li>Pense: como o Netflix sabe que você é assinante?</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 25 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

@@ -9,6 +9,7 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 16 — API REST com ASP.NET Core</h2>
@@ -16,195 +17,305 @@
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 15</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é uma API REST?</li>
-                        <li>Quais verbos HTTP são usados em uma API REST?</li>
-                        <li>O que é o Swagger e para que serve?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>Autenticação:</strong> "Quem é você?" — verificar identidade (login/senha)</li>
+                        <li class="recap-item"><strong>Autorização:</strong> "O que você pode fazer?" — verificar permissões</li>
+                        <li class="recap-item"><strong>BCrypt:</strong> Hashing irreversível para armazenar senhas com segurança</li>
+                        <li class="recap-item"><strong>[Authorize]:</strong> Atributo que protege Controllers e Actions</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
                     <li>O que é uma API REST?</li>
+                    <li>Verbos HTTP e Endpoints</li>
                     <li>MVC Controller vs. API Controller</li>
+                    <li>Mini Quiz</li>
                     <li>Criando uma Web API</li>
                     <li>Status Codes HTTP</li>
                     <li>Swagger / OpenAPI</li>
-                    <li>Consumindo a API com Fetch</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Caso de Uso Real: Uber</li>
+                    <li>Exercício Guiado: API de Produtos</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 4: O que é API REST -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>O que é uma API REST?</h2></div>
             <div class="slide-body">
-                <p><strong>API</strong> (Application Programming Interface) é uma interface que permite que diferentes sistemas se comuniquem. <strong>REST</strong> (Representational State Transfer) é um estilo arquitetural que usa HTTP para essa comunicação.</p>
-                <table style="margin-top: 15px;">
-                    <thead><tr><th>Verbo HTTP</th><th>Operação</th><th>Endpoint</th></tr></thead>
-                    <tbody>
-                        <tr><td><span class="badge badge-green">GET</span></td><td>Listar todos</td><td><span class="inline-code">/api/alunos</span></td></tr>
-                        <tr><td><span class="badge badge-green">GET</span></td><td>Buscar por ID</td><td><span class="inline-code">/api/alunos/5</span></td></tr>
-                        <tr><td><span class="badge badge-blue">POST</span></td><td>Criar novo</td><td><span class="inline-code">/api/alunos</span></td></tr>
-                        <tr><td><span class="badge badge-orange">PUT</span></td><td>Atualizar</td><td><span class="inline-code">/api/alunos/5</span></td></tr>
-                        <tr><td><span class="badge badge-red">DELETE</span></td><td>Excluir</td><td><span class="inline-code">/api/alunos/5</span></td></tr>
-                    </tbody>
-                </table>
+                <p><strong>API</strong> (Application Programming Interface) é uma interface que permite que diferentes sistemas se comuniquem. <strong>REST</strong> usa o protocolo HTTP para essa comunicação.</p>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">🍽️</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Restaurante</h4>
+                        <p>A API é como o <strong>garçom</strong>: você (cliente/app) faz um pedido, o garçom (API) leva até a cozinha (servidor/banco) e traz a resposta. Você não precisa saber como a cozinha funciona!</p>
+                    </div>
+                </div>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">App Mobile</span>
+                        <span class="box-desc">Cliente</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 120px;">
+                        <span class="box-label">API REST</span>
+                        <span class="box-desc">JSON via HTTP</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 120px;">
+                        <span class="box-label">Servidor</span>
+                        <span class="box-desc">Banco de Dados</span>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 5: Verbos HTTP -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>API Controller</h2></div>
+            <div class="slide-header"><h2>Verbos HTTP e Endpoints</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>Verbo HTTP</th><th>Operação</th><th>Endpoint</th><th>Corpo?</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong style="color:#2ecc71;">GET</strong></td><td>Listar todos</td><td><span class="inline-code">/api/produtos</span></td><td>Não</td></tr>
+                        <tr><td><strong style="color:#2ecc71;">GET</strong></td><td>Buscar por ID</td><td><span class="inline-code">/api/produtos/5</span></td><td>Não</td></tr>
+                        <tr><td><strong style="color:#3498db;">POST</strong></td><td>Criar novo</td><td><span class="inline-code">/api/produtos</span></td><td>Sim (JSON)</td></tr>
+                        <tr><td><strong style="color:#f39c12;">PUT</strong></td><td>Atualizar</td><td><span class="inline-code">/api/produtos/5</span></td><td>Sim (JSON)</td></tr>
+                        <tr><td><strong style="color:#e74c3c;">DELETE</strong></td><td>Excluir</td><td><span class="inline-code">/api/produtos/5</span></td><td>Não</td></tr>
+                    </tbody>
+                </table>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>A mesma URL (<span class="inline-code">/api/produtos</span>) responde de forma diferente dependendo do <strong>verbo HTTP</strong> usado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: MVC vs API -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>MVC Controller vs. API Controller</h2></div>
+            <div class="slide-body">
+                <table>
+                    <thead><tr><th>MVC Controller</th><th>API Controller</th></tr></thead>
+                    <tbody>
+                        <tr><td>Herda de <span class="inline-code">Controller</span></td><td>Herda de <span class="inline-code">ControllerBase</span></td></tr>
+                        <tr><td>Retorna <strong>Views</strong> (HTML)</td><td>Retorna <strong>dados</strong> (JSON)</td></tr>
+                        <tr><td>Usado por navegadores</td><td>Usado por apps, SPAs, outros sistemas</td></tr>
+                        <tr><td>Rotas: <span class="inline-code">/Produto/Index</span></td><td>Rotas: <span class="inline-code">/api/produtos</span></td></tr>
+                        <tr><td>Atributo: nenhum especial</td><td>Atributo: <span class="inline-code">[ApiController]</span></td></tr>
+                    </tbody>
+                </table>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>Os dois podem coexistir no mesmo projeto! O MVC serve as páginas e a API serve os dados.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Mini Quiz (meio) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="b">
+                    <h3>Vamos verificar!</h3>
+                    <p class="quiz-question">Qual verbo HTTP é usado para <strong>criar</strong> um novo recurso em uma API REST?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) GET</button></li>
+                        <li><button class="quiz-option" data-option="b">b) POST</button></li>
+                        <li><button class="quiz-option" data-option="c">c) PUT</button></li>
+                        <li><button class="quiz-option" data-option="d">d) DELETE</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(b)</strong>. O verbo <strong>POST</strong> é usado para criar novos recursos. GET lê, PUT atualiza e DELETE exclui.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: API Controller código -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Criando o API Controller</h2></div>
             <div class="slide-body">
                 <pre>
-<span class="comment">// Controllers/Api/AlunosApiController.cs</span>
-[<span class="type">Route</span>(<span class="string">"api/[controller]"</span>)]
+[<span class="type">Route</span>(<span class="js-string">"api/[controller]"</span>)]
 [<span class="type">ApiController</span>]
-<span class="keyword">public class</span> <span class="type">AlunosApiController</span> : <span class="type">ControllerBase</span>
+<span class="keyword">public class</span> <span class="type">ProdutosApiController</span> : <span class="type">ControllerBase</span>
 {
     <span class="keyword">private readonly</span> <span class="type">AppDbContext</span> _context;
 
-    <span class="keyword">public</span> <span class="type">AlunosApiController</span>(<span class="type">AppDbContext</span> context)
+    <span class="keyword">public</span> <span class="js-func">ProdutosApiController</span>(<span class="type">AppDbContext</span> <span class="js-var">context</span>)
     {
-        _context = context;
+        _context = <span class="js-var">context</span>;
     }
 
-    <span class="comment">// GET: api/AlunosApi</span>
+    <span class="comment">// GET: api/ProdutosApi</span>
     [<span class="type">HttpGet</span>]
-    <span class="keyword">public</span> <span class="type">ActionResult</span>&lt;<span class="type">IEnumerable</span>&lt;<span class="type">Aluno</span>&gt;&gt; <span class="js-func">GetAlunos</span>()
+    <span class="keyword">public</span> ActionResult&lt;IEnumerable&lt;<span class="type">Produto</span>&gt;&gt; <span class="js-func">GetProdutos</span>()
     {
-        <span class="keyword">return</span> _context.Alunos.<span class="js-func">ToList</span>();
+        <span class="keyword">return</span> _context.Produtos.<span class="js-func">ToList</span>();
     }
 
-    <span class="comment">// GET: api/AlunosApi/5</span>
-    [<span class="type">HttpGet</span>(<span class="string">"{id}"</span>)]
-    <span class="keyword">public</span> <span class="type">ActionResult</span>&lt;<span class="type">Aluno</span>&gt; <span class="js-func">GetAluno</span>(<span class="keyword">int</span> id)
+    <span class="comment">// GET: api/ProdutosApi/5</span>
+    [<span class="type">HttpGet</span>(<span class="js-string">"{id}"</span>)]
+    <span class="keyword">public</span> ActionResult&lt;<span class="type">Produto</span>&gt; <span class="js-func">GetProduto</span>(<span class="keyword">int</span> <span class="js-var">id</span>)
     {
-        <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
-        <span class="keyword">if</span> (aluno == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
-        <span class="keyword">return</span> aluno;
+        <span class="keyword">var</span> <span class="js-var">produto</span> = _context.Produtos.<span class="js-func">Find</span>(<span class="js-var">id</span>);
+        <span class="keyword">if</span> (<span class="js-var">produto</span> == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+        <span class="keyword">return</span> <span class="js-var">produto</span>;
     }
 }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 9: POST, PUT, DELETE -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>POST, PUT e DELETE</h2></div>
             <div class="slide-body">
                 <pre style="font-size: 0.85em;">
-<span class="comment">// POST: api/AlunosApi</span>
+<span class="comment">// POST: api/ProdutosApi</span>
 [<span class="type">HttpPost</span>]
-<span class="keyword">public</span> <span class="type">ActionResult</span>&lt;<span class="type">Aluno</span>&gt; <span class="js-func">PostAluno</span>(<span class="type">Aluno</span> aluno)
+<span class="keyword">public</span> ActionResult&lt;<span class="type">Produto</span>&gt; <span class="js-func">PostProduto</span>(<span class="type">Produto</span> <span class="js-var">produto</span>)
 {
-    _context.Alunos.<span class="js-func">Add</span>(aluno);
+    _context.Produtos.<span class="js-func">Add</span>(<span class="js-var">produto</span>);
     _context.<span class="js-func">SaveChanges</span>();
-    <span class="keyword">return</span> <span class="js-func">CreatedAtAction</span>(<span class="keyword">nameof</span>(GetAluno), <span class="keyword">new</span> { id = aluno.Id }, aluno);
+    <span class="keyword">return</span> <span class="js-func">CreatedAtAction</span>(<span class="keyword">nameof</span>(GetProduto), 
+        <span class="keyword">new</span> { id = <span class="js-var">produto</span>.Id }, <span class="js-var">produto</span>);
 }
 
-<span class="comment">// PUT: api/AlunosApi/5</span>
-[<span class="type">HttpPut</span>(<span class="string">"{id}"</span>)]
-<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">PutAluno</span>(<span class="keyword">int</span> id, <span class="type">Aluno</span> aluno)
+<span class="comment">// PUT: api/ProdutosApi/5</span>
+[<span class="type">HttpPut</span>(<span class="js-string">"{id}"</span>)]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">PutProduto</span>(<span class="keyword">int</span> <span class="js-var">id</span>, <span class="type">Produto</span> <span class="js-var">produto</span>)
 {
-    <span class="keyword">if</span> (id != aluno.Id) <span class="keyword">return</span> <span class="js-func">BadRequest</span>();
-    _context.<span class="js-func">Update</span>(aluno);
+    <span class="keyword">if</span> (<span class="js-var">id</span> != <span class="js-var">produto</span>.Id) <span class="keyword">return</span> <span class="js-func">BadRequest</span>();
+    _context.<span class="js-func">Update</span>(<span class="js-var">produto</span>);
     _context.<span class="js-func">SaveChanges</span>();
     <span class="keyword">return</span> <span class="js-func">NoContent</span>();
 }
 
-<span class="comment">// DELETE: api/AlunosApi/5</span>
-[<span class="type">HttpDelete</span>(<span class="string">"{id}"</span>)]
-<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">DeleteAluno</span>(<span class="keyword">int</span> id)
+<span class="comment">// DELETE: api/ProdutosApi/5</span>
+[<span class="type">HttpDelete</span>(<span class="js-string">"{id}"</span>)]
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">DeleteProduto</span>(<span class="keyword">int</span> <span class="js-var">id</span>)
 {
-    <span class="keyword">var</span> aluno = _context.Alunos.<span class="js-func">Find</span>(id);
-    <span class="keyword">if</span> (aluno == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
-    _context.Alunos.<span class="js-func">Remove</span>(aluno);
+    <span class="keyword">var</span> <span class="js-var">produto</span> = _context.Produtos.<span class="js-func">Find</span>(<span class="js-var">id</span>);
+    <span class="keyword">if</span> (<span class="js-var">produto</span> == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="js-func">NotFound</span>();
+    _context.Produtos.<span class="js-func">Remove</span>(<span class="js-var">produto</span>);
     _context.<span class="js-func">SaveChanges</span>();
     <span class="keyword">return</span> <span class="js-func">NoContent</span>();
 }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 10: Status Codes -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Status Codes HTTP</h2></div>
             <div class="slide-body">
                 <table>
-                    <thead><tr><th>Código</th><th>Significado</th><th>Método no ASP.NET</th></tr></thead>
+                    <thead><tr><th>Código</th><th>Significado</th><th>Método ASP.NET</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="badge badge-green">200</span></td><td>OK — Sucesso</td><td><span class="inline-code">Ok()</span></td></tr>
-                        <tr><td><span class="badge badge-green">201</span></td><td>Created — Recurso criado</td><td><span class="inline-code">CreatedAtAction()</span></td></tr>
-                        <tr><td><span class="badge badge-blue">204</span></td><td>No Content — Sucesso sem corpo</td><td><span class="inline-code">NoContent()</span></td></tr>
-                        <tr><td><span class="badge badge-orange">400</span></td><td>Bad Request — Dados inválidos</td><td><span class="inline-code">BadRequest()</span></td></tr>
-                        <tr><td><span class="badge badge-red">404</span></td><td>Not Found — Não encontrado</td><td><span class="inline-code">NotFound()</span></td></tr>
-                        <tr><td><span class="badge badge-red">500</span></td><td>Internal Server Error</td><td>Exceção não tratada</td></tr>
+                        <tr><td><strong style="color:#2ecc71;">200</strong></td><td>OK — Sucesso</td><td><span class="inline-code">Ok()</span></td></tr>
+                        <tr><td><strong style="color:#2ecc71;">201</strong></td><td>Created — Recurso criado</td><td><span class="inline-code">CreatedAtAction()</span></td></tr>
+                        <tr><td><strong style="color:#3498db;">204</strong></td><td>No Content — Sucesso sem corpo</td><td><span class="inline-code">NoContent()</span></td></tr>
+                        <tr><td><strong style="color:#f39c12;">400</strong></td><td>Bad Request — Dados inválidos</td><td><span class="inline-code">BadRequest()</span></td></tr>
+                        <tr><td><strong style="color:#e74c3c;">404</strong></td><td>Not Found — Não encontrado</td><td><span class="inline-code">NotFound()</span></td></tr>
+                        <tr><td><strong style="color:#e74c3c;">500</strong></td><td>Internal Server Error</td><td>Exceção não tratada</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- SLIDE 11: Swagger -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Swagger / OpenAPI</h2></div>
             <div class="slide-body">
                 <p>O <strong>Swagger</strong> gera automaticamente uma documentação interativa da sua API, permitindo testar os endpoints diretamente no navegador.</p>
                 <pre>
-<span class="comment">// Program.cs — já vem configurado no template</span>
+<span class="comment">// Program.cs</span>
 builder.Services.<span class="js-func">AddEndpointsApiExplorer</span>();
 builder.Services.<span class="js-func">AddSwaggerGen</span>();
 
-<span class="comment">// Habilitar Swagger (apenas em desenvolvimento)</span>
 <span class="keyword">if</span> (app.Environment.<span class="js-func">IsDevelopment</span>())
 {
     app.<span class="js-func">UseSwagger</span>();
     app.<span class="js-func">UseSwaggerUI</span>();
 }</pre>
-                <div class="box-success" style="margin-top: 15px;">
-                    <p>Acesse <strong>https://localhost:5001/swagger</strong> para ver a documentação interativa!</p>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">📋</span>
+                        <h4>Documentação</h4>
+                        <p>Lista todos os endpoints automaticamente</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🧪</span>
+                        <h4>Teste</h4>
+                        <p>Permite testar cada endpoint no navegador</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🤝</span>
+                        <h4>Colaboração</h4>
+                        <p>Front-end sabe exatamente como chamar a API</p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 12: Caso de Uso Real -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>API REST de Alunos</h3>
-                    <ol>
-                        <li>Crie um <span class="inline-code">AlunosApiController</span> com os 5 endpoints REST</li>
-                        <li>Configure o Swagger no projeto</li>
-                        <li>Teste todos os endpoints pelo Swagger: GET, POST, PUT, DELETE</li>
-                        <li>Cadastre 3 alunos via POST</li>
-                        <li>Liste todos via GET</li>
-                        <li>Edite um aluno via PUT</li>
-                        <li>Exclua um aluno via DELETE</li>
+                <div class="real-world">
+                    <h3>Uber — APIs em Tudo</h3>
+                    <span class="company-tag">Uber</span>
+                    <span class="company-tag">API REST</span>
+                    <span class="company-tag">Microserviços</span>
+                    <p style="margin-top: 10px;">O app do Uber no seu celular <strong>não acessa o banco de dados diretamente</strong>. Ele consome APIs REST: uma API para localização, outra para preços, outra para pagamentos, outra para avaliações. Cada funcionalidade é uma API independente.</p>
+                </div>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 100px;">
+                        <span class="box-label">App iOS</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 100px;">
+                        <span class="box-label">API REST</span>
+                    </div>
+                    <span class="diagram-arrow">←</span>
+                    <div class="diagram-box" style="min-width: 100px;">
+                        <span class="box-label">App Android</span>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.85em; color: #888; margin-top: 5px;">A mesma API serve múltiplos clientes: iOS, Android, Web</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>API REST de Produtos com Swagger</h3>
+                    <div class="timebox">40 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie o arquivo <span class="inline-code">ProdutosApiController.cs</span> com <span class="inline-code">[ApiController]</span></li>
+                        <li>Implemente o <strong>GET</strong> (listar todos e buscar por ID)</li>
+                        <li>Implemente o <strong>POST</strong> (criar produto)</li>
+                        <li>Implemente o <strong>PUT</strong> (atualizar produto)</li>
+                        <li>Implemente o <strong>DELETE</strong> (excluir produto)</li>
+                        <li>Configure o Swagger no <span class="inline-code">Program.cs</span></li>
+                        <li>Acesse <span class="inline-code">/swagger</span> e teste cada endpoint</li>
+                        <li>Cadastre 3 produtos via Swagger, edite 1 e exclua 1</li>
                     </ol>
                 </div>
             </div>
         </div>
 
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
-            <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Consumindo a API com JavaScript</h3>
-                    <ol>
-                        <li>Crie uma página HTML que consuma a API de Alunos</li>
-                        <li>Use <span class="inline-code">fetch()</span> para listar todos os alunos em uma tabela</li>
-                        <li>Adicione um formulário para cadastrar alunos via POST</li>
-                        <li>Adicione botões de "Editar" e "Excluir" em cada linha</li>
-                        <li>Tudo deve funcionar <strong>sem recarregar a página</strong></li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
+        <!-- SLIDE 14: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -215,12 +326,14 @@ builder.Services.<span class="js-func">AddSwaggerGen</span>();
                         <li>Pesquise sobre <strong>relacionamentos</strong> em banco de dados (1:N, N:N)</li>
                         <li>Leia sobre <strong>chaves estrangeiras</strong> (Foreign Keys)</li>
                         <li>Pesquise o que é <strong>LINQ</strong> no C#</li>
+                        <li>Pense: como o Mercado Livre relaciona um produto ao seu vendedor?</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 25 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 15: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

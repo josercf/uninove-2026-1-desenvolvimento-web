@@ -3,299 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 08 - ASP.NET Core MVC | Desenvolvimento Web - UNINOVE</title>
+    <title>Aula 08 - Primeiros Passos com ASP.NET Core MVC | Desenvolvimento Web - UNINOVE</title>
     <link rel="stylesheet" href="css/slides.css">
 </head>
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 08 — Primeiros Passos com ASP.NET Core MVC</h2>
-            <p>Padrão MVC, Controllers, Views e Razor</p>
+            <p>Controllers, Views, Razor e Rotas</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 07</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é o padrão MVC? Quais são seus 3 componentes?</li>
-                        <li>Qual a diferença entre ASP.NET Core e .NET Framework?</li>
-                        <li>Por que o MVC é tão utilizado no desenvolvimento web?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>.NET:</strong> Plataforma open-source da Microsoft para desenvolvimento</li>
+                        <li class="recap-item"><strong>C#:</strong> Linguagem fortemente tipada — int, string, double, bool</li>
+                        <li class="recap-item"><strong>CLI:</strong> dotnet new mvc, dotnet run, dotnet watch run</li>
+                        <li class="recap-item"><strong>MVC:</strong> Model (dados) + View (interface) + Controller (lógica)</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>O Padrão MVC</li>
-                    <li>Criando um Projeto ASP.NET Core MVC</li>
-                    <li>Estrutura do Projeto</li>
-                    <li>Controllers e Actions</li>
-                    <li>Views e Razor Syntax</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Razor — A engine de templates do ASP.NET</li>
+                    <li>Criando Controllers e Actions</li>
+                    <li>Criando Views (.cshtml)</li>
+                    <li>Passando dados: ViewBag e ViewData</li>
+                    <li>Rotas no ASP.NET Core</li>
+                    <li>Caso de Uso Real: LinkedIn</li>
+                    <li>Exercício Guiado: Página de perfil</li>
+                    <li>Mini Quiz</li>
                 </ul>
             </div>
         </div>
 
-        <div class="slide slide-section">
-            <h1>Padrão MVC</h1>
-            <h2>Model — View — Controller</h2>
-        </div>
-
+        <!-- SLIDE 4: Razor -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>O que é MVC?</h2></div>
+            <div class="slide-header"><h2>Razor — Misturando C# e HTML</h2></div>
             <div class="slide-body">
-                <p>O <strong>MVC</strong> é um padrão de arquitetura que separa a aplicação em três componentes principais, facilitando a organização e manutenção do código.</p>
-                <div class="two-columns" style="margin-top: 15px;">
-                    <div class="box-info">
-                        <h3 style="color: #1565C0;">Model (Modelo)</h3>
-                        <p>Representa os <strong>dados</strong> e as <strong>regras de negócio</strong>. Define as classes que representam as entidades do sistema.</p>
-                    </div>
-                    <div class="box-success">
-                        <h3 style="color: #2E7D32;">View (Visão)</h3>
-                        <p>Responsável pela <strong>interface</strong> com o usuário. Exibe os dados do Model usando HTML, CSS e Razor.</p>
-                    </div>
-                </div>
-                <div class="box-warning" style="margin-top: 15px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                    <h3 style="color: #E65100;">Controller (Controlador)</h3>
-                    <p>Recebe as <strong>requisições</strong> do usuário, processa a lógica e decide qual View exibir.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Fluxo de uma Requisição MVC</h2></div>
-            <div class="slide-body" style="justify-content: center;">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>1. Requisição HTTP</h3>
-                        <p>O navegador envia uma requisição (ex: GET /Home/Index)</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>2. Roteamento</h3>
-                        <p>O ASP.NET identifica o Controller e a Action correspondentes</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>3. Controller</h3>
-                        <p>O Controller processa a lógica e obtém dados do Model</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>4. View</h3>
-                        <p>A View renderiza o HTML com os dados e retorna ao navegador</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Criando o Projeto</h2></div>
-            <div class="slide-body">
+                <p><strong>Razor</strong> é a engine de templates que permite escrever C# dentro do HTML. Arquivos usam extensão <span class="inline-code">.cshtml</span>.</p>
                 <pre>
-<span class="comment"># Criar projeto ASP.NET Core MVC</span>
-$ dotnet new mvc -n MinhaAppWeb
-$ cd MinhaAppWeb
+<span class="comment">&lt;!-- Expressão simples: @ --&gt;</span>
+<span class="html-name">&lt;h1&gt;</span>Olá, <span class="keyword">@</span>ViewBag.Nome!<span class="html-name">&lt;/h1&gt;</span>
+<span class="html-name">&lt;p&gt;</span>Hoje é <span class="keyword">@</span>DateTime.Now.ToString("dd/MM/yyyy")<span class="html-name">&lt;/p&gt;</span>
 
-<span class="comment"># Abrir no VS Code</span>
-$ code .
+<span class="comment">&lt;!-- Bloco de código: @{ } --&gt;</span>
+<span class="keyword">@{</span>
+    <span class="keyword">var</span> <span class="js-var">mensagem</span> = <span class="js-string">"Bem-vindo ao ASP.NET!"</span>;
+    <span class="keyword">var</span> <span class="js-var">hora</span> = DateTime.Now.Hour;
+<span class="keyword">}</span>
 
-<span class="comment"># Executar o projeto</span>
-$ dotnet run
-
-<span class="comment"># Ou com hot-reload (recarrega ao salvar)</span>
-$ dotnet watch run</pre>
-                <div class="box-success" style="margin-top: 15px;">
-                    <p>Acesse <strong>https://localhost:5001</strong> no navegador para ver a aplicação rodando!</p>
-                </div>
+<span class="comment">&lt;!-- Condicional em Razor --&gt;</span>
+<span class="keyword">@if</span> (<span class="js-var">hora</span> < <span class="number">12</span>) {
+    <span class="html-name">&lt;p&gt;</span>Bom dia!<span class="html-name">&lt;/p&gt;</span>
+} <span class="keyword">else</span> {
+    <span class="html-name">&lt;p&gt;</span>Boa tarde!<span class="html-name">&lt;/p&gt;</span>
+}</pre>
             </div>
         </div>
 
+        <!-- SLIDE 5: Controller -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Estrutura do Projeto</h2></div>
+            <div class="slide-header"><h2>Criando um Controller</h2></div>
             <div class="slide-body">
+                <p>O Controller recebe requisições e decide qual View retornar. Cada método público é uma <strong>Action</strong>.</p>
                 <pre>
-MinhaAppWeb/
-├── <span class="type">Controllers/</span>          <span class="comment">← Controladores (lógica)</span>
-│   └── HomeController.cs
-├── <span class="type">Models/</span>               <span class="comment">← Modelos (dados)</span>
-│   └── ErrorViewModel.cs
-├── <span class="type">Views/</span>                <span class="comment">← Visões (interface)</span>
-│   ├── Home/
-│   │   ├── Index.cshtml
-│   │   └── Privacy.cshtml
-│   └── Shared/
-│       ├── _Layout.cshtml   <span class="comment">← Template principal</span>
-│       └── _ViewStart.cshtml
-├── <span class="type">wwwroot/</span>              <span class="comment">← Arquivos estáticos (CSS, JS, imagens)</span>
-├── Program.cs               <span class="comment">← Ponto de entrada</span>
-└── appsettings.json         <span class="comment">← Configurações</span></pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Controllers e Actions</h2></div>
-            <div class="slide-body">
-                <p>Um <strong>Controller</strong> é uma classe C# que herda de <span class="inline-code">Controller</span>. Cada método público é uma <strong>Action</strong> que responde a uma URL.</p>
-                <pre>
-<span class="comment">// Controllers/HomeController.cs</span>
+<span class="comment">// Controllers/ProdutoController.cs</span>
 <span class="keyword">using</span> Microsoft.AspNetCore.Mvc;
 
-<span class="keyword">public class</span> <span class="type">HomeController</span> : <span class="type">Controller</span>
+<span class="keyword">public class</span> <span class="type">ProdutoController</span> : <span class="type">Controller</span>
 {
-    <span class="comment">// GET: /Home/Index  ou  /</span>
+    <span class="comment">// Action: responde a /Produto/Index</span>
     <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Index</span>()
     {
-        <span class="type">ViewBag</span>.Mensagem = <span class="string">"Bem-vindo ao ASP.NET Core MVC!"</span>;
+        ViewBag.Titulo = <span class="js-string">"Lista de Produtos"</span>;
         <span class="keyword">return</span> <span class="js-func">View</span>();
     }
 
-    <span class="comment">// GET: /Home/Sobre</span>
-    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Sobre</span>()
+    <span class="comment">// Action: responde a /Produto/Detalhes/5</span>
+    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Detalhes</span>(<span class="keyword">int</span> <span class="js-var">id</span>)
     {
+        ViewBag.ProdutoId = <span class="js-var">id</span>;
         <span class="keyword">return</span> <span class="js-func">View</span>();
     }
 }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 6: View -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Roteamento Padrão</h2></div>
+            <div class="slide-header"><h2>Criando uma View</h2></div>
             <div class="slide-body">
-                <p>O ASP.NET Core MVC usa o padrão de roteamento <strong>{controller}/{action}/{id?}</strong>:</p>
-                <table style="margin-top: 15px;">
-                    <thead><tr><th>URL</th><th>Controller</th><th>Action</th></tr></thead>
+                <p>A View fica em <span class="inline-code">Views/[Controller]/[Action].cshtml</span>:</p>
+                <pre>
+<span class="comment">&lt;!-- Views/Produto/Index.cshtml --&gt;</span>
+<span class="keyword">@{</span>
+    ViewData[<span class="js-string">"Title"</span>] = ViewBag.Titulo;
+<span class="keyword">}</span>
+
+<span class="html-name">&lt;h1&gt;</span><span class="keyword">@</span>ViewBag.Titulo<span class="html-name">&lt;/h1&gt;</span>
+<span class="html-name">&lt;p&gt;</span>Bem-vindo à página de produtos!<span class="html-name">&lt;/p&gt;</span>
+<span class="html-name">&lt;a</span> <span class="html-attr">href=</span><span class="html-value">"/Produto/Detalhes/1"</span><span class="html-name">&gt;</span>Ver Produto 1<span class="html-name">&lt;/a&gt;</span></pre>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 130px;">
+                        <span class="box-label">/Produto/Index</span>
+                        <span class="box-desc">URL no navegador</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 130px;">
+                        <span class="box-label">ProdutoController</span>
+                        <span class="box-desc">Método Index()</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 170px;">
+                        <span class="box-label">Views/Produto/Index</span>
+                        <span class="box-desc">HTML renderizado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: ViewBag e ViewData -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Passando Dados para a View</h2></div>
+            <div class="slide-body">
+                <div class="two-columns">
+                    <div>
+                        <h3>ViewBag (dinâmico)</h3>
+                        <pre style="font-size: 0.85em;">
+<span class="comment">// Controller</span>
+ViewBag.Nome = <span class="js-string">"Maria"</span>;
+ViewBag.Idade = <span class="number">25</span>;
+
+<span class="comment">// View</span>
+<span class="html-name">&lt;p&gt;</span><span class="keyword">@</span>ViewBag.Nome<span class="html-name">&lt;/p&gt;</span></pre>
+                    </div>
+                    <div>
+                        <h3>ViewData (dicionário)</h3>
+                        <pre style="font-size: 0.85em;">
+<span class="comment">// Controller</span>
+ViewData[<span class="js-string">"Nome"</span>] = <span class="js-string">"Maria"</span>;
+
+<span class="comment">// View</span>
+<span class="html-name">&lt;p&gt;</span><span class="keyword">@</span>ViewData[<span class="js-string">"Nome"</span>]<span class="html-name">&lt;/p&gt;</span></pre>
+                    </div>
+                </div>
+                <div class="box-info" style="margin-top: 15px;">
+                    <p>Na próxima aula veremos a forma mais robusta: <strong>Model fortemente tipado</strong> com <span class="inline-code">@model</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Rotas -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Rotas no ASP.NET Core</h2></div>
+            <div class="slide-body">
+                <p>O padrão de rota é <span class="inline-code">{controller}/{action}/{id?}</span>:</p>
+                <table>
+                    <thead><tr><th>URL</th><th>Controller</th><th>Action</th><th>Parâmetro</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="inline-code">/</span></td><td>HomeController</td><td>Index()</td></tr>
-                        <tr><td><span class="inline-code">/Home/Index</span></td><td>HomeController</td><td>Index()</td></tr>
-                        <tr><td><span class="inline-code">/Home/Sobre</span></td><td>HomeController</td><td>Sobre()</td></tr>
-                        <tr><td><span class="inline-code">/Produto/Detalhe/5</span></td><td>ProdutoController</td><td>Detalhe(5)</td></tr>
+                        <tr><td><span class="inline-code">/</span></td><td>Home</td><td>Index</td><td>—</td></tr>
+                        <tr><td><span class="inline-code">/Produto</span></td><td>Produto</td><td>Index</td><td>—</td></tr>
+                        <tr><td><span class="inline-code">/Produto/Detalhes/5</span></td><td>Produto</td><td>Detalhes</td><td>id = 5</td></tr>
                     </tbody>
                 </table>
-                <div class="box-info" style="margin-top: 10px;">
-                    <p>A rota padrão é configurada em <span class="inline-code">Program.cs</span>: <span class="inline-code">"{controller=Home}/{action=Index}/{id?}"</span></p>
+                <pre style="margin-top: 10px;">
+<span class="comment">// Program.cs — Configuração da rota padrão</span>
+app.<span class="js-func">MapControllerRoute</span>(
+    name: <span class="js-string">"default"</span>,
+    pattern: <span class="js-string">"{controller=Home}/{action=Index}/{id?}"</span>
+);</pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>LinkedIn — Rotas e Perfis Dinâmicos</h3>
+                    <span class="company-tag">LinkedIn</span>
+                    <span class="company-tag">ASP.NET</span>
+                    <span class="company-tag">Rotas dinâmicas</span>
+                    <p style="margin-top: 10px;">O LinkedIn usa rotas dinâmicas para exibir perfis: <span class="inline-code">/in/nome-do-usuario</span>. Cada URL mapeia para um Controller que busca os dados do perfil e renderiza a View correspondente.</p>
                 </div>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Views e Razor Syntax</h2></div>
-            <div class="slide-body">
-                <p>As Views usam a sintaxe <strong>Razor</strong> (arquivos <span class="inline-code">.cshtml</span>) que mistura HTML com código C#.</p>
-                <pre>
-<span class="comment">@* Views/Home/Index.cshtml *@</span>
-
-<span class="html-name">&lt;h1&gt;</span><span class="keyword">@</span>ViewBag.Mensagem<span class="html-name">&lt;/h1&gt;</span>
-
-<span class="html-name">&lt;p&gt;</span>Data atual: <span class="keyword">@</span>DateTime.Now.ToString(<span class="string">"dd/MM/yyyy"</span>)<span class="html-name">&lt;/p&gt;</span>
-
-<span class="keyword">@if</span> (DateTime.Now.Hour < <span class="number">12</span>)
-{
-    <span class="html-name">&lt;p&gt;</span>Bom dia!<span class="html-name">&lt;/p&gt;</span>
-}
-<span class="keyword">else</span>
-{
-    <span class="html-name">&lt;p&gt;</span>Boa tarde!<span class="html-name">&lt;/p&gt;</span>
-}
-
-<span class="keyword">@for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">5</span>; i++)
-{
-    <span class="html-name">&lt;p&gt;</span>Item <span class="keyword">@</span>i<span class="html-name">&lt;/p&gt;</span>
-}</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>ViewBag e ViewData</h2></div>
-            <div class="slide-body">
-                <p>São formas de passar dados do <strong>Controller</strong> para a <strong>View</strong>:</p>
-                <div class="two-columns" style="margin-top: 15px;">
-                    <div>
-                        <h3>Controller</h3>
-                        <pre>
-<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Index</span>()
-{
-    <span class="comment">// ViewBag (dinâmico)</span>
-    <span class="type">ViewBag</span>.Nome = <span class="string">"Maria"</span>;
-    <span class="type">ViewBag</span>.Idade = <span class="number">25</span>;
-
-    <span class="comment">// ViewData (dicionário)</span>
-    <span class="type">ViewData</span>[<span class="string">"Curso"</span>] = <span class="string">"ADS"</span>;
-
-    <span class="keyword">return</span> <span class="js-func">View</span>();
-}</pre>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 130px;">
+                        <span class="box-label">/in/joao-silva</span>
+                        <span class="box-desc">URL do perfil</span>
                     </div>
-                    <div>
-                        <h3>View (.cshtml)</h3>
-                        <pre>
-<span class="html-name">&lt;h1&gt;</span>Olá, <span class="keyword">@</span>ViewBag.Nome<span class="html-name">&lt;/h1&gt;</span>
-<span class="html-name">&lt;p&gt;</span>Idade: <span class="keyword">@</span>ViewBag.Idade<span class="html-name">&lt;/p&gt;</span>
-<span class="html-name">&lt;p&gt;</span>Curso: <span class="keyword">@</span>ViewData[<span class="string">"Curso"</span>]<span class="html-name">&lt;/p&gt;</span></pre>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 130px;">
+                        <span class="box-label">ProfileController</span>
+                        <span class="box-desc">Busca dados</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box" style="min-width: 130px;">
+                        <span class="box-label">Banco de Dados</span>
+                        <span class="box-desc">Retorna perfil</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 130px;">
+                        <span class="box-label">Profile View</span>
+                        <span class="box-desc">Página do perfil</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 10: Exercício Guiado -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Criando seu Primeiro Projeto MVC</h3>
-                    <ol>
-                        <li>Crie um projeto: <span class="inline-code">dotnet new mvc -n MeuSite</span></li>
-                        <li>Execute com <span class="inline-code">dotnet watch run</span></li>
-                        <li>Modifique a View <span class="inline-code">Index.cshtml</span> com uma mensagem personalizada</li>
-                        <li>Crie uma nova Action <span class="inline-code">Sobre()</span> no HomeController</li>
-                        <li>Crie a View correspondente <span class="inline-code">Views/Home/Sobre.cshtml</span></li>
-                        <li>Passe seu nome e curso via <strong>ViewBag</strong> e exiba na View</li>
-                        <li>Adicione um link de navegação entre as páginas</li>
+                <div class="guided-exercise">
+                    <h3>Criando uma Página de Perfil do Aluno</h3>
+                    <div class="timebox">35 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra o projeto MVC criado na aula anterior</li>
+                        <li>Crie <span class="inline-code">Controllers/AlunoController.cs</span> herdando de <span class="inline-code">Controller</span></li>
+                        <li>Crie o método <span class="inline-code">Index()</span> que define ViewBag.Nome, ViewBag.Curso e ViewBag.Semestre</li>
+                        <li>Crie a pasta <span class="inline-code">Views/Aluno/</span> e o arquivo <span class="inline-code">Index.cshtml</span></li>
+                        <li>Na View, exiba os dados usando <span class="inline-code">@ViewBag.Nome</span>, etc.</li>
+                        <li>Crie um método <span class="inline-code">Detalhes(int id)</span> que recebe o ID do aluno</li>
+                        <li>Acesse <span class="inline-code">/Aluno</span> e <span class="inline-code">/Aluno/Detalhes/1</span> no navegador</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 11: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Página de Perfil Dinâmica</h3>
-                    <ol>
-                        <li>Crie um Controller chamado <span class="inline-code">PerfilController</span></li>
-                        <li>Na Action <span class="inline-code">Index()</span>, passe via ViewBag: nome, idade, curso e lista de hobbies</li>
-                        <li>Na View, exiba todos os dados formatados com HTML e CSS</li>
-                        <li>Use <span class="inline-code">@foreach</span> para listar os hobbies</li>
-                        <li>Use <span class="inline-code">@if</span> para exibir "Maior de idade" ou "Menor de idade"</li>
-                        <li>Estilize a página usando o arquivo CSS em <span class="inline-code">wwwroot/css/</span></li>
+                <div class="guided-exercise">
+                    <h3>Adicionando Navegação</h3>
+                    <div class="timebox">15 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra <span class="inline-code">Views/Shared/_Layout.cshtml</span></li>
+                        <li>Adicione um link "Alunos" no menu de navegação</li>
+                        <li>Use o Tag Helper: <span class="inline-code">&lt;a asp-controller="Aluno" asp-action="Index"&gt;Alunos&lt;/a&gt;</span></li>
+                        <li>Crie uma View <span class="inline-code">Sobre.cshtml</span> com informações sobre o projeto</li>
+                        <li>Adicione um método <span class="inline-code">Sobre()</span> no HomeController</li>
+                        <li>Navegue entre as páginas e observe as rotas na barra de endereço</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 12: Mini Quiz -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="b">
+                    <h3>Teste seus conhecimentos!</h3>
+                    <p class="quiz-question">Qual é a extensão dos arquivos de View no ASP.NET Core MVC?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) .html — arquivo HTML padrão</button></li>
+                        <li><button class="quiz-option" data-option="b">b) .cshtml — HTML com Razor (C#)</button></li>
+                        <li><button class="quiz-option" data-option="c">c) .aspx — Web Forms clássico</button></li>
+                        <li><button class="quiz-option" data-option="d">d) .jsx — React com JavaScript</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(b)</strong>. Arquivos <span class="inline-code">.cshtml</span> usam a engine Razor para misturar C# com HTML.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
                 <div class="box-preclass">
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
-                    <p>Para a <strong>Aula 09 — Estruturas de Controle em C#</strong>:</p>
+                    <p>Para a <strong>Aula 09 — Estruturas de Controle em C# com MVC</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Revise <strong>if/else</strong>, <strong>switch</strong>, <strong>for</strong>, <strong>while</strong> e <strong>foreach</strong> em C#</li>
-                        <li>Pesquise sobre <strong>arrays</strong> e <strong>listas</strong> (List&lt;T&gt;) em C#</li>
-                        <li>Tente criar um programa console que use um <span class="inline-code">foreach</span> para percorrer uma lista</li>
+                        <li>Revise <strong>if/else</strong>, <strong>switch</strong>, <strong>for</strong> e <strong>foreach</strong> em C#</li>
+                        <li>Pesquise o que é uma <strong>List&lt;T&gt;</strong> em C#</li>
+                        <li>Leia sobre o <span class="inline-code">@foreach</span> em Razor</li>
+                        <li>Certifique-se de que seu projeto MVC está funcionando</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 25 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 14: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

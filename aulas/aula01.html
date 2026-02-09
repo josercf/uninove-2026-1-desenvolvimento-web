@@ -20,27 +20,23 @@
 
         <!-- SLIDE 2: Agenda -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Agenda</h2>
-            </div>
+            <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>Apresentação do Professor</li>
-                    <li>Apresentação dos Alunos</li>
+                    <li>Apresentação do Professor e dos Alunos</li>
                     <li>Acordos de Aula e Metodologia</li>
-                    <li>Objetivo da Disciplina</li>
-                    <li>Visão Geral do Semestre</li>
+                    <li>Objetivo e Tecnologias do Semestre</li>
                     <li>O que é Desenvolvimento Web?</li>
-                    <li>Atividade Prática: Explorando a Web</li>
+                    <li>Caso de Uso Real: Como funciona a Amazon?</li>
+                    <li>Mini Quiz</li>
+                    <li>Exercício Guiado: Explorando a Web com DevTools</li>
                 </ul>
             </div>
         </div>
 
         <!-- SLIDE 3: Apresentação do Professor -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Apresentação do Professor</h2>
-            </div>
+            <div class="slide-header"><h2>Apresentação do Professor</h2></div>
             <div class="slide-body">
                 <div class="two-columns">
                     <div>
@@ -76,9 +72,7 @@
 
         <!-- SLIDE 4: Apresentação dos Alunos -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Apresentação dos Alunos</h2>
-            </div>
+            <div class="slide-header"><h2>Apresentação dos Alunos</h2></div>
             <div class="slide-body" style="justify-content: center; align-items: center; text-align: center;">
                 <p style="font-size: 1.4em; margin-bottom: 30px;">Vamos nos conhecer!</p>
                 <div class="box-info" style="max-width: 600px; text-align: left;">
@@ -95,19 +89,31 @@
 
         <!-- SLIDE 5: Acordos de Aula -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Acordos de Aula</h2>
-            </div>
+            <div class="slide-header"><h2>Acordos de Aula</h2></div>
             <div class="slide-body">
-                <ul>
-                    <li><strong>Pergunte sempre</strong> que necessário, por mais simples que seja a dúvida!</li>
-                    <li>Chame para conversar e dar <strong>feedback</strong> sobre a aula</li>
-                    <li>Tolerância de <strong>5 minutos</strong> para início da aula</li>
-                    <li>Presença somente se comparecer</li>
-                    <li>Se chegar atrasado, entrar em silêncio</li>
-                    <li><strong>Prestar atenção e praticar é o segredo!</strong></li>
-                </ul>
-                <div class="box-warning" style="margin-top: 20px;">
+                <div class="concept-cards two-cols">
+                    <div class="concept-card">
+                        <span class="card-icon">❓</span>
+                        <h4>Pergunte Sempre</h4>
+                        <p>Não existe dúvida boba. Pergunte sempre que necessário!</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">💬</span>
+                        <h4>Feedback</h4>
+                        <p>Converse com o professor sobre o andamento da disciplina.</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">⏰</span>
+                        <h4>Pontualidade</h4>
+                        <p>Tolerância de 5 min. Se atrasar, entre em silêncio.</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🎯</span>
+                        <h4>Prática</h4>
+                        <p>Prestar atenção e praticar é o segredo do sucesso!</p>
+                    </div>
+                </div>
+                <div class="box-warning" style="margin-top: 15px;">
                     <p><strong>Importante:</strong> Esta disciplina utiliza a metodologia de <strong>Sala de Aula Invertida</strong>. Antes de cada aula, haverá uma atividade preparatória obrigatória.</p>
                 </div>
             </div>
@@ -115,31 +121,32 @@
 
         <!-- SLIDE 6: Sala de Aula Invertida -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Metodologia: Sala de Aula Invertida</h2>
-            </div>
+            <div class="slide-header"><h2>Metodologia: Sala de Aula Invertida</h2></div>
             <div class="slide-body">
-                <p>Na sala de aula invertida, o aluno estuda o conteúdo teórico <strong>antes</strong> da aula. O tempo em sala é dedicado a <strong>exercícios práticos</strong>, <strong>discussões</strong> e <strong>tira-dúvidas</strong>.</p>
-                <div class="timeline" style="margin-top: 30px;">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>Antes da Aula</h3>
-                        <p>Leitura, vídeo ou tutorial indicado pelo professor</p>
+                <p>O aluno estuda o conteúdo teórico <strong>antes</strong> da aula. O tempo em sala é dedicado a <strong>exercícios práticos</strong> e <strong>tira-dúvidas</strong>.</p>
+                <div class="diagram-flow" style="margin-top: 25px;">
+                    <div class="diagram-box highlight">
+                        <span class="box-icon">📖</span>
+                        <span class="box-label">Antes da Aula</span>
+                        <span class="box-desc">Leitura ou vídeo</span>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>Início da Aula</h3>
-                        <p>Discussão sobre o material estudado e tira-dúvidas</p>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral">
+                        <span class="box-icon">💬</span>
+                        <span class="box-label">Início da Aula</span>
+                        <span class="box-desc">Discussão e dúvidas</span>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>Durante a Aula</h3>
-                        <p>Exercícios práticos, projetos e codificação</p>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight">
+                        <span class="box-icon">💻</span>
+                        <span class="box-label">Durante a Aula</span>
+                        <span class="box-desc">Exercícios práticos</span>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>Após a Aula</h3>
-                        <p>Consolidação e preparação para a próxima aula</p>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral">
+                        <span class="box-icon">✅</span>
+                        <span class="box-label">Após a Aula</span>
+                        <span class="box-desc">Consolidação</span>
                     </div>
                 </div>
             </div>
@@ -147,40 +154,51 @@
 
         <!-- SLIDE 7: Objetivo da Disciplina -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Objetivo da Disciplina</h2>
-            </div>
+            <div class="slide-header"><h2>Objetivo da Disciplina</h2></div>
             <div class="slide-body" style="justify-content: center;">
                 <p style="font-size: 1.3em; line-height: 1.8; text-align: justify;">
-                    Capacitar o aluno a <strong>desenvolver sistemas para a web</strong> e construir arquiteturas utilizando o padrão <strong>MVC (Model-View-Controller)</strong>, através dos conceitos de programação orientada a objetos, componentes reutilizáveis, banco de dados e regras de segurança. Ao término da disciplina, o aluno deverá ser capaz de <strong>criar sistemas</strong> e <strong>implementar projetos profissionais</strong> com as melhores práticas de engenharia.
+                    Capacitar o aluno a <strong>desenvolver sistemas para a web</strong> e construir arquiteturas utilizando o padrão <strong>MVC (Model-View-Controller)</strong>, através dos conceitos de programação orientada a objetos, componentes reutilizáveis, banco de dados e regras de segurança.
                 </p>
+                <div class="tip-box" style="margin-top: 15px;">
+                    <p>Ao final do semestre, vocês serão capazes de criar uma <strong>aplicação web completa</strong> — do banco de dados à interface do usuário — e publicá-la na internet.</p>
+                </div>
             </div>
         </div>
 
         <!-- SLIDE 8: Tecnologias do Semestre -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Tecnologias do Semestre</h2>
-            </div>
+            <div class="slide-header"><h2>Tecnologias do Semestre</h2></div>
             <div class="slide-body">
-                <div class="two-columns">
-                    <div>
-                        <h3>Front-End</h3>
-                        <ul>
-                            <li><strong>HTML5</strong> — Estrutura das páginas</li>
-                            <li><strong>CSS3</strong> — Estilização e layout</li>
-                            <li><strong>JavaScript</strong> — Interatividade</li>
-                            <li><strong>Bootstrap</strong> — Framework CSS</li>
-                        </ul>
+                <div class="concept-cards">
+                    <div class="concept-card">
+                        <span class="card-icon">🌐</span>
+                        <h4>HTML5</h4>
+                        <p>Estrutura das páginas</p>
                     </div>
-                    <div>
-                        <h3>Back-End</h3>
-                        <ul>
-                            <li><strong>C#</strong> — Linguagem de programação</li>
-                            <li><strong>ASP.NET Core MVC</strong> — Framework web</li>
-                            <li><strong>Entity Framework Core</strong> — ORM</li>
-                            <li><strong>MySQL</strong> — Banco de dados</li>
-                        </ul>
+                    <div class="concept-card">
+                        <span class="card-icon">🎨</span>
+                        <h4>CSS3</h4>
+                        <p>Estilização e layout</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">⚡</span>
+                        <h4>JavaScript</h4>
+                        <p>Interatividade</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🔷</span>
+                        <h4>C#</h4>
+                        <p>Linguagem backend</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🏗️</span>
+                        <h4>ASP.NET Core MVC</h4>
+                        <p>Framework web</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🗄️</span>
+                        <h4>MySQL</h4>
+                        <p>Banco de dados</p>
                     </div>
                 </div>
             </div>
@@ -188,17 +206,11 @@
 
         <!-- SLIDE 9: Grade do Semestre -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Visão Geral do Semestre</h2>
-            </div>
+            <div class="slide-header"><h2>Visão Geral do Semestre</h2></div>
             <div class="slide-body">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Módulo</th>
-                            <th>Aulas</th>
-                            <th>Conteúdo</th>
-                        </tr>
+                        <tr><th>Módulo</th><th>Aulas</th><th>Conteúdo</th></tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -226,42 +238,94 @@
             </div>
         </div>
 
-        <!-- SLIDE 10: O que é a Web? -->
+        <!-- SLIDE 10: Seção - O que é a Web? -->
         <div class="slide slide-section">
             <h1>O que é a Web?</h1>
             <h2>Entendendo o mundo que vamos construir</h2>
         </div>
 
-        <!-- SLIDE 11: Cliente x Servidor -->
+        <!-- SLIDE 11: Como a Web Funciona - Diagrama Visual -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Arquitetura Cliente-Servidor</h2>
-            </div>
+            <div class="slide-header"><h2>Como a Web Funciona</h2></div>
             <div class="slide-body">
-                <p>A Web funciona com base no modelo <strong>cliente-servidor</strong>. O navegador (cliente) faz uma <strong>requisição</strong> ao servidor, que processa e retorna uma <strong>resposta</strong>.</p>
-                <div class="two-columns" style="margin-top: 20px;">
-                    <div class="box-info">
-                        <h3 style="color: #1565C0;">Cliente (Navegador)</h3>
-                        <p>Envia requisições HTTP e renderiza o HTML, CSS e JavaScript recebido do servidor.</p>
+                <p>Quando você digita um endereço no navegador, uma série de passos acontece nos bastidores:</p>
+                <div class="diagram-flow" style="margin-top: 20px;">
+                    <div class="diagram-box">
+                        <span class="box-icon">👤</span>
+                        <span class="box-label">Usuário</span>
+                        <span class="box-desc">Digita a URL</span>
                     </div>
-                    <div class="box-success">
-                        <h3 style="color: #2E7D32;">Servidor (Backend)</h3>
-                        <p>Recebe requisições, processa a lógica de negócio, acessa o banco de dados e retorna a resposta.</p>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box">
+                        <span class="box-icon">🌐</span>
+                        <span class="box-label">Navegador</span>
+                        <span class="box-desc">Envia requisição</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box">
+                        <span class="box-icon">📡</span>
+                        <span class="box-label">DNS</span>
+                        <span class="box-desc">Resolve o IP</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight">
+                        <span class="box-icon">🖥️</span>
+                        <span class="box-label">Servidor</span>
+                        <span class="box-desc">Processa e responde</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral">
+                        <span class="box-icon">📄</span>
+                        <span class="box-label">Página</span>
+                        <span class="box-desc">HTML + CSS + JS</span>
                     </div>
                 </div>
-                <div style="text-align: center; margin-top: 20px; font-size: 2em; color: #00274D;">
-                    🖥️ ⟵ HTTP Request ⟶ 🗄️
+                <div class="analogy-box" style="margin-top: 20px;">
+                    <span class="analogy-icon">📬</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Correios</h4>
+                        <p>Pense na Web como os Correios: você escreve o endereço (URL), o carteiro (DNS) encontra o destino, e o destinatário (servidor) envia de volta o que você pediu.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 12: URL -->
+        <!-- SLIDE 12: Cliente x Servidor -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Entendendo uma URL</h2>
+            <div class="slide-header"><h2>Arquitetura Cliente-Servidor</h2></div>
+            <div class="slide-body">
+                <div class="comparison">
+                    <div class="comparison-card">
+                        <h4>🖥️ Cliente (Navegador)</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Envia requisições HTTP</li>
+                            <li>Renderiza HTML, CSS, JS</li>
+                            <li>Exibe a interface ao usuário</li>
+                            <li>Chrome, Firefox, Edge...</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-vs">⟷</div>
+                    <div class="comparison-card alt">
+                        <h4>🗄️ Servidor (Backend)</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Recebe e processa requisições</li>
+                            <li>Executa lógica de negócio</li>
+                            <li>Acessa banco de dados</li>
+                            <li>ASP.NET Core, Node.js...</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tip-box" style="margin-top: 15px;">
+                    <p>Neste semestre, vocês aprenderão a construir <strong>ambos os lados</strong>: o front-end (HTML/CSS/JS) e o back-end (C# com ASP.NET Core MVC).</p>
+                </div>
             </div>
+        </div>
+
+        <!-- SLIDE 13: URL -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Entendendo uma URL</h2></div>
             <div class="slide-body" style="justify-content: center;">
-                <p>Uma URL (Uniform Resource Locator) é o endereço de um recurso na Web. Ela é composta por diversas partes:</p>
+                <p>Uma URL (Uniform Resource Locator) é o endereço de um recurso na Web:</p>
                 <pre style="font-size: 1.1em; text-align: center; background: #f8f9fa; color: #333; border-left-color: #00274D;">
 <span class="keyword">https://</span><span class="type">www.uninove.br</span><span class="string">:443</span><span class="comment">/cursos/graduacao</span><span class="number">?area=ti</span>
   <span class="keyword">protocolo</span>    <span class="type">host (domínio)</span>   <span class="string">porta</span>     <span class="comment">caminho (path)</span>    <span class="number">query string</span></pre>
@@ -271,49 +335,13 @@
             </div>
         </div>
 
-        <!-- SLIDE 13: HTTP Request/Response -->
-        <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Requisição e Resposta HTTP</h2>
-            </div>
-            <div class="slide-body">
-                <div class="two-columns">
-                    <div>
-                        <h3>HTTP Request</h3>
-                        <pre>
-<span class="keyword">GET</span> /cursos HTTP/1.1
-<span class="type">Host:</span> www.uninove.br
-<span class="type">Accept:</span> text/html
-<span class="type">User-Agent:</span> Chrome/120</pre>
-                        <p style="font-size: 1em;">O navegador envia o <strong>método</strong> (GET, POST...), o <strong>caminho</strong> e os <strong>cabeçalhos</strong>.</p>
-                    </div>
-                    <div>
-                        <h3>HTTP Response</h3>
-                        <pre>
-<span class="keyword">HTTP/1.1</span> <span class="number">200 OK</span>
-<span class="type">Content-Type:</span> text/html
-<span class="type">Content-Length:</span> 1234
-
-<span class="string">&lt;html&gt;...&lt;/html&gt;</span></pre>
-                        <p style="font-size: 1em;">O servidor retorna o <strong>status</strong>, os <strong>cabeçalhos</strong> e o <strong>corpo</strong> da resposta.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- SLIDE 14: Métodos HTTP -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Principais Métodos HTTP</h2>
-            </div>
+            <div class="slide-header"><h2>Principais Métodos HTTP</h2></div>
             <div class="slide-body">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Método</th>
-                            <th>Descrição</th>
-                            <th>Exemplo</th>
-                        </tr>
+                        <tr><th>Método</th><th>Descrição</th><th>Exemplo</th></tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -324,79 +352,130 @@
                         <tr>
                             <td><span class="badge badge-blue">POST</span></td>
                             <td>Envia dados para o servidor</td>
-                            <td>Enviar um formulário</td>
+                            <td>Enviar um formulário de cadastro</td>
                         </tr>
                         <tr>
                             <td><span class="badge badge-orange">PUT</span></td>
                             <td>Atualiza um recurso existente</td>
-                            <td>Editar um perfil</td>
+                            <td>Editar dados do perfil</td>
                         </tr>
                         <tr>
                             <td><span class="badge badge-red">DELETE</span></td>
                             <td>Remove um recurso</td>
-                            <td>Excluir uma conta</td>
+                            <td>Excluir uma postagem</td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p>Ao longo do semestre, utilizaremos todos esses métodos ao construir nossa aplicação ASP.NET Core MVC.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>Como funciona a Amazon por dentro?</h3>
+                    <span class="company-tag">Amazon</span>
+                    <span class="company-tag">E-commerce</span>
+                    <span class="company-tag">Milhões de acessos/dia</span>
+                    <p style="margin-top: 10px;">Quando você acessa a Amazon e busca um produto, o que acontece nos bastidores?</p>
+                </div>
+                <div class="diagram-flow" style="margin-top: 10px;">
+                    <div class="diagram-box">
+                        <span class="box-icon">🔍</span>
+                        <span class="box-label">Busca</span>
+                        <span class="box-desc">GET /search?q=...</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight">
+                        <span class="box-icon">⚙️</span>
+                        <span class="box-label">Servidor</span>
+                        <span class="box-desc">Consulta banco</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box">
+                        <span class="box-icon">🗄️</span>
+                        <span class="box-label">Banco de Dados</span>
+                        <span class="box-desc">Produtos, preços</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral">
+                        <span class="box-icon">📄</span>
+                        <span class="box-label">Resposta</span>
+                        <span class="box-desc">HTML com resultados</span>
+                    </div>
+                </div>
+                <div class="tip-box" style="margin-top: 10px;">
+                    <p>Ao final deste semestre, vocês saberão construir uma aplicação web com essa mesma arquitetura: <strong>navegador → servidor → banco de dados → resposta</strong>.</p>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 15: Atividade Prática -->
+        <!-- SLIDE 16: Mini Quiz -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Atividade Prática</h2>
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="b">
+                    <h3>Teste seus conhecimentos!</h3>
+                    <p class="quiz-question">Quando você digita <strong>www.uninove.br</strong> no navegador e a página aparece, o que aconteceu nos bastidores?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) O navegador já tinha a página salva no computador</button></li>
+                        <li><button class="quiz-option" data-option="b">b) O navegador enviou uma requisição HTTP ao servidor, que respondeu com HTML</button></li>
+                        <li><button class="quiz-option" data-option="c">c) O servidor enviou a página automaticamente sem ninguém pedir</button></li>
+                        <li><button class="quiz-option" data-option="d">d) O HTML foi gerado pelo próprio navegador sem precisar de servidor</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(b)</strong>. O navegador (cliente) envia uma requisição HTTP ao servidor, que processa e retorna a página HTML como resposta. Esse é o modelo cliente-servidor!</div>
+                </div>
             </div>
+        </div>
+
+        <!-- SLIDE 17: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Exercício: Explorando a Web com DevTools</h3>
-                    <p>Utilizando as Ferramentas do Desenvolvedor (F12) do navegador:</p>
-                    <ol style="margin-top: 10px;">
-                        <li>Acesse o site <strong>www.uninove.br</strong></li>
-                        <li>Abra a aba <strong>Network</strong> e recarregue a página</li>
-                        <li>Identifique a <strong>primeira requisição</strong> feita pelo navegador</li>
-                        <li>Anote o <strong>método HTTP</strong>, o <strong>status code</strong> e o <strong>Content-Type</strong></li>
-                        <li>Encontre pelo menos <strong>3 tipos diferentes</strong> de recursos carregados (HTML, CSS, JS, imagens)</li>
-                        <li>Identifique quanto <strong>tempo</strong> levou para carregar toda a página</li>
+                <div class="guided-exercise">
+                    <h3>Explorando a Web com DevTools</h3>
+                    <div class="timebox">20 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra o navegador Chrome e acesse <span class="inline-code">www.uninove.br</span></li>
+                        <li>Pressione <span class="inline-code">F12</span> para abrir as Ferramentas do Desenvolvedor</li>
+                        <li>Clique na aba <strong>Network</strong> e recarregue a página com <span class="inline-code">Ctrl+R</span></li>
+                        <li>Clique na <strong>primeira requisição</strong> da lista e anote o <strong>método HTTP</strong> e o <strong>status code</strong></li>
+                        <li>Identifique pelo menos <strong>3 tipos de recursos</strong> carregados (HTML, CSS, JS, imagens)</li>
+                        <li>Na aba <strong>Elements</strong>, clique com botão direito em um texto e selecione "Inspecionar". Tente <strong>editar o texto</strong> diretamente</li>
+                    </ol>
+                </div>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p><strong>Reflexão:</strong> A alteração feita no Elements é permanente? Por quê?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Exercício Guiado 2 -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Analisando Requisições HTTP</h3>
+                    <div class="timebox">15 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Acesse <span class="inline-code">www.google.com</span> com o DevTools aberto na aba Network</li>
+                        <li>Faça uma busca por "UNINOVE" e observe a <strong>query string</strong> na URL (ex: <span class="inline-code">?q=UNINOVE</span>)</li>
+                        <li>Clique na requisição principal e identifique: <strong>Request Method</strong>, <strong>Status Code</strong> e <strong>Content-Type</strong></li>
+                        <li>Agora acesse qualquer site de sua preferência e repita a análise</li>
+                        <li>Compare: quantas requisições cada site faz? Qual é mais "pesado"?</li>
                     </ol>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 16: Atividade Prática 2 -->
+        <!-- SLIDE 19: Preparação para próxima aula -->
         <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Atividade Prática (continuação)</h2>
-            </div>
-            <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Exercício: Analisando Requisições HTTP</h3>
-                    <p>Ainda nas Ferramentas do Desenvolvedor:</p>
-                    <ol style="margin-top: 10px;">
-                        <li>Acesse qualquer site de sua preferência</li>
-                        <li>Clique em um link e observe a <strong>nova requisição GET</strong></li>
-                        <li>Se houver um formulário de busca, faça uma pesquisa e observe a <strong>query string</strong> na URL</li>
-                        <li>Na aba <strong>Elements</strong>, inspecione o código HTML da página</li>
-                        <li>Tente <strong>modificar o texto</strong> de algum elemento diretamente no navegador</li>
-                    </ol>
-                </div>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p><strong>Reflexão:</strong> O que acontece quando você modifica o HTML pelo navegador? A alteração é permanente? Por quê?</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 17: Preparação para próxima aula -->
-        <div class="slide slide-content">
-            <div class="slide-header">
-                <h2>Preparação para a Próxima Aula</h2>
-            </div>
+            <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
                 <div class="box-preclass">
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
-                    <p>Para a <strong>Aula 02</strong>, estude os seguintes temas:</p>
+                    <p>Para a <strong>Aula 02 — Estrutura da Web e Redes TCP/IP</strong>:</p>
                     <ol style="margin-top: 10px;">
                         <li>Assista ao vídeo sobre o <strong>modelo OSI</strong> e o protocolo <strong>TCP/IP</strong></li>
                         <li>Leia sobre o funcionamento do <strong>DNS</strong> (Domain Name System)</li>
@@ -407,7 +486,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 18: Encerramento -->
+        <!-- SLIDE 20: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>
@@ -416,7 +495,6 @@
         </div>
 
     </div>
-
     <script src="js/slides.js"></script>
 </body>
 </html>

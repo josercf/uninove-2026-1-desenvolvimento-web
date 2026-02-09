@@ -9,281 +9,303 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 10 — Formulários e Models no MVC</h2>
-            <p>Classes, Tag Helpers, GET e POST</p>
+            <p>HttpGet, HttpPost, Model Binding e Data Annotations</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 09</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é uma classe em C#? E uma propriedade?</li>
-                        <li>Qual a diferença entre <span class="inline-code">[HttpGet]</span> e <span class="inline-code">[HttpPost]</span>?</li>
-                        <li>O que são Tag Helpers?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>@if/@else:</strong> Condicionais no Razor para renderizar HTML dinamicamente</li>
+                        <li class="recap-item"><strong>@for/@foreach:</strong> Laços para iterar sobre listas e gerar conteúdo repetido</li>
+                        <li class="recap-item"><strong>List&lt;T&gt;:</strong> Coleção dinâmica em C# — Add(), Remove(), Count</li>
+                        <li class="recap-item"><strong>ViewBag:</strong> Passagem de listas do Controller para a View</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>Classes e Propriedades em C#</li>
-                    <li>Models no MVC</li>
-                    <li>Formulários com Tag Helpers</li>
-                    <li>Recebendo Dados com [HttpPost]</li>
-                    <li>Validação de Dados</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Models — Classes que representam dados</li>
+                    <li>[HttpGet] e [HttpPost] — Métodos HTTP</li>
+                    <li>Model Binding — Preenchimento automático</li>
+                    <li>Data Annotations — Validação de dados</li>
+                    <li>Tag Helpers — Formulários no Razor</li>
+                    <li>Caso de Uso Real: Nubank — Cadastro</li>
+                    <li>Exercício Guiado: Formulário de cadastro</li>
+                    <li>Mini Quiz</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 4: O que é um Model -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Classes e Propriedades em C#</h2></div>
+            <div class="slide-header"><h2>O que é um Model?</h2></div>
             <div class="slide-body">
-                <p>Uma <strong>classe</strong> é um molde para criar objetos. As <strong>propriedades</strong> definem os dados que o objeto armazena.</p>
+                <p>Um <strong>Model</strong> é uma classe C# que representa os dados da aplicação. Substitui o uso de ViewBag por algo <strong>fortemente tipado</strong>.</p>
                 <pre>
-<span class="keyword">public class</span> <span class="type">Aluno</span>
+<span class="comment">// Models/Contato.cs</span>
+<span class="keyword">public class</span> <span class="type">Contato</span>
 {
-    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public int</span> Idade { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public double</span> Nota { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-}
-
-<span class="comment">// Criando um objeto</span>
-<span class="keyword">var</span> <span class="js-var">aluno</span> = <span class="keyword">new</span> <span class="type">Aluno</span>
-{
-    Id = <span class="number">1</span>,
-    Nome = <span class="string">"Maria"</span>,
-    Email = <span class="string">"maria@email.com"</span>,
-    Idade = <span class="number">20</span>,
-    Nota = <span class="number">8.5</span>
-};</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Model no MVC</h2></div>
-            <div class="slide-body">
-                <p>No padrão MVC, o <strong>Model</strong> é a classe que representa os dados da aplicação. Ele é criado na pasta <span class="inline-code">Models/</span>.</p>
-                <pre>
-<span class="comment">// Models/Aluno.cs</span>
-<span class="keyword">namespace</span> MinhaAppWeb.Models;
-
-<span class="keyword">public class</span> <span class="type">Aluno</span>
-{
-    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
-    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
-    <span class="keyword">public int</span> Idade { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public double</span> Nota { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="keyword">string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="keyword">string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="keyword">string</span> Mensagem { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="keyword">string</span> Telefone { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 }</pre>
-                <div class="box-info" style="margin-top: 10px;">
-                    <p>O Model é uma <strong>POCO</strong> (Plain Old CLR Object) — uma classe simples sem dependências de framework.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Passando Model para a View</h2></div>
-            <div class="slide-body">
-                <div class="two-columns">
-                    <div>
-                        <h3>Controller</h3>
-                        <pre>
-<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Detalhe</span>()
-{
-    <span class="keyword">var</span> <span class="js-var">aluno</span> = <span class="keyword">new</span> <span class="type">Aluno</span>
-    {
-        Id = <span class="number">1</span>,
-        Nome = <span class="string">"Maria"</span>,
-        Email = <span class="string">"maria@email.com"</span>,
-        Idade = <span class="number">20</span>,
-        Nota = <span class="number">8.5</span>
-    };
-    <span class="keyword">return</span> <span class="js-func">View</span>(<span class="js-var">aluno</span>);
-}</pre>
+                <div class="concept-cards two-cols" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <h4>Antes (ViewBag)</h4>
+                        <p>Dinâmico, sem autocomplete, propenso a erros de digitação</p>
                     </div>
-                    <div>
-                        <h3>View (Detalhe.cshtml)</h3>
-                        <pre>
-<span class="keyword">@model</span> Aluno
-
-<span class="html-name">&lt;h2&gt;</span><span class="keyword">@</span>Model.Nome<span class="html-name">&lt;/h2&gt;</span>
-<span class="html-name">&lt;p&gt;</span>Email: <span class="keyword">@</span>Model.Email<span class="html-name">&lt;/p&gt;</span>
-<span class="html-name">&lt;p&gt;</span>Idade: <span class="keyword">@</span>Model.Idade<span class="html-name">&lt;/p&gt;</span>
-<span class="html-name">&lt;p&gt;</span>Nota: <span class="keyword">@</span>Model.Nota<span class="html-name">&lt;/p&gt;</span></pre>
-                        <div class="box-info" style="margin-top: 10px;">
-                            <p><span class="inline-code">@model</span> define o tipo. <span class="inline-code">@Model</span> acessa os dados.</p>
-                        </div>
+                    <div class="concept-card">
+                        <h4>Agora (Model)</h4>
+                        <p>Tipado, com autocomplete, erros detectados em compilação</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 5: HttpGet e HttpPost -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Formulários com Tag Helpers</h2></div>
-            <div class="slide-body">
-                <p><strong>Tag Helpers</strong> são atributos especiais do Razor que geram HTML automaticamente a partir do Model.</p>
-                <pre>
-<span class="keyword">@model</span> Aluno
-
-<span class="html-name">&lt;form</span> <span class="html-attr">asp-action=</span><span class="html-value">"Cadastrar"</span> <span class="html-attr">method=</span><span class="html-value">"post"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;div&gt;</span>
-        <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"Nome"</span><span class="html-name">&gt;&lt;/label&gt;</span>
-        <span class="html-name">&lt;input</span> <span class="html-attr">asp-for=</span><span class="html-value">"Nome"</span> <span class="html-attr">class=</span><span class="html-value">"form-control"</span> <span class="html-name">/&gt;</span>
-    <span class="html-name">&lt;/div&gt;</span>
-    <span class="html-name">&lt;div&gt;</span>
-        <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"Email"</span><span class="html-name">&gt;&lt;/label&gt;</span>
-        <span class="html-name">&lt;input</span> <span class="html-attr">asp-for=</span><span class="html-value">"Email"</span> <span class="html-attr">class=</span><span class="html-value">"form-control"</span> <span class="html-name">/&gt;</span>
-    <span class="html-name">&lt;/div&gt;</span>
-    <span class="html-name">&lt;div&gt;</span>
-        <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"Idade"</span><span class="html-name">&gt;&lt;/label&gt;</span>
-        <span class="html-name">&lt;input</span> <span class="html-attr">asp-for=</span><span class="html-value">"Idade"</span> <span class="html-attr">class=</span><span class="html-value">"form-control"</span> <span class="html-name">/&gt;</span>
-    <span class="html-name">&lt;/div&gt;</span>
-    <span class="html-name">&lt;button</span> <span class="html-attr">type=</span><span class="html-value">"submit"</span><span class="html-name">&gt;</span>Cadastrar<span class="html-name">&lt;/button&gt;</span>
-<span class="html-name">&lt;/form&gt;</span></pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Recebendo Dados com [HttpPost]</h2></div>
+            <div class="slide-header"><h2>[HttpGet] e [HttpPost]</h2></div>
             <div class="slide-body">
                 <pre>
-<span class="keyword">public class</span> <span class="type">AlunoController</span> : <span class="type">Controller</span>
+<span class="comment">// Controllers/ContatoController.cs</span>
+<span class="keyword">public class</span> <span class="type">ContatoController</span> : <span class="type">Controller</span>
 {
-    <span class="comment">// GET: /Aluno/Cadastrar (exibe o formulário)</span>
+    <span class="comment">// GET: /Contato/Criar — Exibe o formulário vazio</span>
     [<span class="type">HttpGet</span>]
-    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Cadastrar</span>()
+    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Criar</span>()
     {
         <span class="keyword">return</span> <span class="js-func">View</span>();
     }
 
-    <span class="comment">// POST: /Aluno/Cadastrar (recebe os dados)</span>
+    <span class="comment">// POST: /Contato/Criar — Recebe os dados do formulário</span>
     [<span class="type">HttpPost</span>]
-    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Cadastrar</span>(<span class="type">Aluno</span> <span class="js-var">aluno</span>)
+    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Criar</span>(<span class="type">Contato</span> <span class="js-var">contato</span>)
     {
         <span class="comment">// O ASP.NET preenche o objeto automaticamente!</span>
-        <span class="type">ViewBag</span>.Mensagem = <span class="string">$"Aluno {aluno.Nome} cadastrado!"</span>;
-        <span class="keyword">return</span> <span class="js-func">View</span>(<span class="string">"Sucesso"</span>, <span class="js-var">aluno</span>);
+        <span class="keyword">return</span> <span class="js-func">View</span>(<span class="js-string">"Confirmacao"</span>, <span class="js-var">contato</span>);
     }
 }</pre>
-                <div class="box-success" style="margin-top: 10px;">
-                    <p>O <strong>Model Binding</strong> do ASP.NET Core preenche automaticamente as propriedades do objeto a partir dos campos do formulário!</p>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 130px;">
+                        <span class="box-label">GET /Contato/Criar</span>
+                        <span class="box-desc">Formulário vazio</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 130px;">
+                        <span class="box-label">Usuário preenche</span>
+                        <span class="box-desc">e clica "Enviar"</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 130px;">
+                        <span class="box-label">POST /Contato/Criar</span>
+                        <span class="box-desc">Dados no corpo</span>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: Model Binding -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Validação com Data Annotations</h2></div>
+            <div class="slide-header"><h2>Model Binding</h2></div>
+            <div class="slide-body">
+                <p>O <strong>Model Binding</strong> é a "mágica" do ASP.NET: ele preenche automaticamente o objeto C# com os dados do formulário.</p>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">🧩</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Encaixe de peças</h4>
+                        <p>O <span class="inline-code">name="Nome"</span> do input encaixa na propriedade <span class="inline-code">public string Nome</span> do Model. Como peças de quebra-cabeça!</p>
+                    </div>
+                </div>
+                <pre style="margin-top: 15px;">
+<span class="comment">&lt;!-- O name="Email" encaixa em Contato.Email --&gt;</span>
+<span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"email"</span> <span class="html-attr">name=</span><span class="html-value">"Email"</span> <span class="html-name">/&gt;</span>
+
+<span class="comment">// No Controller, o objeto já vem preenchido:</span>
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Criar</span>(<span class="type">Contato</span> <span class="js-var">contato</span>)
+{
+    <span class="comment">// contato.Email já tem o valor digitado!</span>
+}</pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Tag Helpers -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Tag Helpers — Formulários no Razor</h2></div>
+            <div class="slide-body">
+                <p><strong>Tag Helpers</strong> são atributos especiais do Razor que facilitam a criação de formulários vinculados ao Model:</p>
+                <pre>
+<span class="keyword">@model</span> Contato
+
+<span class="html-name">&lt;form</span> <span class="html-attr">asp-action=</span><span class="html-value">"Criar"</span> <span class="html-attr">method=</span><span class="html-value">"post"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;div&gt;</span>
+        <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"Nome"</span><span class="html-name">&gt;&lt;/label&gt;</span>
+        <span class="html-name">&lt;input</span> <span class="html-attr">asp-for=</span><span class="html-value">"Nome"</span> <span class="html-attr">class=</span><span class="html-value">"form-control"</span> <span class="html-name">/&gt;</span>
+        <span class="html-name">&lt;span</span> <span class="html-attr">asp-validation-for=</span><span class="html-value">"Nome"</span><span class="html-name">&gt;&lt;/span&gt;</span>
+    <span class="html-name">&lt;/div&gt;</span>
+    <span class="html-name">&lt;div&gt;</span>
+        <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"Email"</span><span class="html-name">&gt;&lt;/label&gt;</span>
+        <span class="html-name">&lt;input</span> <span class="html-attr">asp-for=</span><span class="html-value">"Email"</span> <span class="html-attr">class=</span><span class="html-value">"form-control"</span> <span class="html-name">/&gt;</span>
+        <span class="html-name">&lt;span</span> <span class="html-attr">asp-validation-for=</span><span class="html-value">"Email"</span><span class="html-name">&gt;&lt;/span&gt;</span>
+    <span class="html-name">&lt;/div&gt;</span>
+    <span class="html-name">&lt;button</span> <span class="html-attr">type=</span><span class="html-value">"submit"</span><span class="html-name">&gt;</span>Enviar<span class="html-name">&lt;/button&gt;</span>
+<span class="html-name">&lt;/form&gt;</span></pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Data Annotations -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Data Annotations — Validação</h2></div>
             <div class="slide-body">
                 <pre>
 <span class="keyword">using</span> System.ComponentModel.DataAnnotations;
 
-<span class="keyword">public class</span> <span class="type">Aluno</span>
+<span class="keyword">public class</span> <span class="type">Contato</span>
 {
-    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    [<span class="type">Required</span>(ErrorMessage = <span class="js-string">"Nome é obrigatório"</span>)]
+    [<span class="type">StringLength</span>(<span class="number">100</span>)]
+    <span class="keyword">public</span> <span class="keyword">string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 
-    [<span class="type">Required</span>(ErrorMessage = <span class="string">"O nome é obrigatório"</span>)]
-    [<span class="type">StringLength</span>(<span class="number">100</span>, MinimumLength = <span class="number">3</span>)]
-    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    [<span class="type">Required</span>(ErrorMessage = <span class="js-string">"Email é obrigatório"</span>)]
+    [<span class="type">EmailAddress</span>(ErrorMessage = <span class="js-string">"Email inválido"</span>)]
+    <span class="keyword">public</span> <span class="keyword">string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 
-    [<span class="type">Required</span>(ErrorMessage = <span class="string">"O e-mail é obrigatório"</span>)]
-    [<span class="type">EmailAddress</span>(ErrorMessage = <span class="string">"E-mail inválido"</span>)]
-    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    [<span class="type">Required</span>]
+    [<span class="type">MinLength</span>(<span class="number">10</span>, ErrorMessage = <span class="js-string">"Mínimo 10 caracteres"</span>)]
+    <span class="keyword">public</span> <span class="keyword">string</span> Mensagem { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 
-    [<span class="type">Range</span>(<span class="number">16</span>, <span class="number">100</span>, ErrorMessage = <span class="string">"Idade entre 16 e 100"</span>)]
-    <span class="keyword">public int</span> Idade { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-
-    [<span class="type">Range</span>(<span class="number">0</span>, <span class="number">10</span>)]
-    <span class="keyword">public double</span> Nota { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    [<span class="type">Phone</span>]
+    <span class="keyword">public</span> <span class="keyword">string</span>? Telefone { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 9: Validação no Controller -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exibindo Erros de Validação</h2></div>
+            <div class="slide-header"><h2>Validação no Controller</h2></div>
             <div class="slide-body">
-                <div class="two-columns">
-                    <div>
-                        <h3>Controller</h3>
-                        <pre>
+                <pre>
 [<span class="type">HttpPost</span>]
-<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Cadastrar</span>(
-    <span class="type">Aluno</span> <span class="js-var">aluno</span>)
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Criar</span>(<span class="type">Contato</span> <span class="js-var">contato</span>)
 {
+    <span class="comment">// Verifica se todas as validações passaram</span>
     <span class="keyword">if</span> (!ModelState.IsValid)
     {
-        <span class="comment">// Retorna o form com erros</span>
-        <span class="keyword">return</span> <span class="js-func">View</span>(<span class="js-var">aluno</span>);
+        <span class="comment">// Retorna o formulário com os erros</span>
+        <span class="keyword">return</span> <span class="js-func">View</span>(<span class="js-var">contato</span>);
     }
-    <span class="comment">// Sucesso!</span>
-    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(
-        <span class="string">"Index"</span>);
+
+    <span class="comment">// Dados válidos — processar e redirecionar</span>
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="js-string">"Sucesso"</span>);
 }</pre>
-                    </div>
-                    <div>
-                        <h3>View</h3>
-                        <pre>
-<span class="html-name">&lt;div&gt;</span>
-  <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"Nome"</span><span class="html-name">&gt;&lt;/label&gt;</span>
-  <span class="html-name">&lt;input</span> <span class="html-attr">asp-for=</span><span class="html-value">"Nome"</span> <span class="html-name">/&gt;</span>
-  <span class="html-name">&lt;span</span> <span class="html-attr">asp-validation-for=</span><span class="html-value">"Nome"</span>
-    <span class="html-attr">class=</span><span class="html-value">"text-danger"</span><span class="html-name">&gt;</span>
-  <span class="html-name">&lt;/span&gt;</span>
-<span class="html-name">&lt;/div&gt;</span>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p><span class="inline-code">ModelState.IsValid</span> retorna <span class="inline-code">true</span> somente se <strong>todas</strong> as Data Annotations forem satisfeitas. Caso contrário, as mensagens de erro são exibidas nos <span class="inline-code">asp-validation-for</span>.</p>
+                </div>
+            </div>
+        </div>
 
-<span class="comment">&lt;!-- Resumo de erros --&gt;</span>
-<span class="html-name">&lt;div</span> <span class="html-attr">asp-validation-summary=</span><span class="html-value">"All"</span>
-  <span class="html-attr">class=</span><span class="html-value">"text-danger"</span><span class="html-name">&gt;</span>
-<span class="html-name">&lt;/div&gt;</span></pre>
+        <!-- SLIDE 10: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>Nubank — Formulário de Cadastro</h3>
+                    <span class="company-tag">Nubank</span>
+                    <span class="company-tag">Validação</span>
+                    <span class="company-tag">UX</span>
+                    <p style="margin-top: 10px;">O cadastro do Nubank valida <strong>CPF, email, telefone e senha</strong> em tempo real. No backend, Data Annotations (ou equivalente) garantem que nenhum dado inválido chegue ao banco de dados.</p>
+                </div>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">🖥️</span>
+                        <h4>Front-end</h4>
+                        <p>Validação visual instantânea (JS)</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🔒</span>
+                        <h4>Back-end</h4>
+                        <p>Data Annotations + ModelState</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🗄️</span>
+                        <h4>Banco de Dados</h4>
+                        <p>Constraints (NOT NULL, UNIQUE)</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 11: Exercício Guiado -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
+                <div class="guided-exercise">
                     <h3>Formulário de Cadastro de Aluno</h3>
-                    <ol>
-                        <li>Crie o Model <span class="inline-code">Aluno</span> com: Nome, Email, Idade, Curso e Nota</li>
-                        <li>Adicione Data Annotations para validação</li>
-                        <li>Crie o <span class="inline-code">AlunoController</span> com Actions GET e POST</li>
-                        <li>Crie a View com formulário usando Tag Helpers</li>
-                        <li>Exiba mensagens de erro de validação</li>
-                        <li>Ao cadastrar com sucesso, redirecione para uma página de confirmação</li>
+                    <div class="timebox">35 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie <span class="inline-code">Models/Aluno.cs</span> com: Nome, Email, RA, Curso e DataNascimento</li>
+                        <li>Adicione Data Annotations: [Required], [EmailAddress], [StringLength]</li>
+                        <li>Crie <span class="inline-code">Controllers/AlunoController.cs</span></li>
+                        <li>Crie o método <span class="inline-code">[HttpGet] Cadastrar()</span> que retorna a View vazia</li>
+                        <li>Crie o método <span class="inline-code">[HttpPost] Cadastrar(Aluno aluno)</span> que valida com ModelState</li>
+                        <li>Na View, use Tag Helpers: <span class="inline-code">asp-for</span>, <span class="inline-code">asp-validation-for</span></li>
+                        <li>Teste enviando o formulário vazio e com dados inválidos</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 12: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Formulário de Contato</h3>
-                    <ol>
-                        <li>Crie o Model <span class="inline-code">Contato</span> com: Nome, Email, Assunto e Mensagem</li>
-                        <li>Todos os campos devem ser obrigatórios</li>
-                        <li>O campo Assunto deve ser um <span class="inline-code">&lt;select&gt;</span> com opções: Dúvida, Sugestão, Reclamação</li>
-                        <li>O campo Mensagem deve ter no mínimo 10 caracteres</li>
-                        <li>Ao enviar, exiba uma página de sucesso com os dados preenchidos</li>
-                        <li>Estilize o formulário com CSS (use Bootstrap se preferir)</li>
+                <div class="guided-exercise">
+                    <h3>Página de Confirmação</h3>
+                    <div class="timebox">15 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie a View <span class="inline-code">Confirmacao.cshtml</span> com <span class="inline-code">@model Aluno</span></li>
+                        <li>Exiba todos os dados do aluno cadastrado usando <span class="inline-code">@Model.Nome</span></li>
+                        <li>Estilize com uma mensagem de sucesso (verde)</li>
+                        <li>Adicione um botão "Cadastrar outro" que redireciona para o formulário</li>
+                        <li>No Controller, redirecione para a View de confirmação quando os dados forem válidos</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Mini Quiz -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="d">
+                    <h3>Teste seus conhecimentos!</h3>
+                    <p class="quiz-question">Qual Data Annotation é usada para tornar um campo <strong>obrigatório</strong> no Model?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) [NotNull]</button></li>
+                        <li><button class="quiz-option" data-option="b">b) [Mandatory]</button></li>
+                        <li><button class="quiz-option" data-option="c">c) [NotEmpty]</button></li>
+                        <li><button class="quiz-option" data-option="d">d) [Required]</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(d)</strong>. <span class="inline-code">[Required]</span> torna o campo obrigatório. Se o campo estiver vazio, <span class="inline-code">ModelState.IsValid</span> retorna false.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -292,14 +314,16 @@
                     <p>Para a <strong>Aula 11 — Entity Framework Core e MySQL</strong>:</p>
                     <ol style="margin-top: 10px;">
                         <li>Pesquise o que é um <strong>ORM</strong> (Object-Relational Mapping)</li>
-                        <li>Leia sobre o <strong>Entity Framework Core</strong> e o conceito de <strong>DbContext</strong></li>
-                        <li>Instale o <strong>MySQL</strong> (ou MySQL Workbench) no seu computador</li>
+                        <li>Leia sobre o <strong>Entity Framework Core</strong></li>
+                        <li>Instale o <strong>MySQL</strong> na sua máquina (ou use o MySQL Workbench)</li>
+                        <li>Pesquise o que é <strong>DbContext</strong> e <strong>DbSet</strong></li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 40 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 15: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

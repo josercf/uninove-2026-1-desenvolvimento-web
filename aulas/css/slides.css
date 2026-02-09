@@ -1,6 +1,6 @@
 /* ============================================
    UNINOVE - Desenvolvimento Web
-   Template de Slides HTML
+   Template de Slides HTML v2.0
    ============================================ */
 
 /* Reset e base */
@@ -414,10 +414,6 @@ code {
     margin-bottom: 10px;
 }
 
-.box-preclass h3::before {
-    content: '📖 ';
-}
-
 .box-preclass p, .box-preclass li {
     color: #1A237E;
     font-size: 1.05em;
@@ -661,3 +657,572 @@ figcaption {
 .icon-book::before { content: '📖 '; }
 .icon-code::before { content: '💻 '; }
 .icon-exercise::before { content: '✏️ '; }
+
+/* ============================================
+   MINI QUIZ INTERATIVO (v2.0)
+   ============================================ */
+
+.quiz-container {
+    background: linear-gradient(135deg, #EDE7F6, #D1C4E9);
+    border: 2px solid #7E57C2;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin: 15px 0;
+    position: relative;
+}
+
+.quiz-container h3 {
+    color: #4527A0;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quiz-container h3::before {
+    content: '🧠';
+    font-size: 1.2em;
+}
+
+.quiz-question {
+    font-size: 1.15em;
+    color: #311B92;
+    margin-bottom: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.quiz-options {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.quiz-options li {
+    margin: 0;
+}
+
+.quiz-option {
+    display: block;
+    width: 100%;
+    padding: 12px 18px;
+    background: #fff;
+    border: 2px solid #B39DDB;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-family: inherit;
+    line-height: 1.4;
+}
+
+.quiz-option:hover {
+    background: #EDE7F6;
+    border-color: #7E57C2;
+    transform: translateY(-1px);
+}
+
+.quiz-option.correct {
+    background: #E8F5E9;
+    border-color: #4CAF50;
+    color: #2E7D32;
+    font-weight: 600;
+    box-shadow: 0 0 0 2px rgba(76,175,80,0.3);
+}
+
+.quiz-option.incorrect {
+    background: #FFEBEE;
+    border-color: #EF5350;
+    color: #C62828;
+    opacity: 0.7;
+}
+
+.quiz-option:disabled {
+    cursor: default;
+}
+
+.quiz-option:disabled:hover {
+    transform: none;
+}
+
+.quiz-feedback {
+    margin-top: 15px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 1.05em;
+    display: none;
+    line-height: 1.5;
+}
+
+.quiz-feedback.show {
+    display: block;
+}
+
+.quiz-feedback.correct {
+    background: #E8F5E9;
+    border-left: 4px solid #4CAF50;
+    color: #2E7D32;
+}
+
+.quiz-feedback.incorrect {
+    background: #FFF3E0;
+    border-left: 4px solid #FF9800;
+    color: #E65100;
+}
+
+/* ============================================
+   RECAPITULAÇÃO DA AULA ANTERIOR (v2.0)
+   ============================================ */
+
+.recap-container {
+    background: linear-gradient(135deg, #E0F2F1, #B2DFDB);
+    border: 2px solid #26A69A;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin: 10px 0;
+}
+
+.recap-container h3 {
+    color: #00695C;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recap-container h3::before {
+    content: '🔄';
+    font-size: 1.1em;
+}
+
+.recap-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+}
+
+.recap-item {
+    background: rgba(255,255,255,0.7);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid #26A69A;
+    font-size: 1em;
+    color: #004D40;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.recap-item strong {
+    color: #00695C;
+}
+
+/* ============================================
+   EXERCÍCIO GUIADO COM TIMEBOX (v2.0)
+   ============================================ */
+
+.guided-exercise {
+    background: linear-gradient(135deg, #FFF8E1, #FFECB3);
+    border: 2px solid #FFA000;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin: 15px 0;
+    position: relative;
+}
+
+.guided-exercise h3 {
+    color: #E65100;
+    font-size: 1.3em;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.guided-exercise h3::before {
+    content: '💻';
+    font-size: 1.1em;
+}
+
+.timebox {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #E65100;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.timebox::before {
+    content: '⏱';
+    font-size: 1em;
+}
+
+.guided-steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+}
+
+.guided-steps li {
+    counter-increment: step;
+    padding: 10px 15px 10px 50px;
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    position: relative;
+    line-height: 1.5;
+}
+
+.guided-steps li::before {
+    content: "Passo " counter(step);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #FFA000;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.guided-steps .inline-code {
+    font-size: 0.85em;
+}
+
+/* ============================================
+   CASO DE USO REAL (v2.0)
+   ============================================ */
+
+.real-world {
+    background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+    border: 2px solid #1976D2;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin: 15px 0;
+}
+
+.real-world h3 {
+    color: #0D47A1;
+    font-size: 1.3em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.real-world h3::before {
+    content: '🌍';
+    font-size: 1.1em;
+}
+
+.real-world p {
+    color: #1565C0;
+    font-size: 1.05em;
+    margin-bottom: 10px;
+}
+
+.real-world .company-tag {
+    display: inline-block;
+    background: #1976D2;
+    color: #fff;
+    padding: 3px 12px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-right: 6px;
+    margin-bottom: 8px;
+}
+
+/* ============================================
+   DIAGRAMAS VISUAIS CSS (v2.0)
+   ============================================ */
+
+.diagram-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.diagram-box {
+    background: #fff;
+    border: 2px solid #00274D;
+    border-radius: 10px;
+    padding: 15px 20px;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.diagram-box.highlight {
+    background: #00274D;
+    color: #fff;
+    border-color: #00274D;
+}
+
+.diagram-box.highlight-coral {
+    background: #C84B31;
+    color: #fff;
+    border-color: #C84B31;
+}
+
+.diagram-box .box-icon {
+    font-size: 1.8em;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.diagram-box .box-label {
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.diagram-box .box-desc {
+    font-size: 0.75em;
+    color: #666;
+    margin-top: 4px;
+}
+
+.diagram-box.highlight .box-desc,
+.diagram-box.highlight-coral .box-desc {
+    color: rgba(255,255,255,0.7);
+}
+
+.diagram-arrow {
+    font-size: 1.5em;
+    color: #C84B31;
+    padding: 0 8px;
+    font-weight: bold;
+}
+
+/* Diagrama vertical / stack */
+.diagram-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 15px 0;
+}
+
+.diagram-stack .diagram-arrow {
+    transform: rotate(90deg);
+    padding: 4px 0;
+}
+
+/* Diagrama de camadas */
+.layer-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 15px 0;
+    max-width: 500px;
+}
+
+.layer-diagram .layer {
+    padding: 12px 20px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1em;
+    border-radius: 6px;
+    color: #fff;
+}
+
+/* Comparação visual lado a lado */
+.comparison {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.comparison-vs {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #C84B31;
+    text-align: center;
+}
+
+.comparison-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    border-top: 4px solid #00274D;
+}
+
+.comparison-card h4 {
+    color: #00274D;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.comparison-card.alt {
+    border-top-color: #C84B31;
+}
+
+.comparison-card.alt h4 {
+    color: #C84B31;
+}
+
+/* ============================================
+   CONCEITO VISUAL (cards de conceito)
+   ============================================ */
+
+.concept-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.concept-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border-top: 4px solid #C84B31;
+    transition: transform 0.2s;
+}
+
+.concept-card:hover {
+    transform: translateY(-3px);
+}
+
+.concept-card .card-icon {
+    font-size: 2em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.concept-card h4 {
+    color: #00274D;
+    font-size: 1em;
+    margin-bottom: 6px;
+}
+
+.concept-card p {
+    font-size: 0.85em;
+    color: #666;
+    margin: 0;
+}
+
+/* 4 colunas para cards menores */
+.concept-cards.four-cols {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* 2 colunas para cards maiores */
+.concept-cards.two-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* ============================================
+   ANALOGIA VISUAL (v2.0)
+   ============================================ */
+
+.analogy-box {
+    background: linear-gradient(135deg, #FCE4EC, #F8BBD0);
+    border: 2px solid #E91E63;
+    border-radius: 12px;
+    padding: 20px 25px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.analogy-box .analogy-icon {
+    font-size: 3em;
+    flex-shrink: 0;
+}
+
+.analogy-box .analogy-text {
+    flex: 1;
+}
+
+.analogy-box .analogy-text h4 {
+    color: #880E4F;
+    font-size: 1.1em;
+    margin-bottom: 6px;
+}
+
+.analogy-box .analogy-text p {
+    color: #AD1457;
+    font-size: 1em;
+    margin: 0;
+}
+
+/* ============================================
+   DESTAQUE DE RESULTADO / OUTPUT
+   ============================================ */
+
+.output-box {
+    background: #263238;
+    color: #4CAF50;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 10px 0;
+    border-left: 4px solid #4CAF50;
+}
+
+.output-box .output-label {
+    color: #78909C;
+    font-size: 0.8em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* ============================================
+   DICA DO PROFESSOR
+   ============================================ */
+
+.tip-box {
+    background: linear-gradient(135deg, #FFF9C4, #FFF59D);
+    border: 2px solid #FBC02D;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 15px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.tip-box::before {
+    content: '💡';
+    font-size: 1.5em;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.tip-box p {
+    color: #F57F17;
+    font-size: 1.05em;
+    margin: 0;
+    font-weight: 500;
+}
+
+.tip-box strong {
+    color: #E65100;
+}

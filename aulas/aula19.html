@@ -9,6 +9,7 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 19 — Publicação e Deploy</h2>
@@ -16,61 +17,62 @@
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 18</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é deploy? Por que é importante?</li>
-                        <li>O que é Docker? O que é um container?</li>
-                        <li>Todos conseguiram criar a conta no Azure ou Railway?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>_Layout.cshtml:</strong> Template mestre com menu, rodapé e @RenderBody()</li>
+                        <li class="recap-item"><strong>Partial Views:</strong> Componentes reutilizáveis de HTML/Razor</li>
+                        <li class="recap-item"><strong>Bootstrap:</strong> Framework CSS com componentes prontos e responsivos</li>
+                        <li class="recap-item"><strong>Grid System:</strong> 12 colunas para organizar layouts (row, col-md-4)</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
                     <li>Ambientes: Desenvolvimento vs. Produção</li>
                     <li>Publicando com dotnet publish</li>
+                    <li>Mini Quiz</li>
                     <li>Docker e Dockerfile</li>
-                    <li>Variáveis de Ambiente</li>
-                    <li>Deploy na Nuvem</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Variáveis de Ambiente e Segurança</li>
+                    <li>Caso de Uso Real: Netflix</li>
+                    <li>Exercício Guiado: Dockerizar e Publicar</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 4: Ambientes -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Ambientes no ASP.NET Core</h2></div>
             <div class="slide-body">
                 <p>O ASP.NET Core suporta múltiplos ambientes para configurações diferentes:</p>
                 <table style="margin-top: 15px;">
-                    <thead><tr><th>Ambiente</th><th>Variável</th><th>Uso</th></tr></thead>
+                    <thead><tr><th>Ambiente</th><th>Uso</th><th>Erros</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Development</strong></td><td><span class="inline-code">ASPNETCORE_ENVIRONMENT=Development</span></td><td>Desenvolvimento local, erros detalhados</td></tr>
-                        <tr><td><strong>Staging</strong></td><td><span class="inline-code">ASPNETCORE_ENVIRONMENT=Staging</span></td><td>Testes antes de produção</td></tr>
-                        <tr><td><strong>Production</strong></td><td><span class="inline-code">ASPNETCORE_ENVIRONMENT=Production</span></td><td>Servidor real, erros genéricos</td></tr>
+                        <tr><td><strong>Development</strong></td><td>Sua máquina local</td><td>Detalhados (stack trace)</td></tr>
+                        <tr><td><strong>Staging</strong></td><td>Testes antes de produção</td><td>Parciais</td></tr>
+                        <tr><td><strong>Production</strong></td><td>Servidor real (usuários)</td><td>Genéricos (segurança)</td></tr>
                     </tbody>
                 </table>
-                <pre style="margin-top: 15px;">
-<span class="comment">// Program.cs — Configuração por ambiente</span>
-<span class="keyword">if</span> (app.Environment.<span class="js-func">IsDevelopment</span>())
-{
-    app.<span class="js-func">UseDeveloperExceptionPage</span>();
-    app.<span class="js-func">UseSwagger</span>();
-}
-<span class="keyword">else</span>
-{
-    app.<span class="js-func">UseExceptionHandler</span>(<span class="string">"/Home/Error"</span>);
-    app.<span class="js-func">UseHsts</span>();
-}</pre>
+                <div class="analogy-box" style="margin-top: 10px;">
+                    <span class="analogy-icon">🎭</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Peça de Teatro</h4>
+                        <p><strong>Development</strong> = ensaio (pode errar à vontade). <strong>Staging</strong> = ensaio geral (quase pronto). <strong>Production</strong> = noite de estreia (tudo tem que funcionar!).</p>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 5: dotnet publish -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Publicando com dotnet publish</h2></div>
             <div class="slide-body">
@@ -87,32 +89,76 @@ publish/
 │   ├── css/
 │   ├── js/
 │   └── lib/
-└── ...
-
-<span class="comment"># Executar a aplicação publicada</span>
-$ dotnet MinhaAppWeb.dll</pre>
-                <div class="box-info" style="margin-top: 10px;">
-                    <p>O comando <span class="inline-code">dotnet publish</span> compila, otimiza e gera os arquivos prontos para deploy.</p>
+└── ...</pre>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">Código Fonte</span>
+                        <span class="box-desc">.cs, .cshtml</span>
+                    </div>
+                    <span class="diagram-arrow">dotnet publish →</span>
+                    <div class="diagram-box highlight" style="min-width: 120px;">
+                        <span class="box-label">Publicação</span>
+                        <span class="box-desc">.dll otimizado</span>
+                    </div>
+                    <span class="diagram-arrow">deploy →</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 120px;">
+                        <span class="box-label">Servidor</span>
+                        <span class="box-desc">Nuvem / Docker</span>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: Mini Quiz (meio) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="d">
+                    <h3>Vamos verificar!</h3>
+                    <p class="quiz-question">Em qual ambiente do ASP.NET Core os erros devem ser exibidos de forma <strong>genérica</strong> para não expor informações sensíveis?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) Development</button></li>
+                        <li><button class="quiz-option" data-option="b">b) Staging</button></li>
+                        <li><button class="quiz-option" data-option="c">c) Testing</button></li>
+                        <li><button class="quiz-option" data-option="d">d) Production</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(d)</strong>. Em <strong>Production</strong>, erros detalhados (stack trace) são ocultados para não expor informações sensíveis do sistema.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Docker -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Docker — Conceito</h2></div>
             <div class="slide-body">
-                <p><strong>Docker</strong> permite empacotar a aplicação com todas as suas dependências em um <strong>container</strong> — garantindo que funcione em qualquer lugar.</p>
-                <div class="box-success" style="margin-top: 15px;">
-                    <p><strong>Analogia:</strong> Um container Docker é como uma "caixa" que contém tudo que a aplicação precisa para rodar: código, runtime, bibliotecas e configurações.</p>
+                <p><strong>Docker</strong> permite empacotar a aplicação com todas as suas dependências em um <strong>container</strong>.</p>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">📦</span>
+                        <h4>Container</h4>
+                        <p>Caixa isolada com tudo que a app precisa para rodar</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🖼️</span>
+                        <h4>Imagem</h4>
+                        <p>Receita/template para criar containers</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">📄</span>
+                        <h4>Dockerfile</h4>
+                        <p>Arquivo com instruções para construir a imagem</p>
+                    </div>
                 </div>
-                <pre style="margin-top: 15px;">
+                <pre style="margin-top: 10px;">
 <span class="comment"># Comandos básicos do Docker</span>
-$ docker build -t minhaapp .          <span class="comment"># Construir imagem</span>
-$ docker run -p 8080:80 minhaapp      <span class="comment"># Rodar container</span>
-$ docker ps                            <span class="comment"># Listar containers</span>
-$ docker stop &lt;id&gt;                    <span class="comment"># Parar container</span></pre>
+$ docker build -t minhaapp .       <span class="comment"># Construir imagem</span>
+$ docker run -p 8080:80 minhaapp   <span class="comment"># Rodar container</span>
+$ docker ps                        <span class="comment"># Listar containers</span>
+$ docker stop &lt;id&gt;                 <span class="comment"># Parar container</span></pre>
             </div>
         </div>
 
+        <!-- SLIDE 8: Dockerfile -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Dockerfile</h2></div>
             <div class="slide-body">
@@ -127,73 +173,98 @@ $ docker stop &lt;id&gt;                    <span class="comment"># Parar contai
 <span class="keyword">COPY</span> . .
 <span class="keyword">RUN</span> dotnet publish -c Release -o /out
 
-<span class="comment"># Etapa 2: Runtime</span>
+<span class="comment"># Etapa 2: Runtime (imagem menor)</span>
 <span class="keyword">FROM</span> mcr.microsoft.com/dotnet/aspnet:8.0
 <span class="keyword">WORKDIR</span> /app
 <span class="keyword">COPY</span> --from=build /out .
 <span class="keyword">EXPOSE</span> 80
-<span class="keyword">ENTRYPOINT</span> [<span class="string">"dotnet"</span>, <span class="string">"MinhaAppWeb.dll"</span>]</pre>
+<span class="keyword">ENTRYPOINT</span> [<span class="js-string">"dotnet"</span>, <span class="js-string">"MinhaAppWeb.dll"</span>]</pre>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p><strong>Multi-stage build:</strong> A etapa 1 compila (imagem grande). A etapa 2 só roda (imagem pequena e segura).</p>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 9: Variáveis de Ambiente -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Variáveis de Ambiente</h2></div>
+            <div class="slide-header"><h2>Variáveis de Ambiente e Segurança</h2></div>
             <div class="slide-body">
                 <p>Em produção, <strong>nunca</strong> coloque senhas no código! Use variáveis de ambiente.</p>
                 <pre>
 <span class="comment">// appsettings.json (desenvolvimento)</span>
 {
-  <span class="string">"ConnectionStrings"</span>: {
-    <span class="string">"DefaultConnection"</span>: <span class="string">"Server=localhost;Database=MinhaDb;..."</span>
+  <span class="js-string">"ConnectionStrings"</span>: {
+    <span class="js-string">"DefaultConnection"</span>: <span class="js-string">"Server=localhost;..."</span>
   }
 }
 
 <span class="comment">// Em produção, use variáveis de ambiente:</span>
-$ <span class="keyword">export</span> ConnectionStrings__DefaultConnection=<span class="string">"Server=prod-server;..."</span>
+$ <span class="keyword">export</span> ConnectionStrings__DefaultConnection=<span class="js-string">"Server=prod;..."</span>
 
-<span class="comment">// O ASP.NET Core lê automaticamente!</span>
-<span class="comment">// Prioridade: Variável de Ambiente > appsettings.Production.json > appsettings.json</span></pre>
+<span class="comment">// Prioridade do ASP.NET Core:</span>
+<span class="comment">// 1. Variável de Ambiente (mais alta)</span>
+<span class="comment">// 2. appsettings.Production.json</span>
+<span class="comment">// 3. appsettings.json (mais baixa)</span></pre>
                 <div class="box-warning" style="margin-top: 10px;">
-                    <p><strong>Importante:</strong> Adicione <span class="inline-code">appsettings.Development.json</span> ao <span class="inline-code">.gitignore</span> para não vazar credenciais!</p>
+                    <p><strong>Importante:</strong> Adicione <span class="inline-code">appsettings.Development.json</span> ao <span class="inline-code">.gitignore</span>!</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 10: Caso de Uso Real -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Publicar e Dockerizar a Aplicação</h3>
-                    <ol>
-                        <li>Execute <span class="inline-code">dotnet publish -c Release -o ./publish</span></li>
-                        <li>Verifique os arquivos gerados na pasta <span class="inline-code">publish/</span></li>
-                        <li>Crie o <span class="inline-code">Dockerfile</span> na raiz do projeto</li>
+                <div class="real-world">
+                    <h3>Netflix — Deploy com Docker e Microserviços</h3>
+                    <span class="company-tag">Netflix</span>
+                    <span class="company-tag">Docker</span>
+                    <span class="company-tag">AWS</span>
+                    <p style="margin-top: 10px;">A Netflix roda <strong>centenas de microserviços</strong> em containers Docker na AWS. Cada serviço (catálogo, recomendações, streaming, pagamento) é um container independente. Se um falha, os outros continuam funcionando. Eles fazem <strong>dezenas de deploys por dia</strong> sem derrubar o serviço.</p>
+                </div>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 100px;">
+                        <span class="box-label">Catálogo</span>
+                        <span class="box-desc">Container 1</span>
+                    </div>
+                    <div class="diagram-box" style="min-width: 100px;">
+                        <span class="box-label">Streaming</span>
+                        <span class="box-desc">Container 2</span>
+                    </div>
+                    <div class="diagram-box" style="min-width: 100px;">
+                        <span class="box-label">Pagamento</span>
+                        <span class="box-desc">Container 3</span>
+                    </div>
+                    <div class="diagram-box" style="min-width: 100px;">
+                        <span class="box-label">Recomendação</span>
+                        <span class="box-desc">Container 4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Dockerizar e Publicar a Aplicação</h3>
+                    <div class="timebox">45 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Execute <span class="inline-code">dotnet publish -c Release -o ./publish</span> e verifique os arquivos</li>
+                        <li>Crie o <span class="inline-code">Dockerfile</span> na raiz do projeto (copie o modelo do slide)</li>
+                        <li>Crie o <span class="inline-code">.dockerignore</span> (bin/, obj/, .git/)</li>
                         <li>Construa a imagem: <span class="inline-code">docker build -t minhaapp .</span></li>
                         <li>Execute o container: <span class="inline-code">docker run -p 8080:80 minhaapp</span></li>
                         <li>Acesse <span class="inline-code">http://localhost:8080</span> e teste a aplicação</li>
+                        <li>Crie um repositório no GitHub e faça push do código</li>
+                        <li>Configure o <span class="inline-code">.gitignore</span> (bin/, obj/, appsettings.Development.json)</li>
                     </ol>
                 </div>
             </div>
         </div>
 
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
-            <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Deploy na Nuvem</h3>
-                    <ol>
-                        <li>Crie um repositório no GitHub para o projeto</li>
-                        <li>Faça push do código</li>
-                        <li>Crie o <span class="inline-code">.gitignore</span> adequado (bin/, obj/, appsettings.Development.json)</li>
-                        <li>No Railway (ou Azure), conecte o repositório GitHub</li>
-                        <li>Configure as variáveis de ambiente (connection string)</li>
-                        <li>Faça o deploy e acesse a URL pública</li>
-                        <li>Teste todas as funcionalidades no ambiente de produção</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
+        <!-- SLIDE 12: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -201,15 +272,17 @@ $ <span class="keyword">export</span> ConnectionStrings__DefaultConnection=<span
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
                     <p>Para a <strong>Aula 20 — Revisão e Projeto Final</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Revise todo o conteúdo do semestre</li>
-                        <li>Prepare dúvidas sobre os temas mais difíceis</li>
+                        <li>Revise todo o conteúdo do semestre (slides disponíveis online)</li>
+                        <li>Prepare <strong>3 dúvidas</strong> sobre os temas mais difíceis</li>
                         <li>Pense em uma ideia de <strong>projeto final</strong> que use: MVC, EF Core, MySQL, autenticação e AJAX</li>
+                        <li>Traga o projeto no notebook pronto para apresentar o progresso</li>
                     </ol>
                     <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 60 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

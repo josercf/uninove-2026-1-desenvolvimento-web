@@ -3,120 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 07 - Ambiente .NET e Introdução ao C# | Desenvolvimento Web - UNINOVE</title>
+    <title>Aula 07 - Ambiente de Desenvolvimento .NET | Desenvolvimento Web - UNINOVE</title>
     <link rel="stylesheet" href="css/slides.css">
 </head>
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
-            <h2>Aula 07 — Ambiente .NET e Introdução ao C#</h2>
-            <p>Configuração, Hello World e Fundamentos de C#</p>
+            <h2>Aula 07 — Ambiente de Desenvolvimento .NET</h2>
+            <p>Instalação, C# e o padrão MVC</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 06</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Verificação (10 min)</h3>
-                    <ol>
-                        <li>Todos conseguiram instalar o .NET SDK? Execute: <span class="inline-code">dotnet --version</span></li>
-                        <li>A extensão C# Dev Kit está instalada no VS Code?</li>
-                        <li>O que vocês descobriram sobre a linguagem C#?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>JavaScript:</strong> Linguagem que roda no navegador para interatividade</li>
+                        <li class="recap-item"><strong>Variáveis:</strong> let (mutável), const (imutável) — tipos: string, number, boolean</li>
+                        <li class="recap-item"><strong>DOM:</strong> document.getElementById(), querySelector(), addEventListener()</li>
+                        <li class="recap-item"><strong>Validação:</strong> event.preventDefault() para impedir envio de formulários inválidos</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>O que é .NET?</li>
-                    <li>Configuração do Ambiente</li>
-                    <li>Hello World em C#</li>
-                    <li>Tipos de Dados e Variáveis</li>
-                    <li>Operadores</li>
-                    <li>Entrada e Saída de Dados</li>
-                    <li>Exercícios Práticos</li>
+                    <li>O que é .NET e ASP.NET Core?</li>
+                    <li>C# — A linguagem do ecossistema .NET</li>
+                    <li>Ferramentas: SDK, Visual Studio, CLI</li>
+                    <li>Tipos de dados, variáveis e operadores</li>
+                    <li>O padrão MVC (Model-View-Controller)</li>
+                    <li>Caso de Uso Real: Stack Overflow</li>
+                    <li>Exercício Guiado: Primeiro projeto</li>
+                    <li>Mini Quiz</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 4: O que é .NET -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>O que é .NET?</h2></div>
             <div class="slide-body">
-                <p><strong>.NET</strong> é uma plataforma de desenvolvimento criada pela Microsoft. É <strong>open-source</strong>, <strong>multiplataforma</strong> (Windows, Linux, macOS) e suporta diversas linguagens, sendo <strong>C#</strong> a principal.</p>
-                <div class="two-columns" style="margin-top: 15px;">
-                    <div>
-                        <h3>Componentes</h3>
-                        <ul>
-                            <li><strong>.NET SDK</strong> — Ferramentas de desenvolvimento</li>
-                            <li><strong>CLR</strong> — Runtime que executa o código</li>
-                            <li><strong>BCL</strong> — Biblioteca de classes base</li>
-                            <li><strong>ASP.NET Core</strong> — Framework web</li>
-                        </ul>
+                <p><strong>.NET</strong> é uma plataforma de desenvolvimento da Microsoft, gratuita e open-source, para criar aplicações web, desktop, mobile e cloud.</p>
+                <div class="concept-cards" style="margin-top: 15px;">
+                    <div class="concept-card">
+                        <span class="card-icon">🌐</span>
+                        <h4>ASP.NET Core</h4>
+                        <p>Framework web (nosso foco!)</p>
                     </div>
-                    <div>
-                        <h3>Por que .NET?</h3>
-                        <ul>
-                            <li>Alta <strong>performance</strong></li>
-                            <li>Ecossistema <strong>robusto</strong></li>
-                            <li>Grande <strong>mercado de trabalho</strong></li>
-                            <li>Suporte da <strong>Microsoft</strong></li>
-                        </ul>
+                    <div class="concept-card">
+                        <span class="card-icon">💻</span>
+                        <h4">.NET MAUI</h4>
+                        <p>Apps desktop e mobile</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">☁️</span>
+                        <h4>Azure</h4>
+                        <p>Serviços em nuvem</p>
+                    </div>
+                </div>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">🔄</span>
+                    <div class="analogy-text">
+                        <h4>De JSP para .NET</h4>
+                        <p><strong>Java/JSP</strong> → <strong>C#/ASP.NET Core MVC</strong>. A linguagem muda, mas os conceitos (MVC, HTTP, banco de dados) são os mesmos!</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 5: C# Visão Geral -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Configuração do Ambiente</h2></div>
+            <div class="slide-header"><h2>C# — Visão Geral</h2></div>
             <div class="slide-body">
-                <h3>Ferramentas Necessárias</h3>
-                <table>
-                    <thead><tr><th>Ferramenta</th><th>Descrição</th><th>Download</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>.NET SDK 8</strong></td><td>Kit de desenvolvimento</td><td>dotnet.microsoft.com</td></tr>
-                        <tr><td><strong>VS Code</strong></td><td>Editor de código</td><td>code.visualstudio.com</td></tr>
-                        <tr><td><strong>C# Dev Kit</strong></td><td>Extensão para C# no VS Code</td><td>Marketplace do VS Code</td></tr>
-                    </tbody>
-                </table>
-                <h3 style="margin-top: 15px;">Verificando a Instalação</h3>
+                <p><strong>C#</strong> (lê-se "C Sharp") é a linguagem principal do .NET. Fortemente tipada, orientada a objetos e moderna.</p>
                 <pre>
-<span class="comment"># No terminal:</span>
-$ dotnet --version
-<span class="string">8.0.100</span>
+<span class="comment">// Variáveis e tipos</span>
+<span class="keyword">string</span> <span class="js-var">nome</span> = <span class="js-string">"Maria"</span>;
+<span class="keyword">int</span> <span class="js-var">idade</span> = <span class="number">25</span>;
+<span class="keyword">double</span> <span class="js-var">salario</span> = <span class="number">4500.50</span>;
+<span class="keyword">bool</span> <span class="js-var">ativo</span> = <span class="keyword">true</span>;
 
-$ dotnet --list-sdks
-<span class="string">8.0.100 [/usr/share/dotnet/sdk]</span></pre>
+<span class="comment">// Interpolação de strings</span>
+<span class="keyword">string</span> <span class="js-var">msg</span> = <span class="js-string">$"Olá, {nome}! Você tem {idade} anos."</span>;
+Console.<span class="js-func">WriteLine</span>(<span class="js-var">msg</span>);</pre>
+                <div class="concept-cards two-cols" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <h4>JavaScript</h4>
+                        <p>Tipagem dinâmica: <span class="inline-code">let x = 10;</span></p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>C#</h4>
+                        <p>Tipagem estática: <span class="inline-code">int x = 10;</span></p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Hello World em C#</h2></div>
-            <div class="slide-body">
-                <h3>Criando o Primeiro Projeto</h3>
-                <pre>
-<span class="comment"># Criar um projeto console</span>
-$ dotnet new console -n MeuPrimeiroProjeto
-$ cd MeuPrimeiroProjeto
-$ code .    <span class="comment"># Abre no VS Code</span></pre>
-                <h3 style="margin-top: 15px;">Arquivo Program.cs</h3>
-                <pre>
-<span class="comment">// Program.cs</span>
-<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Olá, Mundo!"</span>);
-<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">"Bem-vindo ao C#!"</span>);</pre>
-                <pre>
-<span class="comment"># Executar o projeto</span>
-$ dotnet run
-<span class="string">Olá, Mundo!</span>
-<span class="string">Bem-vindo ao C#!</span></pre>
-            </div>
-        </div>
-
+        <!-- SLIDE 6: Tipos de Dados -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Tipos de Dados em C#</h2></div>
             <div class="slide-body">
@@ -127,98 +121,199 @@ $ dotnet run
                         <tr><td><span class="inline-code">double</span></td><td>Número decimal</td><td><span class="inline-code">double preco = 19.99;</span></td></tr>
                         <tr><td><span class="inline-code">string</span></td><td>Texto</td><td><span class="inline-code">string nome = "Maria";</span></td></tr>
                         <tr><td><span class="inline-code">bool</span></td><td>Verdadeiro/Falso</td><td><span class="inline-code">bool ativo = true;</span></td></tr>
-                        <tr><td><span class="inline-code">char</span></td><td>Um caractere</td><td><span class="inline-code">char letra = 'A';</span></td></tr>
                         <tr><td><span class="inline-code">decimal</span></td><td>Decimal de alta precisão</td><td><span class="inline-code">decimal salario = 5000.50m;</span></td></tr>
                         <tr><td><span class="inline-code">var</span></td><td>Tipo inferido pelo compilador</td><td><span class="inline-code">var x = 10;</span></td></tr>
                     </tbody>
                 </table>
                 <div class="box-info" style="margin-top: 10px;">
-                    <p>C# é uma linguagem <strong>fortemente tipada</strong>. Diferente do JavaScript, você precisa declarar o tipo da variável.</p>
+                    <p>C# é <strong>fortemente tipada</strong>. Diferente do JS, você precisa declarar o tipo ou usar <span class="inline-code">var</span>.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 7: Ferramentas e CLI -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Variáveis e Constantes</h2></div>
+            <div class="slide-header"><h2>Ferramentas e CLI do .NET</h2></div>
             <div class="slide-body">
-                <pre>
-<span class="comment">// Variáveis</span>
-<span class="keyword">string</span> <span class="js-var">nome</span> = <span class="string">"João"</span>;
-<span class="keyword">int</span> <span class="js-var">idade</span> = <span class="number">20</span>;
-<span class="keyword">double</span> <span class="js-var">nota</span> = <span class="number">8.5</span>;
-<span class="keyword">bool</span> <span class="js-var">aprovado</span> = <span class="keyword">true</span>;
+                <table>
+                    <thead><tr><th>Ferramenta</th><th>Descrição</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>.NET SDK 8.0+</strong></td><td>Kit de desenvolvimento (compilador, CLI)</td></tr>
+                        <tr><td><strong>Visual Studio 2022</strong></td><td>IDE completa (recomendada)</td></tr>
+                        <tr><td><strong>VS Code + C# Extension</strong></td><td>Editor leve (alternativa)</td></tr>
+                    </tbody>
+                </table>
+                <pre style="margin-top: 15px;">
+<span class="comment"># Verificar versão</span>
+$ dotnet --version
 
-<span class="comment">// Constantes (não podem ser alteradas)</span>
-<span class="keyword">const</span> <span class="keyword">double</span> <span class="js-var">PI</span> = <span class="number">3.14159</span>;
-<span class="keyword">const</span> <span class="keyword">string</span> <span class="js-var">UNIVERSIDADE</span> = <span class="string">"UNINOVE"</span>;
+<span class="comment"># Criar projeto MVC</span>
+$ dotnet new mvc -n MeuProjeto
 
-<span class="comment">// Interpolação de strings</span>
-<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Aluno: {nome}, Idade: {idade}"</span>);
-<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Nota: {nota:F1} - Aprovado: {aprovado}"</span>);
-
-<span class="comment">// Conversão de tipos</span>
-<span class="keyword">string</span> <span class="js-var">textoNumero</span> = <span class="string">"42"</span>;
-<span class="keyword">int</span> <span class="js-var">numero</span> = <span class="keyword">int</span>.<span class="js-func">Parse</span>(<span class="js-var">textoNumero</span>);
-<span class="keyword">double</span> <span class="js-var">valor</span> = <span class="type">Convert</span>.<span class="js-func">ToDouble</span>(<span class="string">"3.14"</span>);</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Entrada de Dados pelo Console</h2></div>
-            <div class="slide-body">
-                <pre>
-<span class="comment">// Lendo dados do usuário</span>
-<span class="type">Console</span>.<span class="js-func">Write</span>(<span class="string">"Digite seu nome: "</span>);
-<span class="keyword">string</span> <span class="js-var">nome</span> = <span class="type">Console</span>.<span class="js-func">ReadLine</span>();
-
-<span class="type">Console</span>.<span class="js-func">Write</span>(<span class="string">"Digite sua idade: "</span>);
-<span class="keyword">int</span> <span class="js-var">idade</span> = <span class="keyword">int</span>.<span class="js-func">Parse</span>(<span class="type">Console</span>.<span class="js-func">ReadLine</span>());
-
-<span class="type">Console</span>.<span class="js-func">Write</span>(<span class="string">"Digite sua nota: "</span>);
-<span class="keyword">double</span> <span class="js-var">nota</span> = <span class="keyword">double</span>.<span class="js-func">Parse</span>(<span class="type">Console</span>.<span class="js-func">ReadLine</span>());
-
-<span class="comment">// Exibindo resultado</span>
-<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Olá, {nome}! Você tem {idade} anos."</span>);
-<span class="type">Console</span>.<span class="js-func">WriteLine</span>(<span class="string">$"Sua nota é: {nota:F1}"</span>);</pre>
-                <div class="box-warning" style="margin-top: 10px;">
-                    <p><span class="inline-code">Console.ReadLine()</span> sempre retorna uma <strong>string</strong>. Use <span class="inline-code">int.Parse()</span> ou <span class="inline-code">Convert.ToInt32()</span> para converter.</p>
+<span class="comment"># Executar com hot-reload</span>
+$ dotnet watch run</pre>
+                <div class="tip-box" style="margin-top: 10px;">
+                    <p>Verifique a instalação: <span class="inline-code">dotnet --version</span> deve retornar 8.0.x ou superior.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: Padrão MVC -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>O Padrão MVC</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Hello World e Variáveis</h3>
-                    <ol>
-                        <li>Crie um projeto console: <span class="inline-code">dotnet new console -n Aula07</span></li>
-                        <li>Peça ao usuário: nome, idade, curso e nota</li>
-                        <li>Exiba uma mensagem formatada com todos os dados</li>
-                        <li>Calcule e exiba se o aluno está aprovado (nota >= 7)</li>
-                        <li>Calcule a idade que o aluno terá daqui a 5 anos</li>
+                <p><strong>MVC</strong> (Model-View-Controller) separa a aplicação em 3 camadas:</p>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 130px;">
+                        <span class="box-label">Usuário</span>
+                        <span class="box-desc">Requisição HTTP</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 130px;">
+                        <span class="box-label">Controller</span>
+                        <span class="box-desc">Recebe e processa</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box" style="min-width: 130px;">
+                        <span class="box-label">Model</span>
+                        <span class="box-desc">Dados e regras</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 130px;">
+                        <span class="box-label">View</span>
+                        <span class="box-desc">HTML para o usuário</span>
+                    </div>
+                </div>
+                <div class="concept-cards" style="margin-top: 15px;">
+                    <div class="concept-card">
+                        <span class="card-icon">📦</span>
+                        <h4>Model</h4>
+                        <p>Dados e regras de negócio (classes C#)</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">👁️</span>
+                        <h4>View</h4>
+                        <p>Interface visual (HTML + Razor)</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🎮</span>
+                        <h4>Controller</h4>
+                        <p>Lógica de controle (requisições)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Estrutura do Projeto -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Estrutura de um Projeto MVC</h2></div>
+            <div class="slide-body">
+                <pre>
+MeuProjeto/
+├── <span class="keyword">Controllers/</span>        <span class="comment">← Controladores (lógica)</span>
+│   └── HomeController.cs
+├── <span class="keyword">Models/</span>             <span class="comment">← Modelos (dados)</span>
+│   └── Produto.cs
+├── <span class="keyword">Views/</span>              <span class="comment">← Views (interface)</span>
+│   ├── Home/
+│   │   └── Index.cshtml
+│   └── Shared/
+│       └── _Layout.cshtml
+├── <span class="keyword">wwwroot/</span>            <span class="comment">← Arquivos estáticos (CSS, JS)</span>
+├── Program.cs          <span class="comment">← Ponto de entrada</span>
+└── MeuProjeto.csproj   <span class="comment">← Configuração do projeto</span></pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>Stack Overflow — Feito com ASP.NET</h3>
+                    <span class="company-tag">Stack Overflow</span>
+                    <span class="company-tag">ASP.NET MVC</span>
+                    <span class="company-tag">SQL Server</span>
+                    <p style="margin-top: 10px;">O <strong>Stack Overflow</strong>, o maior site de Q&A para programadores, é construído com <strong>ASP.NET MVC</strong>. Atende milhões de requisições por dia com uma equipe relativamente pequena.</p>
+                </div>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">📊</span>
+                        <h4>100M+ visitas/mês</h4>
+                        <p>Alta performance com .NET</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">👥</span>
+                        <h4>~50 devs</h4>
+                        <p>Equipe enxuta e produtiva</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">⚡</span>
+                        <h4>&lt; 50ms</h4>
+                        <p>Tempo de resposta médio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Exercício Guiado 1 -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Criando seu Primeiro Projeto ASP.NET Core MVC</h3>
+                    <div class="timebox">30 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra o <strong>terminal</strong> (Prompt de Comando ou PowerShell)</li>
+                        <li>Navegue até sua pasta de projetos: <span class="inline-code">cd C:\Projetos</span></li>
+                        <li>Crie o projeto: <span class="inline-code">dotnet new mvc -n MeuPrimeiroMVC</span></li>
+                        <li>Entre na pasta: <span class="inline-code">cd MeuPrimeiroMVC</span></li>
+                        <li>Execute: <span class="inline-code">dotnet watch run</span></li>
+                        <li>Acesse no navegador: <span class="inline-code">https://localhost:5001</span></li>
+                        <li>Abra o projeto no VS Code ou Visual Studio e explore as pastas</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 12: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Calculadora em C#</h3>
-                    <ol>
-                        <li>Crie um programa que peça dois números ao usuário</li>
-                        <li>Exiba um menu: 1-Soma, 2-Subtração, 3-Multiplicação, 4-Divisão</li>
-                        <li>Peça ao usuário para escolher a operação</li>
-                        <li>Calcule e exiba o resultado</li>
-                        <li>Trate a divisão por zero</li>
-                        <li><strong>Desafio:</strong> Faça o programa repetir até o usuário digitar 0 para sair</li>
+                <div class="guided-exercise">
+                    <h3>Explorando e Modificando o Projeto</h3>
+                    <div class="timebox">20 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra <span class="inline-code">Controllers/HomeController.cs</span> — identifique os métodos Index() e Privacy()</li>
+                        <li>Abra <span class="inline-code">Views/Home/Index.cshtml</span> — modifique o texto de boas-vindas</li>
+                        <li>Abra <span class="inline-code">Views/Shared/_Layout.cshtml</span> — identifique o menu de navegação</li>
+                        <li>Abra <span class="inline-code">wwwroot/css/site.css</span> — altere a cor de fundo do body</li>
+                        <li>Salve e observe o <strong>hot-reload</strong> atualizar automaticamente</li>
+                        <li>Abra <span class="inline-code">Program.cs</span> — identifique onde o MVC é configurado</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Mini Quiz -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Teste seus conhecimentos!</h3>
+                    <p class="quiz-question">No padrão MVC, qual componente é responsável por <strong>receber as requisições</strong> do usuário?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) Model — responsável pelos dados</button></li>
+                        <li><button class="quiz-option" data-option="b">b) View — responsável pela interface</button></li>
+                        <li><button class="quiz-option" data-option="c">c) Controller — responsável pela lógica de controle</button></li>
+                        <li><button class="quiz-option" data-option="d">d) Router — responsável pelas rotas</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. O <strong>Controller</strong> recebe as requisições HTTP, processa a lógica e decide qual View retornar.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Preparação para próxima aula -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -226,20 +321,22 @@ $ dotnet run
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
                     <p>Para a <strong>Aula 08 — Primeiros Passos com ASP.NET Core MVC</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Leia sobre o padrão de arquitetura <strong>MVC</strong> (Model-View-Controller)</li>
-                        <li>Pesquise o que é o <strong>ASP.NET Core</strong> e como ele se diferencia do .NET Framework</li>
-                        <li>Assista a um vídeo introdutório sobre <strong>ASP.NET Core MVC</strong></li>
+                        <li>Pesquise o que é <strong>Razor</strong> (engine de templates do ASP.NET)</li>
+                        <li>Descubra a diferença entre <span class="inline-code">@</span> e <span class="inline-code">@{ }</span> em .cshtml</li>
+                        <li>Leia sobre <strong>rotas</strong> no ASP.NET Core</li>
+                        <li>Certifique-se de que o projeto da aula anterior está funcionando</li>
                     </ol>
                     <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 15: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>
             <p>jose.romualdo@uni9.pro.br</p>
-            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 07 — Ambiente .NET e Introdução ao C#</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 07 — Ambiente de Desenvolvimento .NET</p>
         </div>
 
     </div>

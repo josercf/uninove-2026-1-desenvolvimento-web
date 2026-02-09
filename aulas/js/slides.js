@@ -1,6 +1,7 @@
 /**
  * UNINOVE - Desenvolvimento Web
- * Script de navegação para slides HTML
+ * Script de navegação para slides HTML v2.0
+ * Inclui: navegação, quiz interativo, timebox
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -91,10 +92,16 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(e.key) {
             case 'ArrowRight':
             case 'ArrowDown':
-            case ' ':
             case 'PageDown':
                 e.preventDefault();
                 nextSlide();
+                break;
+            case ' ':
+                // Só avança com espaço se não estiver num quiz
+                if (!e.target.closest('.quiz-container') && !e.target.closest('.quiz-option')) {
+                    e.preventDefault();
+                    nextSlide();
+                }
                 break;
             case 'ArrowLeft':
             case 'ArrowUp':
@@ -114,8 +121,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Navegação por clique (área esquerda/direita)
+    // Ignora cliques em elementos interativos (quiz, botões, links)
     document.addEventListener('click', function(e) {
         if (e.target.closest('.nav-controls')) return;
+        if (e.target.closest('.quiz-container')) return;
+        if (e.target.closest('.quiz-option')) return;
+        if (e.target.closest('button')) return;
+        if (e.target.closest('a')) return;
+        if (e.target.closest('input')) return;
+        if (e.target.closest('select')) return;
+
         const x = e.clientX;
         const width = window.innerWidth;
         if (x > width * 0.7) {
@@ -124,6 +139,49 @@ document.addEventListener('DOMContentLoaded', function() {
             prevSlide();
         }
     });
+
+    // ============================================
+    // QUIZ INTERATIVO
+    // ============================================
+
+    function initQuizzes() {
+        document.querySelectorAll('.quiz-container').forEach(function(quiz) {
+            const options = quiz.querySelectorAll('.quiz-option');
+            const feedback = quiz.querySelector('.quiz-feedback');
+            const correctAnswer = quiz.dataset.answer; // data-answer="b"
+
+            options.forEach(function(option) {
+                option.addEventListener('click', function() {
+                    // Desabilitar todas as opções
+                    options.forEach(function(opt) {
+                        opt.disabled = true;
+                    });
+
+                    const selected = this.dataset.option; // data-option="a"
+
+                    if (selected === correctAnswer) {
+                        this.classList.add('correct');
+                        if (feedback) {
+                            feedback.classList.add('correct', 'show');
+                        }
+                    } else {
+                        this.classList.add('incorrect');
+                        // Destacar a resposta correta
+                        options.forEach(function(opt) {
+                            if (opt.dataset.option === correctAnswer) {
+                                opt.classList.add('correct');
+                            }
+                        });
+                        if (feedback) {
+                            feedback.classList.add('incorrect', 'show');
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    initQuizzes();
 
     // Inicializar
     showSlide(0);

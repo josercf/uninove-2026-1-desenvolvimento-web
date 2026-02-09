@@ -9,142 +9,158 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 05 — CSS Avançado e Formulários HTML</h2>
-            <p>Unidades de Medida e Elementos de Formulário</p>
+            <p>Flexbox, Grid e interação com o usuário</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 04</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>Qual a diferença entre medidas absolutas e relativas?</li>
-                        <li>Quando usar <span class="inline-code">px</span> e quando usar <span class="inline-code">em</span> ou <span class="inline-code">rem</span>?</li>
-                        <li>Quais elementos de formulário vocês encontraram na pesquisa?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>CSS:</strong> Linguagem para estilizar elementos HTML (cores, fontes, espaçamentos)</li>
+                        <li class="recap-item"><strong>Seletores:</strong> tag, .classe, #id — definem quais elementos serão estilizados</li>
+                        <li class="recap-item"><strong>Box Model:</strong> content + padding + border + margin = tamanho total</li>
+                        <li class="recap-item"><strong>Unidades:</strong> px (absoluta), rem/em/% (relativas) para layouts flexíveis</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>Unidades de Medida no CSS</li>
-                    <li>Medidas Absolutas (px)</li>
-                    <li>Medidas Relativas (em, rem, %, vw, vh)</li>
-                    <li>Formulários HTML</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Flexbox: alinhamento em uma dimensão</li>
+                    <li>CSS Grid: layout em duas dimensões</li>
+                    <li>Formulários HTML: &lt;form&gt;, &lt;input&gt;, &lt;select&gt;</li>
+                    <li>Tipos de input e validação nativa</li>
+                    <li>Caso de Uso Real: Tela de login do Instagram</li>
+                    <li>Exercício Guiado: Formulário de contato</li>
+                    <li>Mini Quiz</li>
                 </ul>
             </div>
         </div>
 
-        <div class="slide slide-section">
-            <h1>Unidades de Medida</h1>
-            <h2>Absolutas vs. Relativas</h2>
-        </div>
-
+        <!-- SLIDE 4: Flexbox -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Medidas Absolutas</h2></div>
+            <div class="slide-header"><h2>Flexbox — Layout em 1 Dimensão</h2></div>
             <div class="slide-body">
-                <p>Medidas absolutas são <strong>fixas</strong> e não mudam de acordo com o dispositivo. A mais comum é o <strong>pixel (px)</strong>.</p>
-                <table>
-                    <thead><tr><th>Unidade</th><th>Nome</th><th>Equivalência</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>px</strong></td><td>Pixel</td><td>1px = 1 ponto na tela</td></tr>
-                        <tr><td>cm</td><td>Centímetro</td><td>1cm = 37.8px</td></tr>
-                        <tr><td>mm</td><td>Milímetro</td><td>1mm = 3.78px</td></tr>
-                        <tr><td>pt</td><td>Ponto</td><td>1pt = 1.33px</td></tr>
-                    </tbody>
-                </table>
-                <div class="box-warning" style="margin-top: 10px;">
-                    <p><strong>Atenção:</strong> O pixel do CSS não é exatamente o pixel físico da tela. É um "pixel de referência" que pode variar conforme a densidade da tela.</p>
+                <p><strong>Flexbox</strong> organiza elementos em uma <strong>única direção</strong> (linha ou coluna). Ideal para alinhar e distribuir espaço.</p>
+                <pre style="font-size: 0.9em;">
+<span class="css-sel">.container</span> {
+    <span class="css-prop">display</span>: <span class="css-val">flex</span>;
+    <span class="css-prop">justify-content</span>: <span class="css-val">space-between</span>;  <span class="comment">/* eixo principal */</span>
+    <span class="css-prop">align-items</span>: <span class="css-val">center</span>;           <span class="comment">/* eixo cruzado */</span>
+    <span class="css-prop">gap</span>: <span class="css-val">20px</span>;                       <span class="comment">/* espaço entre itens */</span>
+}</pre>
+                <div style="display: flex; justify-content: space-around; margin-top: 15px; gap: 10px;">
+                    <div style="background: #00274D; color: white; padding: 15px 25px; border-radius: 6px; text-align: center; flex: 1;">Item 1</div>
+                    <div style="background: #E8505B; color: white; padding: 15px 25px; border-radius: 6px; text-align: center; flex: 1;">Item 2</div>
+                    <div style="background: #00274D; color: white; padding: 15px 25px; border-radius: 6px; text-align: center; flex: 1;">Item 3</div>
+                    <div style="background: #E8505B; color: white; padding: 15px 25px; border-radius: 6px; text-align: center; flex: 1;">Item 4</div>
                 </div>
+                <p style="text-align: center; font-size: 0.85em; color: #888; margin-top: 5px;">justify-content: space-around</p>
             </div>
         </div>
 
+        <!-- SLIDE 5: Propriedades Flexbox -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Medidas Relativas</h2></div>
-            <div class="slide-body">
-                <p>Medidas relativas são calculadas com base em <strong>outra unidade de referência</strong>, permitindo layouts mais flexíveis.</p>
-                <table>
-                    <thead><tr><th>Unidade</th><th>Referência</th><th>Exemplo</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>em</strong></td><td>Font-size do elemento pai</td><td>Se pai = 16px, 2em = 32px</td></tr>
-                        <tr><td><strong>rem</strong></td><td>Font-size do &lt;html&gt; (raiz)</td><td>Se raiz = 16px, 1.5rem = 24px</td></tr>
-                        <tr><td><strong>%</strong></td><td>Tamanho do elemento pai</td><td>50% da largura do pai</td></tr>
-                        <tr><td><strong>vw</strong></td><td>Largura da viewport</td><td>100vw = largura total da tela</td></tr>
-                        <tr><td><strong>vh</strong></td><td>Altura da viewport</td><td>100vh = altura total da tela</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exemplo: em vs. rem</h2></div>
+            <div class="slide-header"><h2>Propriedades do Flexbox</h2></div>
             <div class="slide-body">
                 <div class="two-columns">
                     <div>
-                        <h3>Usando em</h3>
-                        <pre>
-<span class="css-sel">.pai</span> {
-    <span class="css-prop">font-size</span>: <span class="css-val">16px</span>;
-}
-<span class="css-sel">.filho</span> {
-    <span class="css-prop">font-size</span>: <span class="css-val">2em</span>;
-    <span class="comment">/* 2 × 16px = 32px */</span>
-    <span class="css-prop">padding</span>: <span class="css-val">1em</span>;
-    <span class="comment">/* 1 × 32px = 32px */</span>
-}</pre>
-                        <div class="box-warning" style="margin-top: 10px;">
-                            <p style="font-size: 0.9em;">O <span class="inline-code">em</span> pode gerar efeito cascata!</p>
-                        </div>
+                        <h3>No container (pai)</h3>
+                        <table style="font-size: 0.85em;">
+                            <tbody>
+                                <tr><td><span class="inline-code">display: flex</span></td><td>Ativa o Flexbox</td></tr>
+                                <tr><td><span class="inline-code">flex-direction</span></td><td>row | column</td></tr>
+                                <tr><td><span class="inline-code">justify-content</span></td><td>Alinha no eixo principal</td></tr>
+                                <tr><td><span class="inline-code">align-items</span></td><td>Alinha no eixo cruzado</td></tr>
+                                <tr><td><span class="inline-code">flex-wrap</span></td><td>Quebra de linha</td></tr>
+                                <tr><td><span class="inline-code">gap</span></td><td>Espaço entre itens</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div>
-                        <h3>Usando rem</h3>
-                        <pre>
-<span class="css-sel">html</span> {
-    <span class="css-prop">font-size</span>: <span class="css-val">16px</span>;
-}
-<span class="css-sel">.elemento</span> {
-    <span class="css-prop">font-size</span>: <span class="css-val">2rem</span>;
-    <span class="comment">/* 2 × 16px = 32px */</span>
-    <span class="css-prop">padding</span>: <span class="css-val">1rem</span>;
-    <span class="comment">/* 1 × 16px = 16px */</span>
-}</pre>
-                        <div class="box-success" style="margin-top: 10px;">
-                            <p style="font-size: 0.9em;">O <span class="inline-code">rem</span> é sempre relativo à raiz!</p>
-                        </div>
+                        <h3>Nos itens (filhos)</h3>
+                        <table style="font-size: 0.85em;">
+                            <tbody>
+                                <tr><td><span class="inline-code">flex: 1</span></td><td>Cresce igualmente</td></tr>
+                                <tr><td><span class="inline-code">flex-grow</span></td><td>Fator de crescimento</td></tr>
+                                <tr><td><span class="inline-code">flex-shrink</span></td><td>Fator de encolhimento</td></tr>
+                                <tr><td><span class="inline-code">flex-basis</span></td><td>Tamanho inicial</td></tr>
+                                <tr><td><span class="inline-code">align-self</span></td><td>Alinhamento individual</td></tr>
+                                <tr><td><span class="inline-code">order</span></td><td>Ordem de exibição</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="slide slide-section">
-            <h1>Formulários HTML</h1>
-            <h2>Interação entre usuário e aplicação</h2>
+        <!-- SLIDE 6: CSS Grid -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>CSS Grid — Layout em 2 Dimensões</h2></div>
+            <div class="slide-body">
+                <p><strong>Grid</strong> organiza elementos em <strong>linhas e colunas</strong> simultaneamente. Ideal para layouts complexos.</p>
+                <pre style="font-size: 0.9em;">
+<span class="css-sel">.grid</span> {
+    <span class="css-prop">display</span>: <span class="css-val">grid</span>;
+    <span class="css-prop">grid-template-columns</span>: <span class="css-val">1fr 2fr 1fr</span>;  <span class="comment">/* 3 colunas */</span>
+    <span class="css-prop">gap</span>: <span class="css-val">15px</span>;
+}</pre>
+                <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; margin-top: 15px;">
+                    <div style="background: #00274D; color: white; padding: 20px; border-radius: 6px; text-align: center;">Sidebar</div>
+                    <div style="background: #E8505B; color: white; padding: 20px; border-radius: 6px; text-align: center;">Conteúdo Principal</div>
+                    <div style="background: #00274D; color: white; padding: 20px; border-radius: 6px; text-align: center;">Aside</div>
+                </div>
+                <div class="concept-cards two-cols" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <h4>Flexbox</h4>
+                        <p>1 dimensão (linha OU coluna). Ideal para componentes.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Grid</h4>
+                        <p>2 dimensões (linhas E colunas). Ideal para layouts de página.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- SLIDE 7: Formulários HTML -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Formulários HTML</h2></div>
             <div class="slide-body">
-                <p>Formulários são o principal ponto de <strong>interação</strong> entre o usuário e a aplicação web. Permitem que os usuários enviem dados para o servidor.</p>
+                <p>Formulários são o principal ponto de <strong>interação</strong> entre o usuário e a aplicação. Permitem enviar dados ao servidor.</p>
                 <pre>
 <span class="html-name">&lt;form</span> <span class="html-attr">action=</span><span class="html-value">"/processar"</span> <span class="html-attr">method=</span><span class="html-value">"POST"</span><span class="html-name">&gt;</span>
     <span class="html-name">&lt;label</span> <span class="html-attr">for=</span><span class="html-value">"nome"</span><span class="html-name">&gt;</span>Nome:<span class="html-name">&lt;/label&gt;</span>
-    <span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"text"</span> <span class="html-attr">id=</span><span class="html-value">"nome"</span> <span class="html-attr">name=</span><span class="html-value">"nome"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"text"</span> <span class="html-attr">id=</span><span class="html-value">"nome"</span> <span class="html-attr">name=</span><span class="html-value">"nome"</span> <span class="html-attr">required</span><span class="html-name">&gt;</span>
+
     <span class="html-name">&lt;button</span> <span class="html-attr">type=</span><span class="html-value">"submit"</span><span class="html-name">&gt;</span>Enviar<span class="html-name">&lt;/button&gt;</span>
 <span class="html-name">&lt;/form&gt;</span></pre>
-                <div class="box-info" style="margin-top: 10px;">
-                    <p><strong>action</strong> define para onde os dados serão enviados. <strong>method</strong> define o método HTTP (GET ou POST).</p>
+                <div class="concept-cards two-cols" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <h4>action</h4>
+                        <p>URL para onde os dados serão enviados</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>method</h4>
+                        <p><strong>GET</strong> (dados na URL) ou <strong>POST</strong> (dados no corpo)</p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: Tipos de Input -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Tipos de Input</h2></div>
             <div class="slide-body">
@@ -152,17 +168,18 @@
                     <thead><tr><th>Tipo</th><th>Código</th><th>Uso</th></tr></thead>
                     <tbody>
                         <tr><td>Texto</td><td><span class="inline-code">&lt;input type="text"&gt;</span></td><td>Nome, endereço</td></tr>
-                        <tr><td>E-mail</td><td><span class="inline-code">&lt;input type="email"&gt;</span></td><td>Validação automática</td></tr>
-                        <tr><td>Senha</td><td><span class="inline-code">&lt;input type="password"&gt;</span></td><td>Oculta caracteres</td></tr>
-                        <tr><td>Número</td><td><span class="inline-code">&lt;input type="number"&gt;</span></td><td>Valores numéricos</td></tr>
-                        <tr><td>Data</td><td><span class="inline-code">&lt;input type="date"&gt;</span></td><td>Seletor de data</td></tr>
+                        <tr><td>E-mail</td><td><span class="inline-code">&lt;input type="email"&gt;</span></td><td>Validação automática de e-mail</td></tr>
+                        <tr><td>Senha</td><td><span class="inline-code">&lt;input type="password"&gt;</span></td><td>Oculta caracteres digitados</td></tr>
+                        <tr><td>Número</td><td><span class="inline-code">&lt;input type="number"&gt;</span></td><td>Valores numéricos com setas</td></tr>
+                        <tr><td>Data</td><td><span class="inline-code">&lt;input type="date"&gt;</span></td><td>Seletor de data nativo</td></tr>
                         <tr><td>Checkbox</td><td><span class="inline-code">&lt;input type="checkbox"&gt;</span></td><td>Múltipla escolha</td></tr>
-                        <tr><td>Radio</td><td><span class="inline-code">&lt;input type="radio"&gt;</span></td><td>Escolha única</td></tr>
+                        <tr><td>Radio</td><td><span class="inline-code">&lt;input type="radio"&gt;</span></td><td>Escolha única (mesmo name)</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- SLIDE 9: Outros elementos de formulário -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Outros Elementos de Formulário</h2></div>
             <div class="slide-body">
@@ -172,55 +189,100 @@
 
 <span class="comment">&lt;!-- Lista suspensa --&gt;</span>
 <span class="html-name">&lt;select</span> <span class="html-attr">name=</span><span class="html-value">"estado"</span><span class="html-name">&gt;</span>
+    <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">""</span><span class="html-name">&gt;</span>Selecione...<span class="html-name">&lt;/option&gt;</span>
     <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">"SP"</span><span class="html-name">&gt;</span>São Paulo<span class="html-name">&lt;/option&gt;</span>
     <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">"RJ"</span><span class="html-name">&gt;</span>Rio de Janeiro<span class="html-name">&lt;/option&gt;</span>
-    <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">"MG"</span><span class="html-name">&gt;</span>Minas Gerais<span class="html-name">&lt;/option&gt;</span>
 <span class="html-name">&lt;/select&gt;</span>
 
-<span class="comment">&lt;!-- Botão de envio --&gt;</span>
-<span class="html-name">&lt;button</span> <span class="html-attr">type=</span><span class="html-value">"submit"</span><span class="html-name">&gt;</span>Enviar<span class="html-name">&lt;/button&gt;</span></pre>
+<span class="comment">&lt;!-- Atributos de validação --&gt;</span>
+<span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"text"</span> <span class="html-attr">required</span> <span class="html-attr">minlength=</span><span class="html-value">"3"</span> <span class="html-attr">maxlength=</span><span class="html-value">"50"</span><span class="html-name">&gt;</span>
+<span class="html-name">&lt;input</span> <span class="html-attr">type=</span><span class="html-value">"number"</span> <span class="html-attr">min=</span><span class="html-value">"1"</span> <span class="html-attr">max=</span><span class="html-value">"100"</span><span class="html-name">&gt;</span></pre>
             </div>
         </div>
 
+        <!-- SLIDE 10: Caso de Uso Real -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Página de Apresentação com Unidades de Medida</h3>
-                    <ol>
-                        <li>Crie uma página HTML com um cabeçalho "Bem-vindo à Minha Página"</li>
-                        <li>Defina a largura da página como <strong>800px</strong> e centralize</li>
-                        <li>Configure o cabeçalho com altura de <strong>100px</strong> e texto centralizado</li>
-                        <li>Adicione um parágrafo com largura de <strong>600px</strong> e margem superior de <strong>20px</strong></li>
-                        <li>Agora refaça o mesmo exercício substituindo <strong>px</strong> por <strong>em</strong></li>
-                        <li>Compare os resultados ao redimensionar a janela do navegador</li>
+                <div class="real-world">
+                    <h3>Tela de Login do Instagram</h3>
+                    <span class="company-tag">Instagram / Meta</span>
+                    <span class="company-tag">Formulário</span>
+                    <span class="company-tag">UX Design</span>
+                    <p style="margin-top: 10px;">A tela de login do Instagram é um exemplo de formulário <strong>simples e eficaz</strong>: apenas 2 campos (e-mail/telefone e senha), 1 botão de submit e links auxiliares. O CSS usa Flexbox para centralizar tudo na tela.</p>
+                </div>
+                <div style="background: #fafafa; border: 1px solid #dbdbdb; padding: 25px; border-radius: 4px; max-width: 350px; margin: 15px auto 0; text-align: center;">
+                    <p style="font-family: 'Segoe UI', sans-serif; font-size: 1.2em; font-weight: bold; color: #262626; margin: 0 0 15px;">Instagram</p>
+                    <div style="background: #fff; border: 1px solid #dbdbdb; border-radius: 3px; padding: 8px 10px; margin-bottom: 8px;">
+                        <p style="color: #8e8e8e; font-size: 0.75em; margin: 0; text-align: left;">Telefone, nome de usuário ou email</p>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #dbdbdb; border-radius: 3px; padding: 8px 10px; margin-bottom: 12px;">
+                        <p style="color: #8e8e8e; font-size: 0.75em; margin: 0; text-align: left;">Senha</p>
+                    </div>
+                    <div style="background: #0095f6; color: white; padding: 8px; border-radius: 8px; font-weight: 600; font-size: 0.85em;">Entrar</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Criando um Formulário de Contato</h3>
+                    <div class="timebox">30 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie <span class="inline-code">contato.html</span> e <span class="inline-code">contato.css</span></li>
+                        <li>Crie um <span class="inline-code">&lt;form&gt;</span> com <span class="inline-code">method="POST"</span></li>
+                        <li>Adicione campos: Nome (<span class="inline-code">text</span>), Email (<span class="inline-code">email</span>), Assunto (<span class="inline-code">select</span>) e Mensagem (<span class="inline-code">textarea</span>)</li>
+                        <li>Use <span class="inline-code">&lt;label&gt;</span> para cada campo com o atributo <span class="inline-code">for</span></li>
+                        <li>Adicione <span class="inline-code">required</span> nos campos obrigatórios</li>
+                        <li>No CSS, use <strong>Flexbox</strong> (<span class="inline-code">flex-direction: column</span>) para organizar os campos</li>
+                        <li>Estilize os inputs com padding, border-radius e uma borda suave</li>
+                        <li>Crie um botão de submit estilizado com cor de fundo e hover</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 12: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Formulário de Cadastro Completo</h3>
-                    <p>Crie um formulário de cadastro com os seguintes campos:</p>
-                    <ol style="margin-top: 10px;">
-                        <li><strong>Nome completo</strong> (text, obrigatório)</li>
-                        <li><strong>E-mail</strong> (email, obrigatório)</li>
-                        <li><strong>Senha</strong> (password, mínimo 6 caracteres)</li>
-                        <li><strong>Data de nascimento</strong> (date)</li>
-                        <li><strong>Gênero</strong> (radio buttons: Masculino/Feminino/Outro)</li>
-                        <li><strong>Estado</strong> (select com pelo menos 5 opções)</li>
-                        <li><strong>Interesses</strong> (checkboxes: Tecnologia, Esportes, Música, Leitura)</li>
-                        <li><strong>Observações</strong> (textarea)</li>
-                        <li>Botões de <strong>Enviar</strong> e <strong>Limpar</strong></li>
+                <div class="guided-exercise">
+                    <h3>Layout com Flexbox</h3>
+                    <div class="timebox">20 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie <span class="inline-code">layout.html</span> com um <span class="inline-code">&lt;header&gt;</span>, <span class="inline-code">&lt;main&gt;</span> e <span class="inline-code">&lt;footer&gt;</span></li>
+                        <li>No header, crie uma <span class="inline-code">&lt;nav&gt;</span> com 4 links usando Flexbox</li>
+                        <li>Use <span class="inline-code">justify-content: space-between</span> para distribuir os links</li>
+                        <li>No main, crie 3 cards lado a lado usando <span class="inline-code">display: flex</span></li>
+                        <li>Cada card deve ter <span class="inline-code">flex: 1</span> para ocupar espaço igual</li>
+                        <li>Adicione <span class="inline-code">gap: 20px</span> entre os cards</li>
                     </ol>
-                    <p style="margin-top: 10px;">Estilize o formulário com CSS externo usando unidades <strong>rem</strong>.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Mini Quiz -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="b">
+                    <h3>Teste seus conhecimentos!</h3>
+                    <p class="quiz-question">Qual tipo de input HTML é usado para <strong>senhas</strong>?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) &lt;input type="text"&gt;</button></li>
+                        <li><button class="quiz-option" data-option="b">b) &lt;input type="password"&gt;</button></li>
+                        <li><button class="quiz-option" data-option="c">c) &lt;input type="hidden"&gt;</button></li>
+                        <li><button class="quiz-option" data-option="d">d) &lt;input type="secure"&gt;</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(b)</strong>. O tipo <span class="inline-code">password</span> oculta os caracteres digitados. O tipo <span class="inline-code">hidden</span> esconde o campo inteiro, e <span class="inline-code">secure</span> não existe no HTML.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Preparação para próxima aula -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -228,15 +290,17 @@
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
                     <p>Para a <strong>Aula 06 — Introdução ao JavaScript</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Assista a um tutorial básico de <strong>JavaScript</strong> (variáveis, tipos de dados, operadores)</li>
-                        <li>Pesquise o que é o <strong>DOM</strong> (Document Object Model)</li>
-                        <li>Leia sobre <span class="inline-code">document.getElementById()</span> e <span class="inline-code">document.querySelector()</span></li>
+                        <li>Pesquise o que é <strong>JavaScript</strong> e para que serve</li>
+                        <li>Descubra a diferença entre <strong>variáveis</strong> let, const e var</li>
+                        <li>Leia sobre <strong>tipos de dados</strong> em JavaScript (string, number, boolean)</li>
+                        <li>Pesquise o que é o <strong>console.log()</strong></li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 40 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 15: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

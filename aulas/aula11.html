@@ -9,216 +9,312 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 11 — Entity Framework Core e MySQL</h2>
-            <p>ORM, DbContext, Migrations e Conexão com Banco de Dados</p>
+            <p>ORM, DbContext, DbSet e Migrations</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 10</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é um ORM e qual problema ele resolve?</li>
-                        <li>O que é o Entity Framework Core?</li>
-                        <li>Todos conseguiram instalar o MySQL?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>Model:</strong> Classe C# que representa dados — substitui ViewBag</li>
+                        <li class="recap-item"><strong>[HttpGet]/[HttpPost]:</strong> GET exibe formulário, POST recebe dados</li>
+                        <li class="recap-item"><strong>Model Binding:</strong> ASP.NET preenche o objeto automaticamente</li>
+                        <li class="recap-item"><strong>Data Annotations:</strong> [Required], [EmailAddress], [StringLength] para validação</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Mini Quiz (início — reforço) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz — Revisão</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Vamos relembrar!</h3>
+                    <p class="quiz-question">Qual propriedade do Controller verifica se <strong>todas as validações</strong> do Model passaram?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) Model.IsValid</button></li>
+                        <li><button class="quiz-option" data-option="b">b) ViewBag.IsValid</button></li>
+                        <li><button class="quiz-option" data-option="c">c) ModelState.IsValid</button></li>
+                        <li><button class="quiz-option" data-option="d">d) Request.IsValid</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. <span class="inline-code">ModelState.IsValid</span> retorna true somente se todas as Data Annotations forem satisfeitas.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
                     <li>O que é um ORM?</li>
-                    <li>Entity Framework Core</li>
-                    <li>Configurando o MySQL</li>
-                    <li>DbContext e Conexão</li>
-                    <li>Migrations</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Entity Framework Core — Visão geral</li>
+                    <li>Instalação dos pacotes NuGet</li>
+                    <li>Configurando a conexão com MySQL</li>
+                    <li>DbContext e DbSet</li>
+                    <li>Migrations — Criando o banco automaticamente</li>
+                    <li>Caso de Uso Real: iFood</li>
+                    <li>Exercício Guiado: Conectando ao MySQL</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 5: O que é um ORM -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>O que é um ORM?</h2></div>
             <div class="slide-body">
-                <p><strong>ORM</strong> (Object-Relational Mapping) é uma técnica que mapeia objetos da aplicação para tabelas do banco de dados, eliminando a necessidade de escrever SQL manualmente.</p>
-                <div class="two-columns" style="margin-top: 15px;">
-                    <div class="box-warning">
-                        <h3>Sem ORM (SQL puro)</h3>
-                        <pre style="font-size: 0.85em;">
-<span class="keyword">string</span> sql = <span class="string">@"INSERT INTO 
-  Alunos (Nome, Email, Idade) 
-  VALUES (@nome, @email, @idade)"</span>;
-<span class="comment">// + criar conexão, command, 
-// parâmetros, executar...</span></pre>
+                <p><strong>ORM</strong> (Object-Relational Mapping) é uma técnica que mapeia objetos C# para tabelas do banco de dados. Você trabalha com <strong>objetos</strong>, não com SQL.</p>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">🔄</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Tradutor</h4>
+                        <p>O ORM é como um tradutor entre duas línguas: C# e SQL. Você fala em C# e ele traduz para SQL automaticamente!</p>
                     </div>
-                    <div class="box-success">
-                        <h3>Com ORM (EF Core)</h3>
-                        <pre style="font-size: 0.85em;">
-<span class="keyword">var</span> aluno = <span class="keyword">new</span> <span class="type">Aluno</span>
-{
-    Nome = <span class="string">"Maria"</span>,
-    Email = <span class="string">"maria@email.com"</span>,
-    Idade = <span class="number">20</span>
-};
-_context.<span class="js-func">Add</span>(aluno);
-_context.<span class="js-func">SaveChanges</span>();</pre>
+                </div>
+                <div class="concept-cards two-cols" style="margin-top: 15px;">
+                    <div class="concept-card">
+                        <h4>Sem ORM (SQL manual)</h4>
+                        <pre style="font-size: 0.8em; margin: 5px 0;">SELECT * FROM Produtos
+WHERE Preco > 100
+ORDER BY Nome;</pre>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Com ORM (C#)</h4>
+                        <pre style="font-size: 0.8em; margin: 5px 0;">_db.Produtos
+  .Where(p => p.Preco > 100)
+  .OrderBy(p => p.Nome);</pre>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: EF Core -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Instalando os Pacotes NuGet</h2></div>
+            <div class="slide-header"><h2>Entity Framework Core</h2></div>
             <div class="slide-body">
-                <pre>
-<span class="comment"># Pacote do Entity Framework Core</span>
-$ dotnet add package Microsoft.EntityFrameworkCore
+                <p>O <strong>Entity Framework Core</strong> (EF Core) é o ORM oficial da Microsoft para .NET. Ele suporta vários bancos de dados.</p>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 130px;">
+                        <span class="box-label">Model (C#)</span>
+                        <span class="box-desc">Classe Produto</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 130px;">
+                        <span class="box-label">EF Core</span>
+                        <span class="box-desc">ORM / Tradutor</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 130px;">
+                        <span class="box-label">MySQL</span>
+                        <span class="box-desc">Tabela produtos</span>
+                    </div>
+                </div>
+                <table style="margin-top: 15px;">
+                    <thead><tr><th>C# (Model)</th><th>MySQL (Tabela)</th></tr></thead>
+                    <tbody>
+                        <tr><td>Classe <span class="inline-code">Produto</span></td><td>Tabela <span class="inline-code">produtos</span></td></tr>
+                        <tr><td>Propriedade <span class="inline-code">Nome</span></td><td>Coluna <span class="inline-code">nome</span></td></tr>
+                        <tr><td>Propriedade <span class="inline-code">int Id</span></td><td>Coluna <span class="inline-code">id INT PRIMARY KEY</span></td></tr>
+                        <tr><td>Objeto <span class="inline-code">new Produto()</span></td><td>Linha (registro)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<span class="comment"># Provider para MySQL (Pomelo)</span>
-$ dotnet add package Pomelo.EntityFrameworkCore.MySql
+        <!-- SLIDE 7: Instalação -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Instalação dos Pacotes NuGet</h2></div>
+            <div class="slide-body">
+                <p>No terminal, dentro da pasta do projeto:</p>
+                <pre>
+<span class="comment"># Pacote principal do EF Core</span>
+dotnet add package Microsoft.EntityFrameworkCore
+
+<span class="comment"># Driver para MySQL (Pomelo)</span>
+dotnet add package Pomelo.EntityFrameworkCore.MySql
 
 <span class="comment"># Ferramentas para Migrations</span>
-$ dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Design
 
 <span class="comment"># Instalar a ferramenta CLI do EF (uma vez)</span>
-$ dotnet tool install --global dotnet-ef</pre>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p>O <strong>Pomelo</strong> é o provider mais popular e mantido pela comunidade para MySQL com EF Core.</p>
+dotnet tool install --global dotnet-ef</pre>
+                <div class="box-warning" style="margin-top: 10px;">
+                    <p>Usamos o <strong>Pomelo</strong> como driver MySQL por ser o mais popular e bem mantido pela comunidade.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: DbContext -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Criando o DbContext</h2></div>
+            <div class="slide-header"><h2>DbContext — O Coração do EF Core</h2></div>
             <div class="slide-body">
-                <p>O <strong>DbContext</strong> é a classe central do EF Core. Ele representa a sessão com o banco de dados e permite consultar e salvar dados.</p>
+                <p>O <strong>DbContext</strong> gerencia a conexão com o banco e os mapeamentos. Cada <span class="inline-code">DbSet&lt;T&gt;</span> representa uma tabela.</p>
                 <pre>
 <span class="comment">// Data/AppDbContext.cs</span>
 <span class="keyword">using</span> Microsoft.EntityFrameworkCore;
-<span class="keyword">using</span> MinhaAppWeb.Models;
-
-<span class="keyword">namespace</span> MinhaAppWeb.Data;
 
 <span class="keyword">public class</span> <span class="type">AppDbContext</span> : <span class="type">DbContext</span>
 {
-    <span class="keyword">public</span> <span class="type">AppDbContext</span>(<span class="type">DbContextOptions</span>&lt;<span class="type">AppDbContext</span>&gt; options)
-        : <span class="keyword">base</span>(options) { }
+    <span class="keyword">public</span> <span class="js-func">AppDbContext</span>(
+        DbContextOptions&lt;<span class="type">AppDbContext</span>&gt; <span class="js-var">options</span>)
+        : <span class="keyword">base</span>(<span class="js-var">options</span>) { }
 
-    <span class="comment">// Cada DbSet representa uma tabela</span>
-    <span class="keyword">public</span> <span class="type">DbSet</span>&lt;<span class="type">Aluno</span>&gt; Alunos { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="comment">// Cada DbSet = uma tabela no banco</span>
+    <span class="keyword">public</span> DbSet&lt;<span class="type">Produto</span>&gt; Produtos { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 }</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Configurando a Conexão</h2></div>
-            <div class="slide-body">
-                <h3>appsettings.json</h3>
-                <pre>
-{
-  <span class="string">"ConnectionStrings"</span>: {
-    <span class="string">"DefaultConnection"</span>: <span class="string">"Server=localhost;Database=MinhaAppDb;User=root;Password=123456;"</span>
-  }
-}</pre>
-                <h3 style="margin-top: 15px;">Program.cs</h3>
-                <pre>
-<span class="keyword">var</span> connectionString = builder.Configuration
-    .<span class="js-func">GetConnectionString</span>(<span class="string">"DefaultConnection"</span>);
-
-builder.Services.<span class="js-func">AddDbContext</span>&lt;<span class="type">AppDbContext</span>&gt;(options =>
-    options.<span class="js-func">UseMySql</span>(connectionString, 
-        <span class="type">ServerVersion</span>.<span class="js-func">AutoDetect</span>(connectionString)));
-</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Migrations</h2></div>
-            <div class="slide-body">
-                <p><strong>Migrations</strong> são o mecanismo do EF Core para criar e atualizar o banco de dados a partir do código C#.</p>
-                <pre>
-<span class="comment"># Criar a primeira migration</span>
-$ dotnet ef migrations add CriarTabelaAlunos
-
-<span class="comment"># Aplicar a migration (criar/atualizar o banco)</span>
-$ dotnet ef database update
-
-<span class="comment"># Listar migrations existentes</span>
-$ dotnet ef migrations list
-
-<span class="comment"># Reverter última migration</span>
-$ dotnet ef migrations remove</pre>
-                <div class="box-success" style="margin-top: 15px;">
-                    <p>Após executar <span class="inline-code">dotnet ef database update</span>, a tabela <strong>Alunos</strong> será criada automaticamente no MySQL!</p>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p><span class="inline-code">DbSet&lt;Produto&gt; Produtos</span> → cria a tabela <strong>Produtos</strong> no MySQL com as colunas correspondentes às propriedades da classe.</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 9: Configuração -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Usando o DbContext no Controller</h2></div>
+            <div class="slide-header"><h2>Configurando a Conexão</h2></div>
             <div class="slide-body">
                 <pre>
-<span class="keyword">public class</span> <span class="type">AlunoController</span> : <span class="type">Controller</span>
+<span class="comment">// appsettings.json</span>
 {
-    <span class="keyword">private readonly</span> <span class="type">AppDbContext</span> _context;
+  <span class="js-string">"ConnectionStrings"</span>: {
+    <span class="js-string">"DefaultConnection"</span>: 
+      <span class="js-string">"Server=localhost;Database=devweb;User=root;Password=123456;"</span>
+  }
+}
 
-    <span class="comment">// Injeção de Dependência</span>
-    <span class="keyword">public</span> <span class="type">AlunoController</span>(<span class="type">AppDbContext</span> context)
-    {
-        _context = context;
-    }
+<span class="comment">// Program.cs — Registrar o DbContext</span>
+<span class="keyword">var</span> <span class="js-var">connectionString</span> = builder.Configuration
+    .<span class="js-func">GetConnectionString</span>(<span class="js-string">"DefaultConnection"</span>);
 
-    <span class="comment">// Listar todos os alunos</span>
-    <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Index</span>()
-    {
-        <span class="keyword">var</span> alunos = _context.Alunos.<span class="js-func">ToList</span>();
-        <span class="keyword">return</span> <span class="js-func">View</span>(alunos);
-    }
-}</pre>
+builder.Services.<span class="js-func">AddDbContext</span>&lt;<span class="type">AppDbContext</span>&gt;(<span class="js-var">options</span> =>
+    <span class="js-var">options</span>.<span class="js-func">UseMySql</span>(
+        <span class="js-var">connectionString</span>,
+        ServerVersion.<span class="js-func">AutoDetect</span>(<span class="js-var">connectionString</span>)
+    )
+);</pre>
             </div>
         </div>
 
+        <!-- SLIDE 10: Migrations -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Migrations — Criando o Banco</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Configurando o Banco de Dados</h3>
-                    <ol>
-                        <li>No projeto MVC existente, instale os pacotes NuGet do EF Core e Pomelo</li>
+                <p><strong>Migrations</strong> são como "versões" do banco de dados. O EF Core gera o SQL automaticamente a partir dos seus Models.</p>
+                <pre>
+<span class="comment"># 1. Criar a primeira migration</span>
+dotnet ef migrations add CriarTabelaProdutos
+
+<span class="comment"># 2. Aplicar no banco de dados</span>
+dotnet ef database update
+
+<span class="comment"># 3. Se mudar o Model, criar nova migration</span>
+dotnet ef migrations add AdicionarCampoCategoria
+dotnet ef database update</pre>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">Model C#</span>
+                        <span class="box-desc">Classe Produto</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 120px;">
+                        <span class="box-label">Migration</span>
+                        <span class="box-desc">Arquivo gerado</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">SQL gerado</span>
+                        <span class="box-desc">CREATE TABLE...</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 120px;">
+                        <span class="box-label">MySQL</span>
+                        <span class="box-desc">Tabela criada!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>iFood — Catálogo de Restaurantes e Pratos</h3>
+                    <span class="company-tag">iFood</span>
+                    <span class="company-tag">ORM</span>
+                    <span class="company-tag">Banco de Dados</span>
+                    <p style="margin-top: 10px;">O iFood gerencia milhões de restaurantes, pratos e pedidos. Cada entidade é um <strong>Model</strong> mapeado para tabelas no banco. O ORM permite que os desenvolvedores trabalhem com objetos C# sem escrever SQL manualmente.</p>
+                </div>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">🍔</span>
+                        <h4>Restaurante</h4>
+                        <p>Nome, Endereço, Nota, Categoria</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🍕</span>
+                        <h4>Prato</h4>
+                        <p>Nome, Preço, Descrição, Foto</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">📦</span>
+                        <h4>Pedido</h4>
+                        <p>Itens, Total, Status, Data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Conectando o Projeto ao MySQL</h3>
+                    <div class="timebox">40 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Instale os pacotes NuGet (EF Core, Pomelo, Design)</li>
+                        <li>Instale a ferramenta CLI: <span class="inline-code">dotnet tool install --global dotnet-ef</span></li>
+                        <li>Crie o Model <span class="inline-code">Produto.cs</span> com Id, Nome, Descricao, Preco e Estoque</li>
                         <li>Crie a pasta <span class="inline-code">Data/</span> e o arquivo <span class="inline-code">AppDbContext.cs</span></li>
-                        <li>Adicione o <span class="inline-code">DbSet&lt;Aluno&gt;</span></li>
-                        <li>Configure a connection string no <span class="inline-code">appsettings.json</span></li>
+                        <li>Configure o <span class="inline-code">DbSet&lt;Produto&gt;</span></li>
+                        <li>Adicione a connection string no <span class="inline-code">appsettings.json</span></li>
                         <li>Registre o DbContext no <span class="inline-code">Program.cs</span></li>
-                        <li>Crie e aplique a migration</li>
+                        <li>Execute: <span class="inline-code">dotnet ef migrations add Inicial</span></li>
+                        <li>Execute: <span class="inline-code">dotnet ef database update</span></li>
                         <li>Verifique no MySQL Workbench se a tabela foi criada</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
+                <div class="guided-exercise">
                     <h3>Inserindo e Listando Dados</h3>
-                    <ol>
-                        <li>Modifique o <span class="inline-code">AlunoController</span> para receber o <span class="inline-code">AppDbContext</span></li>
-                        <li>Na Action POST de Cadastrar, salve o aluno no banco: <span class="inline-code">_context.Alunos.Add(aluno); _context.SaveChanges();</span></li>
-                        <li>Na Action Index, liste todos os alunos do banco</li>
-                        <li>Na View Index, exiba os alunos em uma tabela HTML</li>
-                        <li>Cadastre 3 alunos pelo formulário e verifique a listagem</li>
+                    <div class="timebox">20 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Modifique o <span class="inline-code">ProdutoController</span> para receber o <span class="inline-code">AppDbContext</span> via construtor</li>
+                        <li>Na Action POST de Cadastrar, salve o produto: <span class="inline-code">_context.Produtos.Add(produto); _context.SaveChanges();</span></li>
+                        <li>Na Action Index, liste todos: <span class="inline-code">var lista = _context.Produtos.ToList();</span></li>
+                        <li>Na View Index, exiba os produtos em uma tabela HTML com @foreach</li>
+                        <li>Cadastre 3 produtos pelo formulário e verifique a listagem</li>
                     </ol>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 14: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -228,13 +324,15 @@ $ dotnet ef migrations remove</pre>
                     <ol style="margin-top: 10px;">
                         <li>Pesquise o que significa <strong>CRUD</strong> (Create, Read, Update, Delete)</li>
                         <li>Leia sobre os métodos <span class="inline-code">Find()</span>, <span class="inline-code">Update()</span> e <span class="inline-code">Remove()</span> do EF Core</li>
-                        <li>Pesquise o que é <strong>scaffolding</strong> no ASP.NET Core</li>
+                        <li>Pesquise o que é <span class="inline-code">SaveChanges()</span></li>
+                        <li>Certifique-se de que o banco MySQL está funcionando</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 25 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 15: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

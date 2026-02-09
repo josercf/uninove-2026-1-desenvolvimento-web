@@ -9,6 +9,7 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 20 — Revisão Geral e Projeto Final</h2>
@@ -16,6 +17,41 @@
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Recapitulação — Aula 19</h2></div>
+            <div class="slide-body">
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>Ambientes:</strong> Development, Staging e Production</li>
+                        <li class="recap-item"><strong>dotnet publish:</strong> Gera os arquivos otimizados para deploy</li>
+                        <li class="recap-item"><strong>Docker:</strong> Container com tudo que a app precisa para rodar</li>
+                        <li class="recap-item"><strong>Variáveis de Ambiente:</strong> Nunca colocar senhas no código!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Mini Quiz (início — revisão geral) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz — Revisão Geral</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Revisão do semestre!</h3>
+                    <p class="quiz-question">No padrão MVC, qual componente é responsável por <strong>receber a requisição do usuário</strong> e decidir o que fazer?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) Model</button></li>
+                        <li><button class="quiz-option" data-option="b">b) View</button></li>
+                        <li><button class="quiz-option" data-option="c">c) Controller</button></li>
+                        <li><button class="quiz-option" data-option="d">d) Entity Framework</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. O <strong>Controller</strong> recebe a requisição, processa a lógica (consultando Models/banco) e retorna uma View ou dados JSON.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
@@ -24,12 +60,14 @@
                     <li>Mapa de Tecnologias</li>
                     <li>Especificação do Projeto Final</li>
                     <li>Critérios de Avaliação</li>
-                    <li>Dúvidas e Orientação</li>
+                    <li>Caso de Uso Real: Sua Carreira</li>
+                    <li>Exercício Guiado: Iniciar o Projeto</li>
                     <li>Próximos Passos na Carreira</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 5: Revisão Bloco 1 -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Revisão — Bloco 1: Fundamentos Web</h2></div>
             <div class="slide-body">
@@ -39,73 +77,120 @@
                         <tr><td>01</td><td>Apresentação</td><td>Disciplina, metodologia, ferramentas</td></tr>
                         <tr><td>02</td><td>Estrutura da Web</td><td>TCP/IP, HTTP, cliente-servidor, DNS</td></tr>
                         <tr><td>03</td><td>HTML</td><td>Tags, semântica, estrutura de página</td></tr>
-                        <tr><td>04</td><td>CSS</td><td>Seletores, box model, flexbox, grid</td></tr>
-                        <tr><td>05</td><td>Formulários</td><td>Inputs, validação HTML5, acessibilidade</td></tr>
+                        <tr><td>04</td><td>CSS</td><td>Seletores, box model, flexbox</td></tr>
+                        <tr><td>05</td><td>Formulários</td><td>Inputs, validação HTML5, medidas CSS</td></tr>
                         <tr><td>06</td><td>JavaScript</td><td>Variáveis, DOM, eventos, funções</td></tr>
                     </tbody>
                 </table>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 100px;">
+                        <span class="box-label">HTML</span>
+                        <span class="box-desc">Estrutura</span>
+                    </div>
+                    <span class="diagram-arrow">+</span>
+                    <div class="diagram-box highlight" style="min-width: 100px;">
+                        <span class="box-label">CSS</span>
+                        <span class="box-desc">Estilo</span>
+                    </div>
+                    <span class="diagram-arrow">+</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 100px;">
+                        <span class="box-label">JavaScript</span>
+                        <span class="box-desc">Comportamento</span>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: Revisão Bloco 2 -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Revisão — Bloco 2: ASP.NET Core MVC</h2></div>
             <div class="slide-body">
                 <table>
                     <thead><tr><th>Aula</th><th>Tema</th><th>Conceitos-Chave</th></tr></thead>
                     <tbody>
-                        <tr><td>07</td><td>Ambiente .NET</td><td>SDK, CLI, Visual Studio, projeto MVC</td></tr>
+                        <tr><td>07</td><td>Ambiente .NET</td><td>SDK, CLI, Visual Studio, C# básico</td></tr>
                         <tr><td>08</td><td>Primeiros Passos MVC</td><td>Controllers, Views, Razor, ViewBag</td></tr>
                         <tr><td>09</td><td>Estruturas de Controle</td><td>if/else, for, foreach, List&lt;T&gt;</td></tr>
-                        <tr><td>10</td><td>Formulários e Models</td><td>Tag Helpers, Model Binding, Data Annotations</td></tr>
+                        <tr><td>10</td><td>Formulários e Models</td><td>Tag Helpers, Model Binding, Validação</td></tr>
                     </tbody>
                 </table>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">Navegador</span>
+                        <span class="box-desc">Requisição HTTP</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 120px;">
+                        <span class="box-label">Controller</span>
+                        <span class="box-desc">Processa lógica</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 120px;">
+                        <span class="box-label">View</span>
+                        <span class="box-desc">Retorna HTML</span>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 7: Revisão Bloco 3 -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Revisão — Bloco 3: Banco de Dados e Recursos</h2></div>
             <div class="slide-body">
                 <table>
                     <thead><tr><th>Aula</th><th>Tema</th><th>Conceitos-Chave</th></tr></thead>
                     <tbody>
-                        <tr><td>11</td><td>EF Core e MySQL</td><td>ORM, DbContext, Migrations, conexão</td></tr>
+                        <tr><td>11</td><td>EF Core e MySQL</td><td>ORM, DbContext, Migrations</td></tr>
                         <tr><td>12</td><td>CRUD Completo</td><td>Create, Read, Update, Delete</td></tr>
-                        <tr><td>13</td><td>Cookies e Sessões</td><td>Estado, cookies, sessões, login simples</td></tr>
-                        <tr><td>14</td><td>AJAX</td><td>Fetch API, JSON, requisições assíncronas</td></tr>
-                        <tr><td>15</td><td>Autenticação</td><td>Login, registro, BCrypt, [Authorize]</td></tr>
+                        <tr><td>13</td><td>Cookies e Sessões</td><td>Estado, cookies, sessões</td></tr>
+                        <tr><td>14</td><td>AJAX</td><td>Fetch API, JSON, assíncrono</td></tr>
+                        <tr><td>15</td><td>Autenticação</td><td>Login, BCrypt, [Authorize]</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- SLIDE 8: Revisão Bloco 4 -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Revisão — Bloco 4: Avançado e Deploy</h2></div>
             <div class="slide-body">
                 <table>
                     <thead><tr><th>Aula</th><th>Tema</th><th>Conceitos-Chave</th></tr></thead>
                     <tbody>
-                        <tr><td>16</td><td>API REST</td><td>Web API, endpoints, Swagger, status codes</td></tr>
-                        <tr><td>17</td><td>Relacionamentos</td><td>1:N, Include, LINQ, SelectList</td></tr>
+                        <tr><td>16</td><td>API REST</td><td>Web API, Swagger, status codes</td></tr>
+                        <tr><td>17</td><td>Relacionamentos</td><td>1:N, Include, LINQ</td></tr>
                         <tr><td>18</td><td>Layout e Bootstrap</td><td>_Layout, Partial Views, componentes</td></tr>
                         <tr><td>19</td><td>Deploy</td><td>Docker, variáveis de ambiente, nuvem</td></tr>
-                        <tr><td>20</td><td>Revisão e Projeto</td><td>Consolidação, projeto final</td></tr>
                     </tbody>
                 </table>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">🌐</span>
+                        <h4>Front-End</h4>
+                        <p>HTML + CSS + JS + Bootstrap</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">⚙️</span>
+                        <h4>Back-End</h4>
+                        <p>C# + ASP.NET MVC + EF Core</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🗄️</span>
+                        <h4>Banco de Dados</h4>
+                        <p>MySQL + Migrations</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="slide slide-section">
-            <h1>Projeto Final</h1>
-            <h2>Especificação e Critérios</h2>
-        </div>
-
+        <!-- SLIDE 9: Projeto Final -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Especificação do Projeto Final</h2></div>
             <div class="slide-body">
-                <p>Desenvolva uma <strong>aplicação web completa</strong> usando ASP.NET Core MVC com os seguintes requisitos obrigatórios:</p>
-                <div class="box-exercise">
+                <p>Desenvolva uma <strong>aplicação web completa</strong> usando ASP.NET Core MVC:</p>
+                <div class="guided-exercise">
                     <h3>Requisitos Obrigatórios</h3>
-                    <ol>
+                    <ol class="guided-steps">
                         <li><strong>Padrão MVC</strong> — Controllers, Models e Views organizados</li>
                         <li><strong>Banco de Dados MySQL</strong> com Entity Framework Core</li>
                         <li><strong>CRUD completo</strong> de pelo menos 2 entidades</li>
@@ -119,18 +204,19 @@
             </div>
         </div>
 
+        <!-- SLIDE 10: Sugestões de temas -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Sugestões de Temas</h2></div>
             <div class="slide-body">
                 <table>
-                    <thead><tr><th>Tema</th><th>Entidades</th><th>Funcionalidade AJAX</th></tr></thead>
+                    <thead><tr><th>Tema</th><th>Entidades</th><th>AJAX</th></tr></thead>
                     <tbody>
                         <tr><td>Biblioteca</td><td>Livro, Autor, Empréstimo</td><td>Busca de livros</td></tr>
-                        <tr><td>Loja Virtual</td><td>Produto, Categoria, Pedido</td><td>Carrinho de compras</td></tr>
-                        <tr><td>Blog</td><td>Post, Categoria, Comentário</td><td>Comentários em tempo real</td></tr>
-                        <tr><td>Agenda</td><td>Contato, Grupo, Evento</td><td>Busca de contatos</td></tr>
+                        <tr><td>Loja Virtual</td><td>Produto, Categoria, Pedido</td><td>Carrinho</td></tr>
+                        <tr><td>Blog</td><td>Post, Categoria, Comentário</td><td>Comentários</td></tr>
                         <tr><td>Escola</td><td>Aluno, Turma, Nota</td><td>Filtro por turma</td></tr>
-                        <tr><td>Clínica</td><td>Paciente, Médico, Consulta</td><td>Agendamento dinâmico</td></tr>
+                        <tr><td>Clínica</td><td>Paciente, Médico, Consulta</td><td>Agendamento</td></tr>
+                        <tr><td>Restaurante</td><td>Prato, Categoria, Pedido</td><td>Cardápio dinâmico</td></tr>
                     </tbody>
                 </table>
                 <div class="box-info" style="margin-top: 10px;">
@@ -139,17 +225,18 @@
             </div>
         </div>
 
+        <!-- SLIDE 11: Critérios -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Critérios de Avaliação</h2></div>
             <div class="slide-body">
                 <table>
                     <thead><tr><th>Critério</th><th>Peso</th><th>Descrição</th></tr></thead>
                     <tbody>
-                        <tr><td>Funcionalidade</td><td>30%</td><td>Todos os requisitos implementados e funcionando</td></tr>
-                        <tr><td>Código</td><td>25%</td><td>Organização, boas práticas, padrão MVC</td></tr>
-                        <tr><td>Banco de Dados</td><td>20%</td><td>EF Core, migrations, relacionamentos</td></tr>
-                        <tr><td>Interface</td><td>15%</td><td>Layout, Bootstrap, usabilidade</td></tr>
-                        <tr><td>Apresentação</td><td>10%</td><td>Demonstração e explicação do projeto</td></tr>
+                        <tr><td>Funcionalidade</td><td><strong>30%</strong></td><td>Todos os requisitos implementados e funcionando</td></tr>
+                        <tr><td>Código</td><td><strong>25%</strong></td><td>Organização, boas práticas, padrão MVC</td></tr>
+                        <tr><td>Banco de Dados</td><td><strong>20%</strong></td><td>EF Core, migrations, relacionamentos</td></tr>
+                        <tr><td>Interface</td><td><strong>15%</strong></td><td>Layout, Bootstrap, usabilidade</td></tr>
+                        <tr><td>Apresentação</td><td><strong>10%</strong></td><td>Demonstração e explicação do projeto</td></tr>
                     </tbody>
                 </table>
                 <div class="box-warning" style="margin-top: 10px;">
@@ -158,10 +245,63 @@
             </div>
         </div>
 
+        <!-- SLIDE 12: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>Sua Carreira — O Mercado de Trabalho</h3>
+                    <span class="company-tag">Carreira</span>
+                    <span class="company-tag">.NET</span>
+                    <span class="company-tag">Mercado</span>
+                    <p style="margin-top: 10px;">Desenvolvedores .NET estão entre os mais demandados no Brasil. Empresas como <strong>iFood, Nubank, Magazine Luiza, Itaú</strong> e muitas outras usam .NET em seus sistemas. O salário médio de um desenvolvedor .NET júnior no Brasil é de <strong>R$ 4.000 a R$ 6.000</strong>, e sênior pode ultrapassar <strong>R$ 15.000</strong>.</p>
+                </div>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">💼</span>
+                        <h4>Portfólio</h4>
+                        <p>Seu projeto final é o primeiro item do seu portfólio!</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🐙</span>
+                        <h4>GitHub</h4>
+                        <p>Recrutadores olham seu GitHub. Mantenha-o ativo!</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🚀</span>
+                        <h4>Prática</h4>
+                        <p>Quanto mais projetos, mais preparado para o mercado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Iniciar o Projeto Final</h3>
+                    <div class="timebox">50 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Forme duplas ou trios para o projeto final</li>
+                        <li>Defina o <strong>tema</strong> e as <strong>entidades</strong> do projeto</li>
+                        <li>Crie o repositório no GitHub (todos os membros como colaboradores)</li>
+                        <li>Crie o projeto ASP.NET Core MVC: <span class="inline-code">dotnet new mvc</span></li>
+                        <li>Crie os <strong>Models</strong> com Data Annotations e relacionamentos</li>
+                        <li>Configure o <strong>DbContext</strong> e a connection string para MySQL</li>
+                        <li>Crie e aplique a primeira <strong>migration</strong></li>
+                        <li>Faça o primeiro <strong>commit e push</strong> para o GitHub</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Próximos passos -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Próximos Passos na Carreira</h2></div>
             <div class="slide-body">
-                <p>O que estudar depois desta disciplina para se aprofundar em desenvolvimento web:</p>
+                <p>O que estudar depois desta disciplina:</p>
                 <div class="two-columns">
                     <div>
                         <h3>Backend</h3>
@@ -189,22 +329,7 @@
             </div>
         </div>
 
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Dúvidas e Orientação</h2></div>
-            <div class="slide-body" style="justify-content: center;">
-                <div class="box-exercise">
-                    <h3>Atividade em Sala (60 min)</h3>
-                    <ol>
-                        <li>Forme duplas ou trios para o projeto final</li>
-                        <li>Defina o tema e as entidades do projeto</li>
-                        <li>Crie o repositório no GitHub</li>
-                        <li>Inicie a estrutura do projeto (Models, DbContext, Migrations)</li>
-                        <li>Tire dúvidas com o professor sobre qualquer tema do semestre</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
+        <!-- SLIDE 15: Encerramento -->
         <div class="slide slide-cover">
             <h1>Parabéns!</h1>
             <h2>Vocês concluíram a disciplina de Desenvolvimento Web!</h2>

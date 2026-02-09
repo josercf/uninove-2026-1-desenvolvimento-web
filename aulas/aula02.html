@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 02 - Estrutura da Web e Redes | Desenvolvimento Web - UNINOVE</title>
+    <title>Aula 02 - Estrutura da Web e Redes TCP/IP | Desenvolvimento Web - UNINOVE</title>
     <link rel="stylesheet" href="css/slides.css">
 </head>
 <body>
@@ -12,55 +12,84 @@
         <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
-            <h2>Aula 02 — Estrutura da Web e Redes</h2>
-            <p>TCP/IP, DNS, HTTP e HTTPS</p>
+            <h2>Aula 02 — Estrutura da Web e Redes TCP/IP</h2>
+            <p>Como a internet funciona por dentro</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
-        <!-- SLIDE 2: Revisão Pré-Aula -->
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 01</h2></div>
             <div class="slide-body">
-                <p>Na atividade pré-aula, vocês estudaram sobre o modelo OSI, TCP/IP e DNS. Vamos discutir:</p>
-                <div class="box-exercise" style="margin-top: 20px;">
-                    <h3>Discussão em Grupo (10 min)</h3>
-                    <ol>
-                        <li>O que é o modelo OSI e quantas camadas ele possui?</li>
-                        <li>Qual a diferença entre TCP e IP?</li>
-                        <li>O que acontece quando você digita um endereço no navegador?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>Cliente-Servidor:</strong> O navegador (cliente) faz requisições e o servidor responde</li>
+                        <li class="recap-item"><strong>URL:</strong> Endereço composto por protocolo, host, porta, caminho e query string</li>
+                        <li class="recap-item"><strong>Métodos HTTP:</strong> GET (buscar), POST (enviar), PUT (atualizar), DELETE (remover)</li>
+                        <li class="recap-item"><strong>DevTools:</strong> F12 para inspecionar requisições e elementos da página</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 3: Agenda -->
+        <!-- SLIDE 3: Quiz de Recapitulação -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Quiz de Recapitulação</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Vamos relembrar a aula passada!</h3>
+                    <p class="quiz-question">Qual método HTTP é usado quando você digita um endereço no navegador e pressiona Enter?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) POST — porque estamos enviando o endereço</button></li>
+                        <li><button class="quiz-option" data-option="b">b) PUT — porque estamos atualizando a página</button></li>
+                        <li><button class="quiz-option" data-option="c">c) GET — porque estamos solicitando uma página</button></li>
+                        <li><button class="quiz-option" data-option="d">d) DELETE — porque a página anterior é removida</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. Quando digitamos um endereço no navegador, ele envia uma requisição <strong>GET</strong> ao servidor, solicitando o recurso (página) daquele endereço.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>TCP/IP e o Modelo OSI</li>
-                    <li>DNS — Sistema de Nomes de Domínio</li>
+                    <li>O Modelo TCP/IP</li>
+                    <li>DNS — O "catálogo telefônico" da internet</li>
                     <li>Three-Way Handshake</li>
-                    <li>SSL/TLS e HTTPS</li>
-                    <li>Exercícios Práticos</li>
+                    <li>HTTP vs HTTPS</li>
+                    <li>Caso de Uso Real: WhatsApp Web</li>
+                    <li>Exercício Guiado: Explorando a Rede</li>
                 </ul>
             </div>
         </div>
 
-        <!-- SLIDE 4: TCP/IP -->
-        <div class="slide slide-section">
-            <h1>TCP/IP</h1>
-            <h2>O conjunto de protocolos que faz a Internet funcionar</h2>
-        </div>
-
-        <!-- SLIDE 5: O que é TCP/IP -->
+        <!-- SLIDE 5: Modelo TCP/IP - Diagrama Visual -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>O que é TCP/IP?</h2></div>
+            <div class="slide-header"><h2>O Modelo TCP/IP</h2></div>
             <div class="slide-body">
-                <p><strong>TCP/IP</strong> é um conjunto de protocolos para troca de informações em redes. Foi criado em 1971 e formalizado em 1983.</p>
-                <p>Para padronizar a criação de protocolos, foi criado o modelo <strong>OSI</strong> (Open Systems Interconnection), que define uma arquitetura de protocolos para redes. Com ele, diferentes fabricantes podem produzir equipamentos que se comunicam entre si.</p>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p><strong>Analogia:</strong> Pense no TCP/IP como o sistema postal da Internet. Assim como uma carta precisa de endereço, selo e envelope, os dados na Internet precisam de protocolos para chegar ao destino correto.</p>
+                <p>A internet funciona em <strong>camadas</strong>. Cada camada tem uma responsabilidade específica:</p>
+                <div class="two-columns" style="margin-top: 15px;">
+                    <div class="layer-diagram" style="width: 100%;">
+                        <div class="layer" style="background: #C84B31;">4. Aplicação (HTTP, HTTPS, FTP, SMTP)</div>
+                        <div class="layer" style="background: #E67E22;">3. Transporte (TCP, UDP)</div>
+                        <div class="layer" style="background: #2980B9;">2. Internet (IP, ICMP)</div>
+                        <div class="layer" style="background: #00274D;">1. Acesso à Rede (Ethernet, Wi-Fi)</div>
+                    </div>
+                    <div>
+                        <div class="analogy-box" style="margin: 0;">
+                            <span class="analogy-icon">📦</span>
+                            <div class="analogy-text">
+                                <h4>Analogia: Enviar uma encomenda</h4>
+                                <p><strong>Aplicação:</strong> Você escreve a carta<br>
+                                <strong>Transporte:</strong> Coloca no envelope<br>
+                                <strong>Internet:</strong> Escreve o endereço<br>
+                                <strong>Rede:</strong> O caminhão entrega</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,9 +99,7 @@
             <div class="slide-header"><h2>O Modelo OSI — 7 Camadas</h2></div>
             <div class="slide-body">
                 <table>
-                    <thead>
-                        <tr><th>#</th><th>Camada</th><th>Função</th></tr>
-                    </thead>
+                    <thead><tr><th>#</th><th>Camada</th><th>Função</th></tr></thead>
                     <tbody>
                         <tr><td>7</td><td><strong>Aplicação</strong></td><td>Funções especializadas (HTTP, FTP, SMTP)</td></tr>
                         <tr><td>6</td><td><strong>Apresentação</strong></td><td>Formatação de dados e conversão de caracteres</td></tr>
@@ -87,174 +114,226 @@
         </div>
 
         <!-- SLIDE 7: DNS -->
-        <div class="slide slide-section">
-            <h1>DNS</h1>
-            <h2>Domain Name System — Sistema de Nomes de Domínio</h2>
-        </div>
-
-        <!-- SLIDE 8: O que é DNS -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>O que é DNS?</h2></div>
+            <div class="slide-header"><h2>DNS — Domain Name System</h2></div>
             <div class="slide-body">
-                <p>O <strong>DNS</strong> (Domain Name System) converte nomes de domínio legíveis por humanos em endereços IP legíveis por máquina.</p>
-                <div class="two-columns" style="margin-top: 20px;">
-                    <div style="text-align: center;">
-                        <p style="font-size: 1.5em; color: #00274D;"><strong>www.uninove.br</strong></p>
-                        <p style="font-size: 0.9em;">Nome que humanos entendem</p>
+                <p>O DNS traduz <strong>nomes de domínio</strong> em <strong>endereços IP</strong>. Sem ele, teríamos que memorizar números!</p>
+                <div class="diagram-flow" style="margin-top: 15px;">
+                    <div class="diagram-box">
+                        <span class="box-icon">👤</span>
+                        <span class="box-label">www.google.com</span>
+                        <span class="box-desc">Nome amigável</span>
                     </div>
-                    <div style="text-align: center;">
-                        <p style="font-size: 1.5em; color: #C84B31;"><strong>192.168.1.100</strong></p>
-                        <p style="font-size: 0.9em;">Endereço que máquinas entendem</p>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral">
+                        <span class="box-icon">📡</span>
+                        <span class="box-label">Servidor DNS</span>
+                        <span class="box-desc">Traduz o nome</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight">
+                        <span class="box-icon">🔢</span>
+                        <span class="box-label">142.250.79.46</span>
+                        <span class="box-desc">Endereço IP real</span>
                     </div>
                 </div>
-                <div style="text-align: center; font-size: 2em; margin: 15px 0;">⟵ DNS ⟶</div>
-                <div class="box-info">
-                    <p><strong>Analogia:</strong> O DNS funciona como uma agenda telefônica da Internet. Você procura pelo nome e ele retorna o número (IP).</p>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">📞</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Agenda telefônica</h4>
+                        <p>O DNS funciona como uma agenda: você procura pelo <strong>nome</strong> (google.com) e ele retorna o <strong>número</strong> (IP). Sem a agenda, você teria que decorar todos os números!</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 9: TLDs -->
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Tipos de Domínio (TLD)</h2></div>
-            <div class="slide-body">
-                <p>Um <strong>TLD</strong> (Top Level Domain) é o último segmento de um nome de domínio — o que aparece depois do último ponto.</p>
-                <table style="margin-top: 15px;">
-                    <thead>
-                        <tr><th>Tipo</th><th>Descrição</th><th>Exemplos</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>gTLD</strong></td><td>Genéricos</td><td>.com, .org, .net, .xyz</td></tr>
-                        <tr><td><strong>sTLD</strong></td><td>Patrocinados</td><td>.gov, .edu, .mil</td></tr>
-                        <tr><td><strong>ccTLD</strong></td><td>Código de País</td><td>.br, .us, .uk, .de</td></tr>
-                    </tbody>
-                </table>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p><strong>No Brasil:</strong> O <strong>Registro.br</strong> é a entidade responsável pelo registro de domínios .br</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 10: Estrutura de um domínio -->
+        <!-- SLIDE 8: Estrutura de um domínio -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Estrutura de um Domínio</h2></div>
-            <div class="slide-body" style="justify-content: center;">
+            <div class="slide-body">
                 <pre style="font-size: 1.2em; text-align: center; background: #f8f9fa; color: #333; border-left-color: #00274D;">
 <span class="comment">portal</span>.<span class="type">uninove</span>.<span class="keyword">edu</span>.<span class="string">br</span>
 
-<span class="string">.br</span>       → Primeiro nível (ccTLD)
+<span class="string">.br</span>       → Primeiro nível (ccTLD — código de país)
 <span class="keyword">.edu</span>      → Domínio de Nível Superior Patrocinado
 <span class="type">.uninove</span>  → Segundo nível (nome da organização)
 <span class="comment">portal</span>    → Terceiro nível (subdomínio)</pre>
-                <p style="margin-top: 20px;">Cada ponto separa um nível diferente, ajudando os computadores a encontrarem o conteúdo apropriado.</p>
+                <table style="margin-top: 15px;">
+                    <thead><tr><th>Tipo</th><th>Descrição</th><th>Exemplos</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>gTLD</strong></td><td>Genéricos</td><td>.com, .org, .net</td></tr>
+                        <tr><td><strong>sTLD</strong></td><td>Patrocinados</td><td>.gov, .edu, .mil</td></tr>
+                        <tr><td><strong>ccTLD</strong></td><td>Código de País</td><td>.br, .us, .uk</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- SLIDE 11: Three-Way Handshake -->
+        <!-- SLIDE 9: Three-Way Handshake -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Three-Way Handshake (TCP)</h2></div>
             <div class="slide-body">
-                <p>O <strong>handshake de três vias</strong> é o processo usado em uma rede TCP/IP para estabelecer uma conexão entre cliente e servidor.</p>
-                <div class="timeline" style="margin-top: 30px;">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>1. SYN</h3>
-                        <p>Cliente envia um pacote SYN ao servidor solicitando conexão</p>
+                <p>O <strong>handshake de três vias</strong> é o processo para estabelecer uma conexão TCP entre cliente e servidor.</p>
+                <div class="diagram-flow" style="margin-top: 20px;">
+                    <div class="diagram-box">
+                        <span class="box-icon">🖥️</span>
+                        <span class="box-label">Cliente</span>
+                        <span class="box-desc">Quer conectar</span>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>2. SYN-ACK</h3>
-                        <p>Servidor responde com SYN-ACK confirmando o recebimento</p>
+                    <span class="diagram-arrow">SYN →</span>
+                    <div class="diagram-box highlight">
+                        <span class="box-icon">🗄️</span>
+                        <span class="box-label">Servidor</span>
+                        <span class="box-desc">Recebe pedido</span>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>3. ACK</h3>
-                        <p>Cliente envia ACK final e a conexão é estabelecida</p>
+                    <span class="diagram-arrow">← SYN-ACK</span>
+                    <div class="diagram-box">
+                        <span class="box-icon">🖥️</span>
+                        <span class="box-label">Cliente</span>
+                        <span class="box-desc">Confirma</span>
                     </div>
-                </div>
-                <div class="box-info" style="margin-top: 20px;">
-                    <p><strong>Analogia:</strong> É como um aperto de mão. "Posso conectar?" → "Sim, pode!" → "Ok, conectado!"</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 12: SSL/TLS -->
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>SSL/TLS e HTTPS</h2></div>
-            <div class="slide-body">
-                <p><strong>SSL</strong> (Secure Sockets Layer) é um tipo de segurança digital que permite a comunicação criptografada entre um site e um navegador. Atualmente foi substituído pelo <strong>TLS</strong> (Transport Layer Security).</p>
-                <div class="two-columns" style="margin-top: 20px;">
-                    <div class="box-warning">
-                        <h3 style="color: #E65100;">HTTP (inseguro)</h3>
-                        <p>Dados trafegam em texto puro. Qualquer pessoa na rede pode interceptar.</p>
-                    </div>
-                    <div class="box-success">
-                        <h3 style="color: #2E7D32;">HTTPS (seguro)</h3>
-                        <p>Dados são criptografados. Mesmo interceptados, não podem ser lidos.</p>
+                    <span class="diagram-arrow">ACK →</span>
+                    <div class="diagram-box highlight-coral">
+                        <span class="box-icon">✅</span>
+                        <span class="box-label">Conectado!</span>
+                        <span class="box-desc">Dados fluem</span>
                     </div>
                 </div>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p><strong>Dica:</strong> Sempre verifique o cadeado na barra de endereço do navegador antes de inserir dados sensíveis!</p>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">🤝</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Aperto de mão</h4>
+                        <p>"Posso conectar?" (SYN) → "Sim, pode!" (SYN-ACK) → "Ok, conectado!" (ACK)</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 13: Exercício 1 -->
+        <!-- SLIDE 10: HTTP vs HTTPS -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>HTTP vs HTTPS</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Investigando o DNS</h3>
-                    <p>Utilizando o terminal (Prompt de Comando ou Terminal):</p>
-                    <ol style="margin-top: 10px;">
-                        <li>Execute o comando <span class="inline-code">nslookup www.uninove.br</span></li>
-                        <li>Anote o endereço IP retornado</li>
-                        <li>Tente acessar o site diretamente pelo IP no navegador</li>
-                        <li>Execute <span class="inline-code">nslookup www.google.com</span> e compare</li>
-                        <li>Execute <span class="inline-code">ping www.uninove.br</span> e observe o tempo de resposta</li>
+                <div class="comparison">
+                    <div class="comparison-card">
+                        <h4>HTTP (inseguro)</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Dados em <strong>texto puro</strong></li>
+                            <li>Pode ser interceptado</li>
+                            <li>Porta padrão: <span class="inline-code">80</span></li>
+                            <li>Sem cadeado no navegador</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-vs">vs</div>
+                    <div class="comparison-card alt">
+                        <h4>HTTPS (seguro) 🔒</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>Dados <strong>criptografados</strong></li>
+                            <li>Protegido contra espionagem</li>
+                            <li>Porta padrão: <span class="inline-code">443</span></li>
+                            <li>Cadeado verde no navegador</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-warning" style="margin-top: 15px;">
+                    <p><strong>Importante:</strong> Nunca insira senhas ou dados pessoais em sites sem HTTPS!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>Como o WhatsApp Web funciona?</h3>
+                    <span class="company-tag">WhatsApp</span>
+                    <span class="company-tag">WebSocket</span>
+                    <span class="company-tag">HTTPS</span>
+                    <p style="margin-top: 10px;">Quando você abre o WhatsApp Web no navegador, ele usa <strong>HTTPS</strong> para a conexão inicial e depois mantém uma conexão <strong>WebSocket</strong> para mensagens em tempo real.</p>
+                </div>
+                <div class="diagram-flow" style="margin-top: 10px;">
+                    <div class="diagram-box">
+                        <span class="box-icon">📱</span>
+                        <span class="box-label">Celular</span>
+                        <span class="box-desc">Mensagem original</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight">
+                        <span class="box-icon">🖥️</span>
+                        <span class="box-label">Servidor</span>
+                        <span class="box-desc">HTTPS + WebSocket</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral">
+                        <span class="box-icon">🌐</span>
+                        <span class="box-label">Navegador</span>
+                        <span class="box-desc">WhatsApp Web</span>
+                    </div>
+                </div>
+                <div class="tip-box" style="margin-top: 10px;">
+                    <p>Todos os conceitos desta aula (TCP/IP, DNS, HTTPS) estão presentes nesse fluxo. O DNS resolve o endereço, o TCP faz o handshake, e o TLS criptografa a comunicação.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Mini Quiz -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="b">
+                    <h3>Teste seus conhecimentos!</h3>
+                    <p class="quiz-question">O que o <strong>DNS</strong> faz quando você digita <span class="inline-code">www.google.com</span> no navegador?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) Entrega os pacotes de dados ao servidor</button></li>
+                        <li><button class="quiz-option" data-option="b">b) Traduz o nome de domínio em um endereço IP</button></li>
+                        <li><button class="quiz-option" data-option="c">c) Criptografa a conexão com SSL/TLS</button></li>
+                        <li><button class="quiz-option" data-option="d">d) Renderiza o HTML da página</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(b)</strong>. O DNS traduz nomes de domínio legíveis (como google.com) em endereços IP numéricos (como 142.250.79.46) que os computadores usam para se comunicar.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Exercício Guiado 1 -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Explorando a Rede</h3>
+                    <div class="timebox">15 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra o <strong>Prompt de Comando</strong> (Windows: <span class="inline-code">cmd</span> / Mac: <span class="inline-code">Terminal</span>)</li>
+                        <li>Digite <span class="inline-code">ping www.google.com</span> e observe o <strong>endereço IP</strong> retornado</li>
+                        <li>Digite <span class="inline-code">ping www.uninove.br</span> e compare o IP</li>
+                        <li>Digite <span class="inline-code">tracert www.google.com</span> (Windows) ou <span class="inline-code">traceroute www.google.com</span> (Mac/Linux)</li>
+                        <li>Conte quantos "saltos" (hops) os dados fazem até chegar ao servidor do Google</li>
                     </ol>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 14: Exercício 2 -->
+        <!-- SLIDE 14: Exercício Guiado 2 -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado (continuação)</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Analisando Certificados SSL/TLS</h3>
-                    <ol style="margin-top: 10px;">
-                        <li>Acesse <strong>https://www.uninove.br</strong> no navegador</li>
-                        <li>Clique no <strong>cadeado</strong> na barra de endereço</li>
-                        <li>Visualize as informações do <strong>certificado</strong></li>
-                        <li>Anote: quem emitiu o certificado, data de validade e tipo de criptografia</li>
-                        <li>Repita para outros 2 sites (ex: Google, GitHub)</li>
-                        <li>Compare os certificados encontrados</li>
+                <div class="guided-exercise">
+                    <h3>Analisando HTTPS no Navegador</h3>
+                    <div class="timebox">15 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Abra o Chrome e acesse <span class="inline-code">https://www.google.com</span></li>
+                        <li>Clique no <strong>cadeado 🔒</strong> ao lado da URL e veja o certificado SSL</li>
+                        <li>Abra o DevTools (<span class="inline-code">F12</span>) e vá na aba <strong>Security</strong></li>
+                        <li>Observe: quem emitiu o certificado? Quando expira?</li>
+                        <li>Agora acesse <span class="inline-code">http://neverssl.com</span> (sem HTTPS) e compare a aba Security</li>
                     </ol>
+                </div>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p><strong>Reflexão:</strong> Por que bancos e lojas online obrigatoriamente usam HTTPS?</p>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 15: Exercício 3 -->
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 3</h2></div>
-            <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Mapeando a Estrutura de Domínios</h3>
-                    <p>Para cada domínio abaixo, identifique os níveis (TLD, segundo nível, subdomínio):</p>
-                    <ol style="margin-top: 10px;">
-                        <li><span class="inline-code">portal.uninove.edu.br</span></li>
-                        <li><span class="inline-code">www.amazon.com.br</span></li>
-                        <li><span class="inline-code">docs.google.com</span></li>
-                        <li><span class="inline-code">github.io</span></li>
-                        <li><span class="inline-code">learn.microsoft.com</span></li>
-                    </ol>
-                    <p style="margin-top: 10px;">Classifique cada TLD como gTLD, sTLD ou ccTLD.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 16: Preparação próxima aula -->
+        <!-- SLIDE 15: Preparação para próxima aula -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -264,20 +343,20 @@
                     <ol style="margin-top: 10px;">
                         <li>Instale o <strong>Visual Studio Code</strong> (code.visualstudio.com)</li>
                         <li>Instale a extensão <strong>Live Server</strong> no VS Code</li>
-                        <li>Leia sobre a <strong>estrutura básica de um documento HTML</strong></li>
-                        <li>Pesquise o que são <strong>tags semânticas</strong> no HTML5</li>
+                        <li>Pesquise o que são <strong>tags HTML</strong> e como funcionam</li>
+                        <li>Descubra o que são <strong>tags semânticas</strong> no HTML5</li>
                     </ol>
                     <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 17: Encerramento -->
+        <!-- SLIDE 16: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>
             <p>jose.romualdo@uni9.pro.br</p>
-            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 02 — Estrutura da Web e Redes</p>
+            <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">Aula 02 — Estrutura da Web e Redes TCP/IP</p>
         </div>
 
     </div>

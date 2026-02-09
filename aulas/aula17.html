@@ -9,201 +9,263 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 17 — Relacionamentos e EF Core Avançado</h2>
-            <p>1:N, N:N, LINQ e Include</p>
+            <p>Chaves estrangeiras, LINQ e Include</p>
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 16</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>O que é um relacionamento 1:N? Dê um exemplo.</li>
-                        <li>O que é uma chave estrangeira?</li>
-                        <li>O que é LINQ?</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>API REST:</strong> Interface para comunicação entre sistemas via HTTP</li>
+                        <li class="recap-item"><strong>Verbos HTTP:</strong> GET (ler), POST (criar), PUT (atualizar), DELETE (excluir)</li>
+                        <li class="recap-item"><strong>[ApiController]:</strong> Herda de ControllerBase e retorna JSON</li>
+                        <li class="recap-item"><strong>Swagger:</strong> Documentação interativa para testar a API</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Mini Quiz (início — reforço) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz — Revisão</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Vamos relembrar!</h3>
+                    <p class="quiz-question">Qual status code HTTP indica que um recurso foi <strong>criado com sucesso</strong>?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) 200 OK</button></li>
+                        <li><button class="quiz-option" data-option="b">b) 204 No Content</button></li>
+                        <li><button class="quiz-option" data-option="c">c) 201 Created</button></li>
+                        <li><button class="quiz-option" data-option="d">d) 404 Not Found</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. O status <strong>201 Created</strong> indica que o recurso foi criado com sucesso. No ASP.NET, usamos <span class="inline-code">CreatedAtAction()</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
-                    <li>Relacionamento 1:N (Um para Muitos)</li>
-                    <li>Configurando Relacionamentos no EF Core</li>
-                    <li>Include e Eager Loading</li>
-                    <li>LINQ — Consultas em C#</li>
-                    <li>Select com DropDown</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Relacionamentos em Banco de Dados</li>
+                    <li>Relacionamento 1:N no EF Core</li>
+                    <li>Navigation Properties</li>
+                    <li>Include() — Carregamento Eager</li>
+                    <li>LINQ — Consultas Avançadas</li>
+                    <li>Caso de Uso Real: Mercado Livre</li>
+                    <li>Exercício Guiado: Categorias e Produtos</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 5: Relacionamentos -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Relacionamento 1:N</h2></div>
+            <div class="slide-header"><h2>Relacionamentos em Banco de Dados</h2></div>
             <div class="slide-body">
-                <p>Um <strong>Curso</strong> possui muitos <strong>Alunos</strong>. Um Aluno pertence a um Curso. Isso é um relacionamento <strong>1:N</strong> (um para muitos).</p>
-                <div class="two-columns" style="margin-top: 15px;">
-                    <div>
-                        <h3>Model Curso</h3>
-                        <pre>
-<span class="keyword">public class</span> <span class="type">Curso</span>
-{
-    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public int</span> CargaHoraria { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-
-    <span class="comment">// Navegação: 1 Curso → N Alunos</span>
-    <span class="keyword">public</span> <span class="type">List</span>&lt;<span class="type">Aluno</span>&gt; Alunos { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-}</pre>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">1️⃣</span>
+                        <h4>1:1 (Um para Um)</h4>
+                        <p>Usuário tem 1 Perfil</p>
                     </div>
-                    <div>
-                        <h3>Model Aluno (atualizado)</h3>
-                        <pre>
-<span class="keyword">public class</span> <span class="type">Aluno</span>
+                    <div class="concept-card" style="border-left: 4px solid #E8505B;">
+                        <span class="card-icon">📦</span>
+                        <h4>1:N (Um para Muitos)</h4>
+                        <p>Categoria tem N Produtos</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🔗</span>
+                        <h4>N:N (Muitos para Muitos)</h4>
+                        <p>Aluno cursa N Disciplinas</p>
+                    </div>
+                </div>
+                <div class="diagram-flow" style="margin-top: 15px; justify-content: center;">
+                    <div class="diagram-box highlight" style="min-width: 130px;">
+                        <span class="box-label">Categoria</span>
+                        <span class="box-desc">Id, Nome</span>
+                    </div>
+                    <span class="diagram-arrow">1 → N</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 130px;">
+                        <span class="box-label">Produto</span>
+                        <span class="box-desc">Id, Nome, CategoriaId</span>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.85em; color: #888; margin-top: 5px;">A chave estrangeira <span class="inline-code">CategoriaId</span> fica na tabela Produto</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Models com relacionamento -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Relacionamento 1:N no EF Core</h2></div>
+            <div class="slide-body">
+                <pre>
+<span class="comment">// Models/Categoria.cs</span>
+<span class="keyword">public class</span> <span class="type">Categoria</span>
 {
     <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+
+    [<span class="type">Required</span>]
+    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="js-string">""</span>;
+
+    <span class="comment">// Navigation Property — lista de produtos</span>
+    <span class="keyword">public</span> List&lt;<span class="type">Produto</span>&gt; Produtos { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">new</span>();
+}
+
+<span class="comment">// Models/Produto.cs (atualizado)</span>
+<span class="keyword">public class</span> <span class="type">Produto</span>
+{
+    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="js-string">""</span>;
+    <span class="keyword">public decimal</span> Preco { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 
     <span class="comment">// Chave estrangeira</span>
-    <span class="keyword">public int</span> CursoId { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="comment">// Navegação: N Alunos → 1 Curso</span>
-    <span class="keyword">public</span> <span class="type">Curso</span> Curso { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public int</span> CategoriaId { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+
+    <span class="comment">// Navigation Property</span>
+    <span class="keyword">public</span> <span class="type">Categoria</span>? Categoria { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 }</pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Include -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Include() — Carregamento Eager</h2></div>
+            <div class="slide-body">
+                <p>Por padrão, o EF Core <strong>não carrega</strong> os dados relacionados. Use <span class="inline-code">Include()</span> para trazer os dados junto:</p>
+                <pre>
+<span class="comment">// SEM Include — Categoria será null!</span>
+<span class="keyword">var</span> <span class="js-var">produtos</span> = _context.Produtos.<span class="js-func">ToList</span>();
+<span class="comment">// produto.Categoria == null ❌</span>
+
+<span class="comment">// COM Include — Categoria é carregada!</span>
+<span class="keyword">var</span> <span class="js-var">produtos</span> = _context.Produtos
+    .<span class="js-func">Include</span>(p => p.Categoria)
+    .<span class="js-func">ToList</span>();
+<span class="comment">// produto.Categoria.Nome == "Eletrônicos" ✅</span></pre>
+                <div class="analogy-box" style="margin-top: 10px;">
+                    <span class="analogy-icon">📦</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Encomenda</h4>
+                        <p>Sem Include, você recebe a caixa vazia (só o ID da categoria). Com Include, a caixa vem com o conteúdo completo (nome, descrição, etc.).</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 8: LINQ -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Include — Eager Loading</h2></div>
+            <div class="slide-header"><h2>LINQ — Consultas Avançadas</h2></div>
             <div class="slide-body">
-                <p>Por padrão, o EF Core <strong>não carrega</strong> os dados relacionados. Use <span class="inline-code">Include()</span> para carregar junto.</p>
+                <p><strong>LINQ</strong> (Language Integrated Query) permite fazer consultas no banco usando C#:</p>
                 <pre>
-<span class="keyword">using</span> Microsoft.EntityFrameworkCore;
-
-<span class="comment">// SEM Include — Curso será null</span>
-<span class="keyword">var</span> alunos = _context.Alunos.<span class="js-func">ToList</span>();
-<span class="comment">// alunos[0].Curso → null</span>
-
-<span class="comment">// COM Include — Curso é carregado</span>
-<span class="keyword">var</span> alunos = _context.Alunos
-    .<span class="js-func">Include</span>(a => a.Curso)
+<span class="comment">// Filtrar por categoria</span>
+<span class="keyword">var</span> <span class="js-var">eletronicos</span> = _context.Produtos
+    .<span class="js-func">Where</span>(p => p.Categoria.Nome == <span class="js-string">"Eletrônicos"</span>)
     .<span class="js-func">ToList</span>();
-<span class="comment">// alunos[0].Curso.Nome → "ADS"</span>
 
-<span class="comment">// Carregar Curso com seus Alunos</span>
-<span class="keyword">var</span> cursos = _context.Cursos
-    .<span class="js-func">Include</span>(c => c.Alunos)
+<span class="comment">// Ordenar por preço (menor → maior)</span>
+<span class="keyword">var</span> <span class="js-var">ordenados</span> = _context.Produtos
+    .<span class="js-func">OrderBy</span>(p => p.Preco).<span class="js-func">ToList</span>();
+
+<span class="comment">// Top 5 mais caros</span>
+<span class="keyword">var</span> <span class="js-var">top5</span> = _context.Produtos
+    .<span class="js-func">OrderByDescending</span>(p => p.Preco)
+    .<span class="js-func">Take</span>(<span class="number">5</span>).<span class="js-func">ToList</span>();
+
+<span class="comment">// Contar produtos por categoria</span>
+<span class="keyword">var</span> <span class="js-var">contagem</span> = _context.Categorias
+    .<span class="js-func">Select</span>(c => <span class="keyword">new</span> { c.Nome, Total = c.Produtos.<span class="js-func">Count</span>() })
     .<span class="js-func">ToList</span>();</pre>
             </div>
         </div>
 
+        <!-- SLIDE 9: Dropdown -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>LINQ — Consultas em C#</h2></div>
+            <div class="slide-header"><h2>Dropdown de Categorias na View</h2></div>
             <div class="slide-body">
                 <pre>
-<span class="comment">// Filtrar alunos por curso</span>
-<span class="keyword">var</span> alunosADS = _context.Alunos
-    .<span class="js-func">Where</span>(a => a.Curso.Nome == <span class="string">"ADS"</span>)
-    .<span class="js-func">ToList</span>();
-
-<span class="comment">// Ordenar por nome</span>
-<span class="keyword">var</span> ordenados = _context.Alunos
-    .<span class="js-func">OrderBy</span>(a => a.Nome)
-    .<span class="js-func">ToList</span>();
-
-<span class="comment">// Contar alunos</span>
-<span class="keyword">int</span> total = _context.Alunos.<span class="js-func">Count</span>();
-
-<span class="comment">// Selecionar apenas nome e email</span>
-<span class="keyword">var</span> nomes = _context.Alunos
-    .<span class="js-func">Select</span>(a => <span class="keyword">new</span> { a.Nome, a.Email })
-    .<span class="js-func">ToList</span>();
-
-<span class="comment">// Buscar o primeiro ou null</span>
-<span class="keyword">var</span> aluno = _context.Alunos
-    .<span class="js-func">FirstOrDefault</span>(a => a.Email == <span class="string">"maria@email.com"</span>);</pre>
-            </div>
-        </div>
-
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>DropDown de Cursos no Formulário</h2></div>
-            <div class="slide-body">
-                <div class="two-columns">
-                    <div>
-                        <h3>Controller</h3>
-                        <pre>
-[<span class="type">HttpGet</span>]
+<span class="comment">// Controller — Enviar categorias para a View</span>
 <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Create</span>()
 {
-    <span class="type">ViewBag</span>.Cursos = <span class="keyword">new</span> 
-      <span class="type">SelectList</span>(
-        _context.Cursos, 
-        <span class="string">"Id"</span>, 
-        <span class="string">"Nome"</span>);
+    ViewBag.Categorias = <span class="keyword">new</span> SelectList(
+        _context.Categorias, <span class="js-string">"Id"</span>, <span class="js-string">"Nome"</span>);
     <span class="keyword">return</span> <span class="js-func">View</span>();
-}</pre>
+}
+
+<span class="comment">&lt;!-- View — Dropdown de categorias --&gt;</span>
+&lt;<span class="html-name">div</span> <span class="html-attr">class</span>=<span class="html-value">"form-group"</span>&gt;
+    &lt;<span class="html-name">label</span> <span class="html-attr">asp-for</span>=<span class="html-value">"CategoriaId"</span>&gt;Categoria&lt;/<span class="html-name">label</span>&gt;
+    &lt;<span class="html-name">select</span> <span class="html-attr">asp-for</span>=<span class="html-value">"CategoriaId"</span>
+            <span class="html-attr">asp-items</span>=<span class="html-value">"ViewBag.Categorias"</span>
+            <span class="html-attr">class</span>=<span class="html-value">"form-control"</span>&gt;
+        &lt;<span class="html-name">option</span> <span class="html-attr">value</span>=<span class="html-value">""</span>&gt;Selecione...&lt;/<span class="html-name">option</span>&gt;
+    &lt;/<span class="html-name">select</span>&gt;
+&lt;/<span class="html-name">div</span>&gt;</pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Caso de Uso Real -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
+            <div class="slide-body">
+                <div class="real-world">
+                    <h3>Mercado Livre — Categorias e Produtos</h3>
+                    <span class="company-tag">Mercado Livre</span>
+                    <span class="company-tag">Relacionamentos</span>
+                    <span class="company-tag">1:N</span>
+                    <p style="margin-top: 10px;">No Mercado Livre, cada <strong>produto</strong> pertence a uma <strong>categoria</strong> (Eletrônicos, Roupas, etc.), cada <strong>vendedor</strong> tem vários <strong>produtos</strong>, e cada <strong>compra</strong> tem vários <strong>itens</strong>. Todos esses são relacionamentos 1:N implementados com chaves estrangeiras.</p>
+                </div>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">🏪</span>
+                        <h4>Vendedor → Produtos</h4>
+                        <p>1 vendedor tem N produtos</p>
                     </div>
-                    <div>
-                        <h3>View</h3>
-                        <pre>
-<span class="html-name">&lt;div&gt;</span>
-  <span class="html-name">&lt;label</span> <span class="html-attr">asp-for=</span><span class="html-value">"CursoId"</span><span class="html-name">&gt;</span>
-    Curso
-  <span class="html-name">&lt;/label&gt;</span>
-  <span class="html-name">&lt;select</span> <span class="html-attr">asp-for=</span><span class="html-value">"CursoId"</span>
-    <span class="html-attr">asp-items=</span><span class="html-value">"ViewBag.Cursos"</span>
-    <span class="html-attr">class=</span><span class="html-value">"form-control"</span><span class="html-name">&gt;</span>
-    <span class="html-name">&lt;option</span> <span class="html-attr">value=</span><span class="html-value">""</span><span class="html-name">&gt;</span>
-      Selecione...
-    <span class="html-name">&lt;/option&gt;</span>
-  <span class="html-name">&lt;/select&gt;</span>
-<span class="html-name">&lt;/div&gt;</span></pre>
+                    <div class="concept-card">
+                        <span class="card-icon">📂</span>
+                        <h4>Categoria → Produtos</h4>
+                        <p>1 categoria tem N produtos</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🛒</span>
+                        <h4>Compra → Itens</h4>
+                        <p>1 compra tem N itens</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 11: Exercício Guiado -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Relacionamento Curso → Alunos</h3>
-                    <ol>
-                        <li>Crie o Model <span class="inline-code">Curso</span> e adicione ao DbContext</li>
-                        <li>Adicione <span class="inline-code">CursoId</span> ao Model Aluno</li>
+                <div class="guided-exercise">
+                    <h3>Categorias e Produtos com Relacionamento</h3>
+                    <div class="timebox">40 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Crie o Model <span class="inline-code">Categoria</span> com Id e Nome</li>
+                        <li>Adicione <span class="inline-code">CategoriaId</span> e a Navigation Property no Model <span class="inline-code">Produto</span></li>
+                        <li>Adicione <span class="inline-code">DbSet&lt;Categoria&gt;</span> no DbContext</li>
                         <li>Crie e aplique a migration</li>
-                        <li>Crie o CRUD completo de Cursos</li>
-                        <li>No formulário de Aluno, adicione um DropDown para selecionar o Curso</li>
-                        <li>Na listagem de Alunos, exiba o nome do Curso usando <span class="inline-code">Include()</span></li>
+                        <li>Crie um CRUD simples para Categorias</li>
+                        <li>No formulário de Produto, adicione um dropdown de Categorias</li>
+                        <li>Na listagem de Produtos, use <span class="inline-code">Include()</span> para exibir o nome da Categoria</li>
+                        <li>Teste: crie 3 categorias, cadastre produtos em cada uma e verifique a listagem</li>
                     </ol>
                 </div>
             </div>
         </div>
 
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
-            <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Consultas com LINQ</h3>
-                    <ol>
-                        <li>Crie uma página que liste alunos <strong>filtrados por curso</strong></li>
-                        <li>Adicione um DropDown de cursos para filtrar</li>
-                        <li>Exiba a <strong>quantidade de alunos</strong> por curso</li>
-                        <li>Ordene os alunos por nome</li>
-                        <li>Crie uma página de <strong>estatísticas</strong>: total de alunos, total de cursos, curso com mais alunos</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
+        <!-- SLIDE 12: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -211,15 +273,17 @@
                     <h3>Atividade Pré-Aula (Obrigatória)</h3>
                     <p>Para a <strong>Aula 18 — Layout, Partial Views e Bootstrap</strong>:</p>
                     <ol style="margin-top: 10px;">
-                        <li>Pesquise o que é o <strong>_Layout.cshtml</strong> no ASP.NET Core</li>
-                        <li>Leia sobre <strong>Partial Views</strong> e <strong>View Components</strong></li>
-                        <li>Acesse <strong>getbootstrap.com</strong> e explore os componentes disponíveis</li>
+                        <li>Pesquise o que é o <span class="inline-code">_Layout.cshtml</span> no ASP.NET Core MVC</li>
+                        <li>Leia sobre <strong>Partial Views</strong> e quando usá-las</li>
+                        <li>Acesse o site do <strong>Bootstrap</strong> e explore os componentes (navbar, cards, buttons)</li>
+                        <li>Pense: como o Facebook mantém o menu de navegação igual em todas as páginas?</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 25 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 13: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>

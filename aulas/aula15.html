@@ -9,6 +9,7 @@
 <body>
     <div class="presentation">
 
+        <!-- SLIDE 1: Capa -->
         <div class="slide slide-cover active">
             <h1>Desenvolvimento Web</h1>
             <h2>Aula 15 — Autenticação e Autorização</h2>
@@ -16,75 +17,121 @@
             <p style="margin-top: 30px; font-size: 0.9em; color: rgba(255,255,255,0.5);">2026.1 — 120 minutos</p>
         </div>
 
+        <!-- SLIDE 2: Recapitulação -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Revisão da Atividade Pré-Aula</h2></div>
+            <div class="slide-header"><h2>Recapitulação — Aula 14</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Discussão (10 min)</h3>
-                    <ol>
-                        <li>Qual a diferença entre autenticação e autorização?</li>
-                        <li>Por que não devemos armazenar senhas em texto puro?</li>
-                        <li>O que é hashing? Dê um exemplo.</li>
-                    </ol>
+                <div class="recap-container">
+                    <h3>O que vimos na aula passada</h3>
+                    <ul class="recap-items">
+                        <li class="recap-item"><strong>AJAX:</strong> Requisições em segundo plano — sem recarregar a página</li>
+                        <li class="recap-item"><strong>JSON:</strong> Formato padrão para troca de dados na web</li>
+                        <li class="recap-item"><strong>fetch():</strong> API do JavaScript para enviar requisições GET e POST</li>
+                        <li class="recap-item"><strong>Json():</strong> Método do Controller que retorna dados em JSON</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 3: Agenda -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Agenda</h2></div>
             <div class="slide-body">
                 <ul class="agenda-list">
                     <li>Autenticação vs. Autorização</li>
-                    <li>Hashing de Senhas</li>
+                    <li>Hashing de Senhas com BCrypt</li>
                     <li>Model de Usuário</li>
+                    <li>Mini Quiz</li>
                     <li>Registro e Login</li>
                     <li>Protegendo Rotas com [Authorize]</li>
-                    <li>Exercícios Práticos</li>
+                    <li>Caso de Uso Real: Netflix</li>
+                    <li>Exercício Guiado: Sistema de Login</li>
                 </ul>
             </div>
         </div>
 
+        <!-- SLIDE 4: Autenticação vs Autorização -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Autenticação vs. Autorização</h2></div>
             <div class="slide-body">
-                <div class="two-columns">
-                    <div class="box-info">
-                        <h3 style="color: #1565C0;">Autenticação</h3>
+                <div class="concept-cards two-cols" style="margin-top: 10px;">
+                    <div class="concept-card" style="border-left: 4px solid #1565C0;">
+                        <span class="card-icon">🔑</span>
+                        <h4>Autenticação</h4>
                         <p><strong>"Quem é você?"</strong></p>
-                        <p>Processo de verificar a identidade do usuário (login/senha).</p>
+                        <p>Verificar a identidade do usuário (login/senha)</p>
                     </div>
-                    <div class="box-success">
-                        <h3 style="color: #2E7D32;">Autorização</h3>
+                    <div class="concept-card" style="border-left: 4px solid #2E7D32;">
+                        <span class="card-icon">🛡️</span>
+                        <h4>Autorização</h4>
                         <p><strong>"O que você pode fazer?"</strong></p>
-                        <p>Processo de verificar se o usuário tem permissão para acessar um recurso.</p>
+                        <p>Verificar se tem permissão para acessar um recurso</p>
                     </div>
                 </div>
-                <div class="box-info" style="margin-top: 15px;">
-                    <p><strong>Analogia:</strong> Autenticação é o crachá que te identifica. Autorização é a permissão para entrar em determinadas salas.</p>
+                <div class="analogy-box" style="margin-top: 15px;">
+                    <span class="analogy-icon">🏢</span>
+                    <div class="analogy-text">
+                        <h4>Analogia: Prédio Corporativo</h4>
+                        <p><strong>Autenticação</strong> = crachá que te identifica na portaria. <strong>Autorização</strong> = permissão para entrar em determinados andares. Você pode ser identificado (autenticado), mas não ter acesso ao andar da diretoria (não autorizado).</p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 5: Hashing -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Hashing de Senhas</h2></div>
             <div class="slide-body">
                 <p>Nunca armazene senhas em texto puro! Use <strong>hashing</strong> — uma função que transforma a senha em um valor irreversível.</p>
                 <pre>
-<span class="keyword">using</span> BCrypt.Net;
+<span class="comment"># Instalar o pacote BCrypt</span>
+dotnet add package BCrypt.Net-Next
 
 <span class="comment">// Gerar hash da senha</span>
-<span class="keyword">string</span> <span class="js-var">senhaHash</span> = <span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">HashPassword</span>(<span class="string">"minhasenha123"</span>);
+<span class="keyword">string</span> <span class="js-var">senhaHash</span> = BCrypt.Net.BCrypt.<span class="js-func">HashPassword</span>(<span class="js-string">"minhasenha123"</span>);
 <span class="comment">// Resultado: "$2a$11$K3GG..."</span>
 
 <span class="comment">// Verificar a senha</span>
-<span class="keyword">bool</span> <span class="js-var">valida</span> = <span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">Verify</span>(<span class="string">"minhasenha123"</span>, <span class="js-var">senhaHash</span>);
+<span class="keyword">bool</span> <span class="js-var">valida</span> = BCrypt.Net.BCrypt.<span class="js-func">Verify</span>(<span class="js-string">"minhasenha123"</span>, <span class="js-var">senhaHash</span>);
 <span class="comment">// true</span></pre>
-                <pre style="margin-top: 10px;">
-<span class="comment"># Instalar o pacote BCrypt</span>
-$ dotnet add package BCrypt.Net-Next</pre>
+                <div class="diagram-flow" style="margin-top: 10px; justify-content: center;">
+                    <div class="diagram-box" style="min-width: 120px;">
+                        <span class="box-label">Senha</span>
+                        <span class="box-desc">"minhasenha123"</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight" style="min-width: 120px;">
+                        <span class="box-label">BCrypt</span>
+                        <span class="box-desc">Hash irreversível</span>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box highlight-coral" style="min-width: 130px;">
+                        <span class="box-label">Banco de Dados</span>
+                        <span class="box-desc">"$2a$11$K3GG..."</span>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 6: Mini Quiz (meio) -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Mini Quiz</h2></div>
+            <div class="slide-body" style="justify-content: center;">
+                <div class="quiz-container" data-answer="c">
+                    <h3>Vamos verificar!</h3>
+                    <p class="quiz-question">Por que usamos <strong>hashing</strong> para armazenar senhas?</p>
+                    <ul class="quiz-options">
+                        <li><button class="quiz-option" data-option="a">a) Para comprimir a senha e economizar espaço</button></li>
+                        <li><button class="quiz-option" data-option="b">b) Para criptografar e depois descriptografar</button></li>
+                        <li><button class="quiz-option" data-option="c">c) Para transformar em valor irreversível — se o banco vazar, a senha real não é exposta</button></li>
+                        <li><button class="quiz-option" data-option="d">d) Para acelerar a verificação de login</button></li>
+                    </ul>
+                    <div class="quiz-feedback">A resposta correta é <strong>(c)</strong>. Hashing é uma função <strong>irreversível</strong>. Mesmo que o banco de dados seja comprometido, as senhas reais não podem ser recuperadas.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Model de Usuário -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Model de Usuário</h2></div>
             <div class="slide-body">
@@ -94,84 +141,88 @@ $ dotnet add package BCrypt.Net-Next</pre>
 {
     <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
 
-    [<span class="type">Required</span>(ErrorMessage = <span class="string">"Nome obrigatório"</span>)]
-    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
+    [<span class="type">Required</span>(ErrorMessage = <span class="js-string">"Nome obrigatório"</span>)]
+    <span class="keyword">public string</span> Nome { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="js-string">""</span>;
 
     [<span class="type">Required</span>]
     [<span class="type">EmailAddress</span>]
-    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
+    <span class="keyword">public string</span> Email { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="js-string">""</span>;
 
     [<span class="type">Required</span>]
-    <span class="keyword">public string</span> SenhaHash { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">""</span>;
+    <span class="keyword">public string</span> SenhaHash { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="js-string">""</span>;
 
-    <span class="keyword">public string</span> Perfil { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">"Usuario"</span>;
+    <span class="keyword">public string</span> Perfil { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="js-string">"Usuario"</span>;
 }
 
 <span class="comment">// Adicionar ao DbContext</span>
-<span class="keyword">public</span> <span class="type">DbSet</span>&lt;<span class="type">Usuario</span>&gt; Usuarios { <span class="keyword">get</span>; <span class="keyword">set</span>; }</pre>
+<span class="keyword">public</span> DbSet&lt;<span class="type">Usuario</span>&gt; Usuarios { <span class="keyword">get</span>; <span class="keyword">set</span>; }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 8: Registro -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Registro de Usuário</h2></div>
             <div class="slide-body">
                 <pre>
 [<span class="type">HttpPost</span>]
-<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Registrar</span>(<span class="keyword">string</span> nome, <span class="keyword">string</span> email, <span class="keyword">string</span> senha)
+<span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Registrar</span>(<span class="keyword">string</span> <span class="js-var">nome</span>, <span class="keyword">string</span> <span class="js-var">email</span>, <span class="keyword">string</span> <span class="js-var">senha</span>)
 {
     <span class="comment">// Verificar se e-mail já existe</span>
-    <span class="keyword">if</span> (_context.Usuarios.<span class="js-func">Any</span>(u => u.Email == email))
+    <span class="keyword">if</span> (_context.Usuarios.<span class="js-func">Any</span>(u => u.Email == <span class="js-var">email</span>))
     {
-        <span class="type">ViewBag</span>.Erro = <span class="string">"E-mail já cadastrado!"</span>;
+        ViewBag.Erro = <span class="js-string">"E-mail já cadastrado!"</span>;
         <span class="keyword">return</span> <span class="js-func">View</span>();
     }
 
-    <span class="keyword">var</span> usuario = <span class="keyword">new</span> <span class="type">Usuario</span>
+    <span class="keyword">var</span> <span class="js-var">usuario</span> = <span class="keyword">new</span> <span class="type">Usuario</span>
     {
-        Nome = nome,
-        Email = email,
-        SenhaHash = <span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">HashPassword</span>(senha)
+        Nome = <span class="js-var">nome</span>,
+        Email = <span class="js-var">email</span>,
+        SenhaHash = BCrypt.Net.BCrypt.<span class="js-func">HashPassword</span>(<span class="js-var">senha</span>)
     };
 
-    _context.Usuarios.<span class="js-func">Add</span>(usuario);
+    _context.Usuarios.<span class="js-func">Add</span>(<span class="js-var">usuario</span>);
     _context.<span class="js-func">SaveChanges</span>();
-    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Login"</span>);
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="js-string">"Login"</span>);
 }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 9: Login -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Login com Cookie Authentication</h2></div>
             <div class="slide-body">
                 <pre style="font-size: 0.85em;">
 [<span class="type">HttpPost</span>]
-<span class="keyword">public async</span> <span class="type">Task</span>&lt;<span class="type">IActionResult</span>&gt; <span class="js-func">Login</span>(<span class="keyword">string</span> email, <span class="keyword">string</span> senha)
+<span class="keyword">public async</span> Task&lt;<span class="type">IActionResult</span>&gt; <span class="js-func">Login</span>(<span class="keyword">string</span> <span class="js-var">email</span>, <span class="keyword">string</span> <span class="js-var">senha</span>)
 {
-    <span class="keyword">var</span> usuario = _context.Usuarios
-        .<span class="js-func">FirstOrDefault</span>(u => u.Email == email);
+    <span class="keyword">var</span> <span class="js-var">usuario</span> = _context.Usuarios
+        .<span class="js-func">FirstOrDefault</span>(u => u.Email == <span class="js-var">email</span>);
 
-    <span class="keyword">if</span> (usuario == <span class="keyword">null</span> || !<span class="type">BCrypt</span>.Net.<span class="type">BCrypt</span>.<span class="js-func">Verify</span>(senha, usuario.SenhaHash))
+    <span class="keyword">if</span> (<span class="js-var">usuario</span> == <span class="keyword">null</span> || 
+        !BCrypt.Net.BCrypt.<span class="js-func">Verify</span>(<span class="js-var">senha</span>, <span class="js-var">usuario</span>.SenhaHash))
     {
-        <span class="type">ViewBag</span>.Erro = <span class="string">"E-mail ou senha inválidos!"</span>;
+        ViewBag.Erro = <span class="js-string">"E-mail ou senha inválidos!"</span>;
         <span class="keyword">return</span> <span class="js-func">View</span>();
     }
 
     <span class="comment">// Criar claims (informações do usuário)</span>
-    <span class="keyword">var</span> claims = <span class="keyword">new</span> <span class="type">List</span>&lt;<span class="type">Claim</span>&gt;
+    <span class="keyword">var</span> <span class="js-var">claims</span> = <span class="keyword">new</span> List&lt;Claim&gt;
     {
-        <span class="keyword">new</span> <span class="type">Claim</span>(<span class="type">ClaimTypes</span>.Name, usuario.Nome),
-        <span class="keyword">new</span> <span class="type">Claim</span>(<span class="type">ClaimTypes</span>.Email, usuario.Email),
-        <span class="keyword">new</span> <span class="type">Claim</span>(<span class="type">ClaimTypes</span>.Role, usuario.Perfil)
+        <span class="keyword">new</span> Claim(ClaimTypes.Name, <span class="js-var">usuario</span>.Nome),
+        <span class="keyword">new</span> Claim(ClaimTypes.Email, <span class="js-var">usuario</span>.Email),
+        <span class="keyword">new</span> Claim(ClaimTypes.Role, <span class="js-var">usuario</span>.Perfil)
     };
-    <span class="keyword">var</span> identity = <span class="keyword">new</span> <span class="type">ClaimsIdentity</span>(claims, <span class="string">"CookieAuth"</span>);
-    <span class="keyword">var</span> principal = <span class="keyword">new</span> <span class="type">ClaimsPrincipal</span>(identity);
+    <span class="keyword">var</span> <span class="js-var">identity</span> = <span class="keyword">new</span> ClaimsIdentity(<span class="js-var">claims</span>, <span class="js-string">"CookieAuth"</span>);
+    <span class="keyword">var</span> <span class="js-var">principal</span> = <span class="keyword">new</span> ClaimsPrincipal(<span class="js-var">identity</span>);
 
-    <span class="keyword">await</span> HttpContext.<span class="js-func">SignInAsync</span>(<span class="string">"CookieAuth"</span>, principal);
-    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="string">"Index"</span>, <span class="string">"Home"</span>);
+    <span class="keyword">await</span> HttpContext.<span class="js-func">SignInAsync</span>(<span class="js-string">"CookieAuth"</span>, <span class="js-var">principal</span>);
+    <span class="keyword">return</span> <span class="js-func">RedirectToAction</span>(<span class="js-string">"Index"</span>, <span class="js-string">"Home"</span>);
 }</pre>
             </div>
         </div>
 
+        <!-- SLIDE 10: [Authorize] -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Protegendo Rotas com [Authorize]</h2></div>
             <div class="slide-body">
@@ -180,61 +231,81 @@ $ dotnet add package BCrypt.Net-Next</pre>
 [<span class="type">Authorize</span>]
 <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Painel</span>()
 {
-    <span class="keyword">var</span> nome = User.Identity.Name;
+    <span class="keyword">var</span> <span class="js-var">nome</span> = User.Identity.Name;
     <span class="keyword">return</span> <span class="js-func">View</span>();
 }
 
 <span class="comment">// Proteger todo o Controller</span>
 [<span class="type">Authorize</span>]
-<span class="keyword">public class</span> <span class="type">AdminController</span> : <span class="type">Controller</span>
-{
-    <span class="comment">// Todas as Actions exigem login</span>
-}
+<span class="keyword">public class</span> <span class="type">AdminController</span> : <span class="type">Controller</span> { }
 
 <span class="comment">// Permitir acesso anônimo em Controller protegido</span>
 [<span class="type">AllowAnonymous</span>]
 <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">Login</span>() => <span class="js-func">View</span>();
 
 <span class="comment">// Exigir perfil específico</span>
-[<span class="type">Authorize</span>(Roles = <span class="string">"Admin"</span>)]
+[<span class="type">Authorize</span>(Roles = <span class="js-string">"Admin"</span>)]
 <span class="keyword">public</span> <span class="type">IActionResult</span> <span class="js-func">GerenciarUsuarios</span>() => <span class="js-func">View</span>();</pre>
+                <div class="box-info" style="margin-top: 10px;">
+                    <p>Se o usuário não estiver autenticado, o ASP.NET redireciona automaticamente para a página de login.</p>
+                </div>
             </div>
         </div>
 
+        <!-- SLIDE 11: Caso de Uso Real -->
         <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 1</h2></div>
+            <div class="slide-header"><h2>Caso de Uso Real</h2></div>
             <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Sistema de Registro e Login</h3>
-                    <ol>
+                <div class="real-world">
+                    <h3>Netflix — Autenticação e Perfis</h3>
+                    <span class="company-tag">Netflix</span>
+                    <span class="company-tag">Autenticação</span>
+                    <span class="company-tag">Autorização</span>
+                    <p style="margin-top: 10px;">A Netflix usa <strong>autenticação</strong> para verificar se você é assinante (login). Depois, usa <strong>autorização</strong> para definir o que você pode assistir (plano básico vs. premium, conteúdo por região, perfil infantil).</p>
+                </div>
+                <div class="concept-cards" style="margin-top: 10px;">
+                    <div class="concept-card">
+                        <span class="card-icon">🔑</span>
+                        <h4>Autenticação</h4>
+                        <p>Login com e-mail e senha</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">👤</span>
+                        <h4>Perfis</h4>
+                        <p>Cada perfil tem suas preferências</p>
+                    </div>
+                    <div class="concept-card">
+                        <span class="card-icon">🛡️</span>
+                        <h4>Autorização</h4>
+                        <p>Plano define qualidade e telas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Exercício Guiado -->
+        <div class="slide slide-content">
+            <div class="slide-header"><h2>Exercício Guiado</h2></div>
+            <div class="slide-body">
+                <div class="guided-exercise">
+                    <h3>Sistema de Login Completo</h3>
+                    <div class="timebox">40 minutos</div>
+                    <ol class="guided-steps">
+                        <li>Instale o pacote <span class="inline-code">BCrypt.Net-Next</span></li>
                         <li>Crie o Model <span class="inline-code">Usuario</span> e adicione ao DbContext</li>
                         <li>Crie e aplique a migration</li>
-                        <li>Implemente a tela de <strong>Registro</strong> com nome, e-mail e senha</li>
-                        <li>Armazene a senha com <strong>BCrypt</strong></li>
-                        <li>Implemente a tela de <strong>Login</strong></li>
-                        <li>Ao logar, grave os dados na sessão</li>
-                        <li>Implemente o <strong>Logout</strong></li>
+                        <li>Crie o <span class="inline-code">ContaController</span> com Actions: Registrar (GET/POST) e Login (GET/POST)</li>
+                        <li>No Registro, use <span class="inline-code">BCrypt.HashPassword()</span> para salvar a senha</li>
+                        <li>No Login, use <span class="inline-code">BCrypt.Verify()</span> para validar</li>
+                        <li>Grave o nome do usuário na sessão após login</li>
+                        <li>Proteja o CRUD de Produtos — redirecione para login se não estiver logado</li>
+                        <li>Implemente o Logout que limpa a sessão</li>
                     </ol>
                 </div>
             </div>
         </div>
 
-        <div class="slide slide-content">
-            <div class="slide-header"><h2>Exercício Prático 2</h2></div>
-            <div class="slide-body">
-                <div class="box-exercise">
-                    <h3>Área Restrita</h3>
-                    <ol>
-                        <li>Crie uma página <strong>"Painel"</strong> acessível apenas para usuários logados</li>
-                        <li>Se o usuário não estiver logado, redirecione para o Login</li>
-                        <li>No Painel, exiba o nome do usuário logado</li>
-                        <li>Adicione um menu de navegação que mostra "Login" ou "Logout" conforme o estado</li>
-                        <li><strong>Desafio:</strong> Proteja o CRUD de Alunos — apenas usuários logados podem acessar</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
+        <!-- SLIDE 13: Preparação -->
         <div class="slide slide-content">
             <div class="slide-header"><h2>Preparação para a Próxima Aula</h2></div>
             <div class="slide-body" style="justify-content: center;">
@@ -245,12 +316,14 @@ $ dotnet add package BCrypt.Net-Next</pre>
                         <li>Pesquise o que é uma <strong>API REST</strong></li>
                         <li>Leia sobre os <strong>verbos HTTP</strong> (GET, POST, PUT, DELETE) no contexto de APIs</li>
                         <li>Pesquise o que é o <strong>Swagger</strong></li>
+                        <li>Pense: como o app do Uber se comunica com o servidor?</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 30 minutos</p>
+                    <p style="margin-top: 15px;"><strong>Tempo estimado:</strong> 25 minutos</p>
                 </div>
             </div>
         </div>
 
+        <!-- SLIDE 14: Encerramento -->
         <div class="slide slide-cover">
             <h1>Obrigado!</h1>
             <h2>Dúvidas?</h2>
