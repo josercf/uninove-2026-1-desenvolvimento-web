@@ -877,7 +877,8 @@ figcaption {
 
 .guided-steps li {
     counter-increment: step;
-    padding: 10px 15px 10px 50px;
+    padding: 10px 15px 10px 15px;
+    padding-top: 32px;
     margin-bottom: 8px;
     background: rgba(255,255,255,0.6);
     border-radius: 8px;
@@ -890,12 +891,11 @@ figcaption {
 .guided-steps li::before {
     content: "Passo " counter(step);
     position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 10px;
+    top: 6px;
     background: #FFA000;
     color: #fff;
-    padding: 2px 8px;
+    padding: 2px 10px;
     border-radius: 4px;
     font-size: 0.7em;
     font-weight: 700;
